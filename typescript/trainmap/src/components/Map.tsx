@@ -1,20 +1,18 @@
-import React from 'react';
-import { MapContainer, TileLayer , Marker} from 'react-leaflet'
-import './Map.css';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 export const Map = () => {
-  // 緯度軽度
-  const position = [34.99, 137];
-  // 初期マップズームレベル
-  const zoom = 15;
   return (
-    <MapContainer center={position} zoom={zoom}>
-      <TileLayer
+    <div>
+      <MapContainer
+        center={[34.99108564176169, 137.0089093275213]}
+        zoom={13}
+        style={{ width: '100%', height: '100dvh'}}
+      >
+        <TileLayer 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={position}></Marker>
-      <Marker position={[35, 137]}></Marker>
-    </MapContainer>
-  )
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      </MapContainer>
+    </div>
+  );
 };
