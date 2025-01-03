@@ -1,12 +1,15 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { LatLng } from 'leaflet';
+const initialPosition:LatLng = new LatLng(35.00612565794908, 137.0386133186716);
+const initialZoom: number = 13;
 
 export const Map = () => {
   return (
     <div>
       <MapContainer
-        center={[34.99108564176169, 137.0089093275213]}
-        zoom={13}
+        center={initialPosition}
+        zoom={initialZoom}
         style={{ width: '100%', height: '100dvh'}}
       >
         <TileLayer 
