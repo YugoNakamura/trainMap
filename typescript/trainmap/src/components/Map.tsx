@@ -1,13 +1,18 @@
-import { MapContainer, Polyline, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Polyline, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LatLng } from 'leaflet';
 import { TrainRoute } from './TrainRoute';
+import { useState } from 'react';
 
 const initialPosition:LatLng = new LatLng(35.00612565794908, 137.0386133186716);
 const initialZoom: number = 13;
 
 export const Map = () => {
-  TrainRoute().then((data) => {console.log(data)});
+  const [position, setPosition] = useState<JSX.Element>();
+
+  TrainRoute()
+    .then((pos) => setPosition(pos));
+
   return (
     <div>
       <MapContainer
@@ -18,6 +23,7 @@ export const Map = () => {
         <TileLayer 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {position}
       </MapContainer>
     </div>
   );
