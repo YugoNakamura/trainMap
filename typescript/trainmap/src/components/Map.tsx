@@ -4,14 +4,14 @@ import { LatLng } from 'leaflet';
 import { TrainRoute } from './TrainRoute';
 import { useState } from 'react';
 
-const initialPosition:LatLng = new LatLng(35.00612565794908, 137.0386133186716);
-const initialZoom: number = 13;
+const initialPosition:LatLng = new LatLng(35.1, 137.16);
+const initialZoom: number = 16;
 
 export const Map = () => {
-  const [position, setPosition] = useState<JSX.Element>();
+  const [markers, setMarkers] = useState<JSX.Element[]>([]);
 
   TrainRoute()
-    .then((pos) => setPosition(pos));
+    .then((pos) => setMarkers(pos));
 
   return (
     <div>
@@ -23,7 +23,7 @@ export const Map = () => {
         <TileLayer 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {position}
+        {markers}
       </MapContainer>
     </div>
   );
