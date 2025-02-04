@@ -2,20 +2,22 @@ import { MapContainer, Marker, Polyline, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LatLng } from 'leaflet';
 import { TrainRoute } from './TrainRoute';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const initialPosition:LatLng = new LatLng(35.1, 137.16);
+const initialPosition:LatLng = new LatLng(35, 137);
 const initialZoom: number = 16;
 
 export const Map = () => {
   const [markers, setMarkers] = useState<JSX.Element[]>([]);
 
-  TrainRoute()
-    .then((pos) => setMarkers(pos));
-
+  useEffect(() => {
+    TrainRoute()
+      .then((pos) => setMarkers(pos));
+  }, []);
   return (
     <div>
       <MapContainer
+        maxZoom={18}
         center={initialPosition}
         zoom={initialZoom}
         style={{ width: '100%', height: '100dvh'}}

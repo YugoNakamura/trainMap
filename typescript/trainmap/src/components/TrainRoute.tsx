@@ -1,23 +1,50 @@
 import { LatLngExpression } from "leaflet";
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Polyline, Popup } from "react-leaflet";
 
-interface Location {
-    lat: number;
-    lng: number;
+interface osmJsonLine {
+    type: string;
+    geometry: {
+        type: string;
+    };
+    properties: string;
+}
+
+interface Point extends osmJsonLine {
+    geometry: {
+        type: string;
+        coordinates: number[];
+    };
+}
+
+interface pointLine extends osmJsonLine {
+    geometry: {
+        type: string;
+        coordinates: number[][];
+    };
 }
 
 export function TrainRoute(): Promise<JSX.Element[]> {
-    return fetch('./trainRoute/Meitetsu_mikawaLine.geojson')
+    return fetch('./trainRoute/chubu-railway-latest.osm-test.json')
         .then(response => response.json())
         .then((data) => {
-                const coordinates:number[][] = data.features[46].geometry.coordinates[0];
-                return coordinates.map((coordinate, index)=>{
-                    const pos:LatLngExpression = [coordinate[1], coordinate[0]];
-                    return <Marker key={index} position={pos}><Popup>{coordinate[1]}, {coordinate[0]}</Popup></Marker>;
-                    }
-                );
-            }
-        )
+            const dataLines = data.features;
+            const elements = dataLines.map((dataLine:osmJsonLine, index:number) => {
+                if(dataLine.geometry.type === 'Point'){
+                    const point:Point = dataLine as Point;
+                    return <Marker position={[point.geometry.coordinates[1], point.geometry.coordinates[0]]} key={index}></Marker>;
+                }
+                if(dataLine.geometry.type === 'LineString'){
+                    const line:pointLine = dataLine as pointLine;
+                    const railRoad:LatLngExpression[] = [];
+                    line.geometry.coordinates.map((point:number[]) =>{
+                        railRoad.push([point[1], point[0]]);
+                    });
+                    return <Polyline pathOptions={{ color: index%2==0?'blue' :'red'}} positions={railRoad} key={index} ><Popup>{index}</Popup></Polyline>;
+                }
+                return null;
+            }).filter(element => element !== null) as JSX.Element[];
+            return elements;
+        });
 }
 
 /*export function TrainRoute() {
