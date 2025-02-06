@@ -1,6 +1,7 @@
 import { LatLngExpression } from "leaflet";
 import { Marker, Polyline, Popup } from "react-leaflet";
 
+//PointとLineStringの共通部分
 interface osmJsonLine {
     type: string;
     geometry: {
@@ -9,6 +10,7 @@ interface osmJsonLine {
     properties: string;
 }
 
+//駅を表すPoint
 interface Point extends osmJsonLine {
     geometry: {
         type: string;
@@ -16,6 +18,7 @@ interface Point extends osmJsonLine {
     };
 }
 
+//路線を表すLineString
 interface pointLine extends osmJsonLine {
     geometry: {
         type: string;
@@ -24,14 +27,15 @@ interface pointLine extends osmJsonLine {
 }
 
 export function TrainRoute(): Promise<JSX.Element[]> {
-    return fetch('./trainRoute/chubu-railway-latest.osm-test.json')
+//    return fetch('./trainRoute/chubu-railway-latest.osm-test.json')
+    return fetch('./trainRoute/mikawaLine.json')
         .then(response => response.json())
         .then((data) => {
             const dataLines = data.features;
             const elements = dataLines.map((dataLine:osmJsonLine, index:number) => {
                 if(dataLine.geometry.type === 'Point'){
                     const point:Point = dataLine as Point;
-                    return <Marker position={[point.geometry.coordinates[1], point.geometry.coordinates[0]]} key={index}></Marker>;
+                    return <Marker position={[point.geometry.coordinates[1], point.geometry.coordinates[0]]} key={index}><Popup>{point.geometry.coordinates[1]}, {point.geometry.coordinates[0]}<Popup /></Popup></Marker>;
                 }
                 if(dataLine.geometry.type === 'LineString'){
                     const line:pointLine = dataLine as pointLine;
