@@ -2,34 +2,101 @@ import json
 
 jsonfile = open('./mikawaLineRailroad.json', 'r')
 jsondata = json.load(jsonfile)
+jsonfile.close()
 
-# 知立駅から碧南駅までの三河線の緯度経度を出力
+# 始点から終点までの緯度経度を一つの配列に格納する
+# JSONから各区間の配列を取得
 railroads = jsondata['coordinates']
-# 知立駅の緯度経度
+
+# 始点の緯度経度と終点の緯度経度
 startPoint = [137.0397465, 35.0056828]
 endPoint = [136.9856149, 34.8738224]
 # 既に参照したindexを格納する配列
 usedIndex = []
-mikawaLine = []
+startToEnd = [0]
 for l in range(len(railroads)):
     for i in range(len(railroads)):
-        # 配列の最初の要素が知立駅の緯度経度と一致する場合
+        # ある区間の配列の最初の要素がstartPointの緯度経度と一致する場合
         if railroads[i]['geometry']['coordinates'][0] == startPoint and i not in usedIndex:
-            for point in railroads[i]['geometry']['coordinates']:
-                mikawaLine.append(point)
-            startPoint = railroads[i]['geometry']['coordinates'][len(railroads[i]['geometry']['coordinates'])-1]
+            tmpCoords = railroads[i]['geometry']['coordinates']
+            # 末尾の要素を上書きして書き込む
+            startToEnd = startToEnd[:-1]
+            for j in range(len(tmpCoords)):
+                startToEnd.append([tmpCoords[j][1], tmpCoords[j][0]])
+            startPoint = railroads[i]['geometry']['coordinates'][-1]
             usedIndex.append(i)
             break
 
-        # 配列の最後の要素が知立駅の緯度経度と一致する場合
-        if railroads[i]['geometry']['coordinates'][len(railroads[i]['geometry']['coordinates'])-1] == startPoint and i not in usedIndex:
-            for point in reversed(railroads[i]['geometry']['coordinates']):
-                mikawaLine.append(point)
+        # ある区間の配列の最後の要素がstartPointの緯度経度と一致する場合
+        if railroads[i]['geometry']['coordinates'][-1] == startPoint and i not in usedIndex:
+            tmpCoords = railroads[i]['geometry']['coordinates']
+            # 末尾の要素を上書きして書き込む
+            startToEnd = startToEnd[:-1]
+            for j in reversed(range(len(tmpCoords))):
+                startToEnd.append([tmpCoords[j][1], tmpCoords[j][0]])
             startPoint = railroads[i]['geometry']['coordinates'][0]
             usedIndex.append(i)
             break
-    
-    # 三河線の終点が碧南駅の緯度経度と一致する場合
-    if mikawaLine[len(mikawaLine)-1] == endPoint:
+    # 対象路線の最後の緯度経度が終着駅の緯度経度と一致する場合
+    if startToEnd[-1] == [endPoint[1], endPoint[0]]:
         break
-print(mikawaLine)
+
+# 駅間ごとにrailroadsをスライス
+jsonfile = open('./mikawaLineStations.json', 'r')
+jsondata = json.load(jsonfile)
+jsonfile.close()
+
+stationData = jsondata['coordinates']
+# stationDataの各行が始発駅から何番目の駅か格納
+stationIndex = []
+# 各駅の緯度経度がstartToEndの何番目の要素か格納
+stationIndexInStartToEnd = []
+
+for i in range(len(startToEnd)):
+    for j in range(len(stationData)):
+        if [startToEnd[i][1], startToEnd[i][0]] == stationData[j]['geometry']['coordinates']:
+            stationIndex.append(j)
+            stationIndexInStartToEnd.append(i)
+            break
+
+output = {'sections':[], 'stations':[]}
+# sections
+for i in range(len(stationIndex)-1):
+    section = {
+        'id': stationData[stationIndex[i]]['properties']['name:en'] + '_' + stationData[stationIndex[i+1]]['properties']['name:en'],
+        'prev': '',
+        'next': '',
+        'coords': startToEnd[stationIndexInStartToEnd[i]:stationIndexInStartToEnd[i+1]+1]
+    }
+    output['sections'].append(section)
+
+for i in range(len(output['sections'])):
+    if i != 0:
+        output['sections'][i]['prev'] = output['sections'][i-1]['id']
+    if i != len(output['sections'])-1:
+        output['sections'][i]['next'] = output['sections'][i+1]['id']
+
+# stations
+for i in range(len(stationIndex)):
+    station ={
+        "name": stationData[stationIndex[i]]['properties']['name'],
+        "name_en": stationData[stationIndex[i]]['properties']['name:en'],
+        "coord": startToEnd[stationIndexInStartToEnd[i]]
+    }
+    output['stations'].append(station)
+
+jsonfile = open('./mikawaLine.json', 'w')
+json.dump(output, jsonfile, indent=4, ensure_ascii=False)
+jsonfile.close()
+# 出力するjsonのフォーマット
+# section:{[
+# id: railroadId,
+# prev: prevRailroadId,
+# next: nextRailroadId,
+# coordinates: [[136.9856149,34.8738224],...]
+# ]...}
+# station:{[
+# name:
+# name:en:
+# coord: [136.9856149,34.8738224]
+# ]...}

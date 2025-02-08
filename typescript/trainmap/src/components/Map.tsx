@@ -1,4 +1,4 @@
-import { MapContainer, Marker, Polyline, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LatLng } from 'leaflet';
 import { TrainRoute } from './TrainRoute';
@@ -12,7 +12,7 @@ export const Map = () => {
 
   useEffect(() => {
     TrainRoute()
-      .then((pos) => setMarkers(pos));
+      .then((element) => setMarkers(element));
   }, []);
   return (
     <div>
