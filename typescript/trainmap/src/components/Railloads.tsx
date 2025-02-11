@@ -16,15 +16,17 @@ interface Station {
     coord:LatLngExpression
 }
 
-export function TrainRoute(): Promise<JSX.Element[]> {
-    return fetch('./trainRoute/mikawaLineFormat.json')
+export function Railloads(): Promise<JSX.Element[]> {
+    return fetch('./trainRoute/mikawaLine.json')
         .then(response => response.json())
         .then((data) => {
+            //区間情報
             const sections:Section[] = data.sections;
             const sectionLines:JSX.Element[] = sections.map((section, index) => {
                 return <Polyline positions={section.coords} key={'section'+index}><Popup>{section.id}</Popup></Polyline>;
             });
 
+            //駅情報
             const stations:Station[] = data.stations;
             const stationMarkers:JSX.Element[] = stations.map((station, index) => {
                 return (
