@@ -1,4 +1,5 @@
 import { LatLngExpression } from "leaflet";
+import { useEffect, useState } from "react";
 import { Marker, Polyline, Popup } from "react-leaflet";
 
 //区間を表す
@@ -16,10 +17,13 @@ interface Station {
     coord:LatLngExpression
 }
 
-export function Railloads(): Promise<JSX.Element[]> {
-    return fetch('./trainRoute/mikawaLine.json')
+export function Railloads():JSX.Element {
+    const [elements, setElements] = useState<JSX.Element[]>([]);
+
+    useEffect(() => {
+        fetch('./trainRoute/mikawaLine.json')
         .then(response => response.json())
-        .then((data) => {
+        .then(data => {
             //区間情報
             const sections:Section[] = data.sections;
             const sectionLines:JSX.Element[] = sections.map((section, index) => {
@@ -37,11 +41,15 @@ export function Railloads(): Promise<JSX.Element[]> {
                     </Marker>
                 );
             });
-            //sectionLinesとstationMarkersを結合して返す
-            return sectionLines.concat(stationMarkers);
+            //sectionLinesとstationMarkersを結合してelementsにセットする
+            setElements(sectionLines.concat(stationMarkers));
         })
         .catch(error => {
             console.error('Error fetching train route data:', error);
             return [];
         });
+    }, []);
+
+    return <div>{elements}</div>
+
 }
