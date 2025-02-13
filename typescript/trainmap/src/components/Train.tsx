@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import { Marker } from "react-leaflet";
+import { Railload } from "../types/railload";
+import { LoadJson } from "./LoadJson";
 
 export const Train = () => {
     const initialPosition: number[] = [35, 137];
     const radius: number = 0.0005;
     const [position, setPosition] = useState<number[]>(initialPosition);
     const [theta, setTheta] = useState<number>(0);
+
+    const [railData, setRailData] = useState<Railload>({ sections: [], stations: [] });
+    useEffect(() => {
+        LoadJson<Railload>('./trainRoute/mikawaLine.json')
+        .then(railData => {
+        setRailData(railData);
+        });
+    },[])
+//    console.log(railData);
+
     useEffect(() => {
         const interval = setInterval(() => {
             const newLat:number = initialPosition[0]+(radius*Math.cos(theta));
