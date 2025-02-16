@@ -7,7 +7,7 @@ import { LoadJson } from './LoadJson';
 import { useEffect, useState } from 'react';
 import { Railload } from '../types/railload';
 
-const initialPosition:LatLng = new LatLng(35, 137);
+const initialPosition:LatLng = new LatLng(35.0056828, 137.0397465);
 const initialZoom: number = 16;
 
 export const Map = () => {
@@ -31,7 +31,7 @@ export const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
-        <Train />
+        <Train railload={railData} />
       </MapContainer>
     </div>
   );

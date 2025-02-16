@@ -1,5 +1,9 @@
 import { Marker, Polyline, Popup } from "react-leaflet";
-import {Prop, Section, Station} from "../types/railload"
+import {Railload, Section, Station} from "../types/railload"
+
+export interface Prop {
+    railload:Railload
+}
 
 export function Railloads(prop:Prop) {
     //区間情報
