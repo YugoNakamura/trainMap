@@ -1,5 +1,3 @@
-import { LatLngExpression } from "leaflet"
-
 //区間を表す
 export interface Section {
     id:string,

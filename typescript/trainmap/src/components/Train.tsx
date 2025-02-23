@@ -8,13 +8,18 @@ interface Prop {
     desStaName:string,
 }
 export const Train = (prop:Prop) => {
-//    const railload:Railload = prop.railload;
+    //出発駅と終着駅を取得
     const sections:Section[] = prop.railload.sections;
     const stations:Station[] = prop.railload.stations;
+    //出発駅
     const depStaNo = stations.findIndex(station => station.name_en===prop.depStaName);
     if (depStaNo===-1) throw new Error("Station Data Load Failed");
+    //目的駅
     const desStaNo = stations.findIndex(station => station.name_en===prop.desStaName);
     if (desStaNo===-1) throw new Error("Station Data Load Failed");
+
+    //上りか下りか
+    const isInBound:boolean = desStaNo > depStaNo;
 
     //現在の緯度経度
     //レンダリング用の座標変数
@@ -38,16 +43,24 @@ export const Train = (prop:Prop) => {
     //加速or定速
     const isAccel = useRef(false);
 
-    const secID:number = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());
-    if (secID===-1) throw new Error("Section Data Load Failed");
-    //現在参照しているsectionのID
-    const sectionID = useRef<number>(secID);
-
+    //走行しているsection番号
+    const sectionID = useRef<number>(-1);
     //setIntervalのID
     const intervalID = useRef<number>();
     useEffect(() => {
-        //JSONからのデータをrailChkPointsへコピー
-        railChkPoints.current = sections[sectionID.current].coords;
+        //sectionIDの初期設定
+        if(isInBound) {
+            sectionID.current = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());
+        } else {
+            sectionID.current = sections.findIndex(section=>section.coords[section.coords.length-1].toString() === stations[depStaNo].coord.toString());
+        }
+        if (sectionID.current===-1) throw new Error("Section Data Load Failed");
+        //railChkPointsの初期設定
+        if(isInBound) {
+            railChkPoints.current = sections[sectionID.current].coords;
+        } else {
+            railChkPoints.current = sections[sectionID.current].coords.slice().reverse();
+        }
 
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
@@ -58,7 +71,6 @@ export const Train = (prop:Prop) => {
 
     //distToMove:次の更新で進む距離, intervalID:setIntervalのID
     const calcNextPosition = (distToMove:number) => {
-
         //Sectionの最後のChkpointを通過したら
         if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
             //指定した終着駅に到着したら
@@ -66,16 +78,17 @@ export const Train = (prop:Prop) => {
                 clearInterval(intervalID.current);
                 return;
             }
-            const secID = sections.findIndex(section=>section.id === sections[sectionID.current].next);
-            if (secID===-1) throw new Error("Section Data Load Failed");
-            sectionID.current=secID;
+
+            if (isInBound) {sectionID.current = sections.findIndex(section=>section.id === sections[sectionID.current].next);}
+            else {sectionID.current = sections.findIndex(section=>section.id === sections[sectionID.current].prev);}
+            if (sectionID.current===-1) throw new Error("Section Data Load Failed");
 
             //Sectionを切り替えるときにこれまで通過してきたChkPointsは不要なので最後に通過したChkPointを残して消去する
             railChkPoints.current = [railChkPoints.current[railChkPoints.current.length-1]];
-            railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords);
+            if(isInBound){railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords);}
+            else {railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords.slice().reverse());}
             //railChkPointsを圧縮するとともにそれを参照するindexも値をリセットする
             railChkPointsIndex.current = 0;
-
         }
         const prevCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
         const nextCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];

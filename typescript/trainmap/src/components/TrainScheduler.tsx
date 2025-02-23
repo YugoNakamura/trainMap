@@ -15,7 +15,11 @@ export const TrainScheduler = () => {
     if(railload === undefined) {
         return <div></div>
     } else {
-        return <Train railload={railload} depStaName='Ogakie' desStaName='Hekinan'/>
+        const trains:JSX.Element[] = [
+            <Train railload={railload} depStaName='Chiryuu' desStaName='Hekinan' key={1}/>,
+            <Train railload={railload} depStaName='Hekinan' desStaName='Chiryuu' key={2}/>
+        ]
+        return <div>{trains}</div>
     }
     
 }
