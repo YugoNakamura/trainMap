@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { Railload } from "../types/railload"
 import { Train } from "./Train";
 
-interface Prop {
-    railload:Railload
-}
+
 export const TrainScheduler = () => {
     const [railload, setRailload] = useState<Railload>();
 
@@ -18,7 +16,7 @@ export const TrainScheduler = () => {
     if(railload === undefined) {
         return <div></div>
     } else {
-        return <Train railload={railload}/>
+        return <Train railload={railload} depStaName='Ogakie' desStaName='Hekinan'/>
     }
     
 }

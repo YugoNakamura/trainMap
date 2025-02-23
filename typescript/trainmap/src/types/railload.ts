@@ -5,14 +5,14 @@ export interface Section {
     id:string,
     prev:string,
     next:string,
-    coords:LatLngExpression[]
+    coords:number[][]
 }
 
 //駅を表す
 export interface Station {
     name:string,
     name_en:string,
-    coord:LatLngExpression
+    coord:number[]
 }
 
 export interface Railload {
