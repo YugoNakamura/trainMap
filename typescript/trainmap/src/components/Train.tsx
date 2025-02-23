@@ -14,7 +14,7 @@ export const Train = (prop:Prop) => {
     //出発駅
     const depStaNo = stations.findIndex(station => station.name_en===prop.depStaName);
     if (depStaNo===-1) throw new Error("Station Data Load Failed");
-    //目的駅
+    //終着駅
     const desStaNo = stations.findIndex(station => station.name_en===prop.desStaName);
     if (desStaNo===-1) throw new Error("Station Data Load Failed");
 
@@ -27,6 +27,8 @@ export const Train = (prop:Prop) => {
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
     const prevPosition = useRef<number[]>(stations[depStaNo].coord);
 
+    //走行しているsection番号
+    const sectionID = useRef<number>(-1);
     //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
     //通過したrailChkPointsのインデックス
@@ -43,24 +45,17 @@ export const Train = (prop:Prop) => {
     //加速or定速
     const isAccel = useRef(false);
 
-    //走行しているsection番号
-    const sectionID = useRef<number>(-1);
     //setIntervalのID
     const intervalID = useRef<number>();
     useEffect(() => {
         //sectionIDの初期設定
-        if(isInBound) {
-            sectionID.current = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());
-        } else {
-            sectionID.current = sections.findIndex(section=>section.coords[section.coords.length-1].toString() === stations[depStaNo].coord.toString());
-        }
+        if(isInBound) {sectionID.current = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());}
+        else {sectionID.current = sections.findIndex(section=>section.coords[section.coords.length-1].toString() === stations[depStaNo].coord.toString());}
         if (sectionID.current===-1) throw new Error("Section Data Load Failed");
+
         //railChkPointsの初期設定
-        if(isInBound) {
-            railChkPoints.current = sections[sectionID.current].coords;
-        } else {
-            railChkPoints.current = sections[sectionID.current].coords.slice().reverse();
-        }
+        if(isInBound) {railChkPoints.current = sections[sectionID.current].coords;}
+        else {railChkPoints.current = sections[sectionID.current].coords.slice().reverse();}
 
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{

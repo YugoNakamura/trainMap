@@ -1,4 +1,5 @@
 import json
+import math
 
 jsonfile = open('./mikawaLineRailroad.json', 'r')
 jsondata = json.load(jsonfile)
@@ -21,8 +22,10 @@ for l in range(len(railroads)):
             tmpCoords = railroads[i]['geometry']['coordinates']
             # 末尾の要素を上書きして書き込む
             startToEnd = startToEnd[:-1]
+            # 緯度経度を入れ替えて追加
             for j in range(len(tmpCoords)):
                 startToEnd.append([tmpCoords[j][1], tmpCoords[j][0]])
+                # 次の検索対象を設定
             startPoint = railroads[i]['geometry']['coordinates'][-1]
             usedIndex.append(i)
             break
@@ -41,7 +44,7 @@ for l in range(len(railroads)):
     if startToEnd[-1] == [endPoint[1], endPoint[0]]:
         break
 
-# 駅間ごとにrailroadsをスライス
+# 駅間ごとにrailroadsを分割
 jsonfile = open('./mikawaLineStations.json', 'r')
 jsondata = json.load(jsonfile)
 jsonfile.close()
@@ -66,11 +69,19 @@ for i in range(len(stationIndex)-1):
         'id': stationData[stationIndex[i]]['properties']['name:en'] + '_' + stationData[stationIndex[i+1]]['properties']['name:en'],
         'prev': '',
         'next': '',
+        'distaice': 0,
+        # [start:end]のend-1番目の要素までスライスされるので[i:[i+1]+1]
         'coords': startToEnd[stationIndexInStartToEnd[i]:stationIndexInStartToEnd[i+1]+1]
     }
     output['sections'].append(section)
 
 for i in range(len(output['sections'])):
+    # 1Sectionの長さ
+    dist=0;
+    coords = output['sections'][i]['coords'];
+    for j in range(len(output['sections'][i]['coords'])-1):
+        dist += math.sqrt((coords[i][0]-coords[i+1][0])**2+(coords[i][1]-coords[i+1][1])**2)
+    output['sections'][i]['distaice'] = dist
     if i != 0:
         output['sections'][i]['prev'] = output['sections'][i-1]['id']
     if i != len(output['sections'])-1:
