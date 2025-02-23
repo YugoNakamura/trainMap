@@ -1,62 +1,78 @@
-import { useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { Marker } from "react-leaflet";
-import { Railload } from "../types/railload";
+import { Railload, Station } from "../types/railload";
 
 interface Prop {
-    railload:Railload
+    railload:Railload,
+    depStaName:string,
+    desStaName:string,
 }
 export const Train = (prop:Prop) => {
-    const initialPosition: number[] = [35.0056828, 137.0397465];
+    const railload:Railload = prop.railload;
+    const depSta = railload.stations.find(station => station.name_en===prop.depStaName);
+    if (depSta===undefined) throw new Error("Station Data Load Failed");
+    const desSta = railload.stations.find(station => station.name_en===prop.desStaName);
+    if (desSta===undefined) throw new Error("Station Data Load Failed");
+
+    //現在の緯度経度
     //レンダリング用の座標変数
-    const [position, setPosition] = useState<number[]>(initialPosition);
+    const [position, setPosition] = useState<number[]>([34.9950889, 137.0241199]);
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
-    const prevPosition = useRef<number[]>([35.0056828, 137.0397465]);
-    //最後に通過したJSON上の座標のインデックス
-    const prevChkPointIndex = useRef<number>(0);
-    //現在までに通過してきた線路のsection情報
+    const prevPosition = useRef<number[]>([34.9950889, 137.0241199]);
+
+    //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
+    //通過したrailChkPointsのインデックス
+    const railChkPointsIndex = useRef<number>(0);
+
+    const secID = railload.sections.findIndex(section=>section.coords[0].toString() === depSta.coord.toString());
     //現在参照しているsectionのID
-    const sectionID = useRef<number>(0);
+    const sectionID = useRef<number>(secID);
+
     //setIntervalのID
     const intervalID = useRef<number>();
-    const railload:Railload = prop.railload;
     useEffect(() => {
-        //JSONがロードたら実行
-        if(railload.sections.length!==0 || railload.stations.length!==0) {
         //JSONからのデータをrailChkPointsへコピー
-        sectionID.current = 0;
-        railChkPoints.current = railload.sections[sectionID.current].coords.map(coord => coord as number[]);
+        railChkPoints.current = railload.sections[sectionID.current].coords;
+
         //更新周期(msec)
-        const mtime = 16;
+        const mtime = 50;
+        //移動距離
         const distToMove = 0.0001;
+        //mtime周期でdistToMoveだけ移動させる
         intervalID.current = setInterval(()=>{
             calcNextPosition(distToMove);
         }, mtime);
         return ()=> clearInterval(intervalID.current);
-        }
-    },[railload]);
+    },[]);
 
     //distToMove:次の更新で進む距離, intervalID:setIntervalのID
     const calcNextPosition = (distToMove:number) => {
+
         //Sectionの最後のChkpointを通過したら
-        if(prevChkPointIndex.current >= railChkPoints.current.length-1) {
+        if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
+            if(railChkPoints.current[railChkPointsIndex.current].toString() === desSta.coord.toString()) {
+                clearInterval(intervalID.current);
+                return;
+            }
             sectionID.current++;
             //sectionの末端まで到達したらsetIntervalを解除(終着駅に着いた後の処理の条件)
             if(sectionID.current > railload.sections.length-1) {
                 clearInterval(intervalID.current);
-                console.log(railChkPoints.current);
                 return;
             }
 
             //Sectionを切り替えるときにこれまで通過してきたChkPointsは不要なので最後に通過したChkPointを残して消去する
             railChkPoints.current = [railChkPoints.current[railChkPoints.current.length-1]];
-            railChkPoints.current = railChkPoints.current.concat(railload.sections[sectionID.current].coords.map(coord => coord as number[]));
+            railChkPoints.current = railChkPoints.current.concat(railload.sections[sectionID.current].coords);
+
             //railChkPointsを圧縮するとともにそれを参照するindexも値をリセットする
-            prevChkPointIndex.current = 0;
+            railChkPointsIndex.current = 0;
 
         }
-        const prevCheckPoint:number[] = railChkPoints.current[prevChkPointIndex.current];
-        const nextCheckPoint:number[] = railChkPoints.current[prevChkPointIndex.current+1];
+        const prevCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
+        const nextCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];
+
         //現在位置を挟む2つのチェックポイント間の距離
         const distChkPoint = getDist(prevCheckPoint, nextCheckPoint);
         //現在位置から次のチェックポイントまでの距離
@@ -64,7 +80,7 @@ export const Train = (prop:Prop) => {
 
         if(distToMove > distPositionToNext) {
             prevPosition.current = nextCheckPoint;
-            prevChkPointIndex.current += 1;
+            railChkPointsIndex.current += 1;
             calcNextPosition(distToMove-distPositionToNext);
         } else {
             //前のチェックポイントから現在位置までの距離
