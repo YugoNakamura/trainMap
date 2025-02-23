@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Railload } from "../types/railload"
 import { Train } from "./Train";
 
-
 export const TrainScheduler = () => {
     const [railload, setRailload] = useState<Railload>();
 

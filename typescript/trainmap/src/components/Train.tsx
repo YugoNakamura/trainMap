@@ -29,8 +29,15 @@ export const Train = (prop:Prop) => {
     const speed = useRef(0.0001);
     //更新周期(msec)
     const mtime = 50;
+    //駅間の移動時間(sec)
+    const timeToSta = 10
+    //加速度
+    const accRate = useRef(0);
+    //加速or定速
+    const isAccel = useRef(false);
 
     const secID = railload.sections.findIndex(section=>section.coords[0].toString() === depSta.coord.toString());
+    if (secID===-1) throw new Error("Section Data Load Failed");
     //現在参照しているsectionのID
     const sectionID = useRef<number>(secID);
 
@@ -52,21 +59,18 @@ export const Train = (prop:Prop) => {
 
         //Sectionの最後のChkpointを通過したら
         if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
+            //指定した終着駅に到着したら
             if(railChkPoints.current[railChkPointsIndex.current].toString() === desSta.coord.toString()) {
                 clearInterval(intervalID.current);
                 return;
             }
-            sectionID.current++;
-            //sectionの末端まで到達したらsetIntervalを解除(終着駅に着いた後の処理の条件)
-            if(sectionID.current > railload.sections.length-1) {
-                clearInterval(intervalID.current);
-                return;
-            }
+            const secID = railload.sections.findIndex(section=>section.id === railload.sections[sectionID.current].next);
+            if (secID===-1) throw new Error("Section Data Load Failed");
+            sectionID.current=secID;
 
             //Sectionを切り替えるときにこれまで通過してきたChkPointsは不要なので最後に通過したChkPointを残して消去する
             railChkPoints.current = [railChkPoints.current[railChkPoints.current.length-1]];
             railChkPoints.current = railChkPoints.current.concat(railload.sections[sectionID.current].coords);
-
             //railChkPointsを圧縮するとともにそれを参照するindexも値をリセットする
             railChkPointsIndex.current = 0;
 
