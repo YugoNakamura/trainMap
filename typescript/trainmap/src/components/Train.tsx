@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Marker } from "react-leaflet";
-import { Railload } from "../types/railload";
+import { Railload, Section, Station } from "../types/railload";
 
 interface Prop {
     railload:Railload,
@@ -8,17 +8,19 @@ interface Prop {
     desStaName:string,
 }
 export const Train = (prop:Prop) => {
-    const railload:Railload = prop.railload;
-    const depSta = railload.stations.find(station => station.name_en===prop.depStaName);
-    if (depSta===undefined) throw new Error("Station Data Load Failed");
-    const desSta = railload.stations.find(station => station.name_en===prop.desStaName);
-    if (desSta===undefined) throw new Error("Station Data Load Failed");
+//    const railload:Railload = prop.railload;
+    const sections:Section[] = prop.railload.sections;
+    const stations:Station[] = prop.railload.stations;
+    const depStaNo = stations.findIndex(station => station.name_en===prop.depStaName);
+    if (depStaNo===-1) throw new Error("Station Data Load Failed");
+    const desStaNo = stations.findIndex(station => station.name_en===prop.desStaName);
+    if (desStaNo===-1) throw new Error("Station Data Load Failed");
 
     //現在の緯度経度
     //レンダリング用の座標変数
-    const [position, setPosition] = useState<number[]>(depSta.coord);
+    const [position, setPosition] = useState<number[]>(stations[depStaNo].coord);
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
-    const prevPosition = useRef<number[]>(depSta.coord);
+    const prevPosition = useRef<number[]>(stations[depStaNo].coord);
 
     //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
@@ -36,7 +38,7 @@ export const Train = (prop:Prop) => {
     //加速or定速
     const isAccel = useRef(false);
 
-    const secID = railload.sections.findIndex(section=>section.coords[0].toString() === depSta.coord.toString());
+    const secID:number = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());
     if (secID===-1) throw new Error("Section Data Load Failed");
     //現在参照しているsectionのID
     const sectionID = useRef<number>(secID);
@@ -45,7 +47,7 @@ export const Train = (prop:Prop) => {
     const intervalID = useRef<number>();
     useEffect(() => {
         //JSONからのデータをrailChkPointsへコピー
-        railChkPoints.current = railload.sections[sectionID.current].coords;
+        railChkPoints.current = sections[sectionID.current].coords;
 
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
@@ -60,17 +62,17 @@ export const Train = (prop:Prop) => {
         //Sectionの最後のChkpointを通過したら
         if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
             //指定した終着駅に到着したら
-            if(railChkPoints.current[railChkPointsIndex.current].toString() === desSta.coord.toString()) {
+            if(railChkPoints.current[railChkPointsIndex.current].toString() === stations[desStaNo].coord.toString()) {
                 clearInterval(intervalID.current);
                 return;
             }
-            const secID = railload.sections.findIndex(section=>section.id === railload.sections[sectionID.current].next);
+            const secID = sections.findIndex(section=>section.id === sections[sectionID.current].next);
             if (secID===-1) throw new Error("Section Data Load Failed");
             sectionID.current=secID;
 
             //Sectionを切り替えるときにこれまで通過してきたChkPointsは不要なので最後に通過したChkPointを残して消去する
             railChkPoints.current = [railChkPoints.current[railChkPoints.current.length-1]];
-            railChkPoints.current = railChkPoints.current.concat(railload.sections[sectionID.current].coords);
+            railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords);
             //railChkPointsを圧縮するとともにそれを参照するindexも値をリセットする
             railChkPointsIndex.current = 0;
 
