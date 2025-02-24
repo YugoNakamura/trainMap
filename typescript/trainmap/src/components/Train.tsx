@@ -8,8 +8,12 @@ interface Prop {
     desStaName:string,
 }
 export const Train = (prop:Prop) => {
+    //station, sectionのmap化
+    const sections = new Map(prop.railload.sections.map(section => [section.id, section]));
+    //走行しているsection番号
+    const sectionID = useRef<string>('');
+//    const sections:Section[] = prop.railload.sections;
     //出発駅と終着駅を取得
-    const sections:Section[] = prop.railload.sections;
     const stations:Station[] = prop.railload.stations;
     //出発駅
     const depStaNo = stations.findIndex(station => station.name_en===prop.depStaName);
@@ -27,8 +31,6 @@ export const Train = (prop:Prop) => {
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
     const prevPosition = useRef<number[]>(stations[depStaNo].coord);
 
-    //走行しているsection番号
-    const sectionID = useRef<number>(-1);
     //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
     //通過したrailChkPointsのインデックス
@@ -48,14 +50,8 @@ export const Train = (prop:Prop) => {
     //setIntervalのID
     const intervalID = useRef<number>();
     useEffect(() => {
-        //sectionIDの初期設定
-        if(isInBound) {sectionID.current = sections.findIndex(section=>section.coords[0].toString() === stations[depStaNo].coord.toString());}
-        else {sectionID.current = sections.findIndex(section=>section.coords[section.coords.length-1].toString() === stations[depStaNo].coord.toString());}
-        if (sectionID.current===-1) throw new Error("Section Data Load Failed");
-
         //railChkPointsの初期設定
-        if(isInBound) {railChkPoints.current = sections[sectionID.current].coords;}
-        else {railChkPoints.current = sections[sectionID.current].coords.slice().reverse();}
+        [railChkPoints.current, sectionID.current] = addNextSection(isInBound, sections, stations[depStaNo]);
 
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
@@ -74,15 +70,8 @@ export const Train = (prop:Prop) => {
                 return;
             }
 
-            if (isInBound) {sectionID.current = sections.findIndex(section=>section.id === sections[sectionID.current].next);}
-            else {sectionID.current = sections.findIndex(section=>section.id === sections[sectionID.current].prev);}
-            if (sectionID.current===-1) throw new Error("Section Data Load Failed");
-
-            //Sectionを切り替えるときにこれまで通過してきたChkPointsは不要なので最後に通過したChkPointを残して消去する
-            railChkPoints.current = [railChkPoints.current[railChkPoints.current.length-1]];
-            if(isInBound){railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords);}
-            else {railChkPoints.current = railChkPoints.current.concat(sections[sectionID.current].coords.slice().reverse());}
-            //railChkPointsを圧縮するとともにそれを参照するindexも値をリセットする
+            //次のSectionの座標情報とsectionIDを受け取る
+            [railChkPoints.current, sectionID.current] = addNextSection(isInBound, sections, sections.get(sectionID.current));
             railChkPointsIndex.current = 0;
         }
         const prevCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
@@ -94,6 +83,7 @@ export const Train = (prop:Prop) => {
         const distPositionToNext = getDist(prevPosition.current, nextCheckPoint);
 
         if(distToMove > distPositionToNext) {
+            setPosition(nextCheckPoint);
             prevPosition.current = nextCheckPoint;
             railChkPointsIndex.current += 1;
             calcNextPosition(distToMove-distPositionToNext);
@@ -111,14 +101,25 @@ export const Train = (prop:Prop) => {
         return;
     }
 
-    //2点間の距離を算出
-    const getDist = (coord1:number[], coord2:number[]) => {
-        return Math.sqrt((coord2[0]-coord1[0])**2+(coord2[1]-coord1[1])**2);        
-    }
-
     return (
         <Marker position={[position[0], position[1]]}/>
     );
 
 }
 
+// 次の駅までのsectionを追加
+const addNextSection = (isInBound:boolean, sections:Map<string, Section>, currSection:Section|Station|undefined):[number[][], string] => {
+    if (!currSection) throw new Error("input was undefined");
+    //返り値にするsectionのidを取得してget
+    const secID = isInBound ? currSection.next : currSection.prev;
+    const sec = sections.get(secID);
+    if (!sec) throw new Error("Section Data Load Failed");
+
+    if(isInBound) {return [sec.coords, secID];}
+    else {return [sec.coords.slice().reverse(), secID];}
+}
+
+//2点間の距離を算出
+const getDist = (coord1:number[], coord2:number[]) => {
+    return Math.sqrt((coord2[0]-coord1[0])**2+(coord2[1]-coord1[1])**2);        
+}

@@ -1509,6 +1509,8 @@
         {
             "name": "知立",
             "name_en": "Chiryuu",
+            "prev": "",
+            "next": "Chiryuu_Shigehara",
             "coord": [
                 35.0056828,
                 137.0397465
@@ -1517,6 +1519,8 @@
         {
             "name": "重原",
             "name_en": "Shigehara",
+            "prev": "Chiryuu_Shigehara",
+            "next": "Shigehara_Kariya",
             "coord": [
                 34.9950889,
                 137.0241199
@@ -1525,6 +1529,8 @@
         {
             "name": "刈谷",
             "name_en": "Kariya",
+            "prev": "Shigehara_Kariya",
+            "next": "Kariya_Kariyashi",
             "coord": [
                 34.9907665,
                 137.0087734
@@ -1533,6 +1539,8 @@
         {
             "name": "刈谷市",
             "name_en": "Kariyashi",
+            "prev": "Kariya_Kariyashi",
+            "next": "Kariyashi_Ogakie",
             "coord": [
                 34.9846615,
                 136.9937874
@@ -1541,6 +1549,8 @@
         {
             "name": "小垣江",
             "name_en": "Ogakie",
+            "prev": "Kariyashi_Ogakie",
+            "next": "Ogakie_Yoshihama",
             "coord": [
                 34.9636822,
                 136.9952897
@@ -1549,6 +1559,8 @@
         {
             "name": "吉浜",
             "name_en": "Yoshihama",
+            "prev": "Ogakie_Yoshihama",
+            "next": "Yoshihama_Mikawa Takahama",
             "coord": [
                 34.9464221,
                 136.9890153
@@ -1557,6 +1569,8 @@
         {
             "name": "三河高浜",
             "name_en": "Mikawa Takahama",
+            "prev": "Yoshihama_Mikawa Takahama",
+            "next": "Mikawa Takahama_Takahama-minato",
             "coord": [
                 34.9305508,
                 136.989997
@@ -1565,6 +1579,8 @@
         {
             "name": "高浜港",
             "name_en": "Takahama-minato",
+            "prev": "Mikawa Takahama_Takahama-minato",
+            "next": "Takahama-minato_Kita Shinkawa",
             "coord": [
                 34.9211817,
                 136.9893201
@@ -1573,6 +1589,8 @@
         {
             "name": "北新川",
             "name_en": "Kita Shinkawa",
+            "prev": "Takahama-minato_Kita Shinkawa",
+            "next": "Kita Shinkawa_Shinkawa-machi",
             "coord": [
                 34.9061018,
                 136.9924749
@@ -1581,6 +1599,8 @@
         {
             "name": "新川町",
             "name_en": "Shinkawa-machi",
+            "prev": "Kita Shinkawa_Shinkawa-machi",
+            "next": "Shinkawa-machi_Hekinan-chūō",
             "coord": [
                 34.8965858,
                 136.9903221
@@ -1589,6 +1609,8 @@
         {
             "name": "碧南中央",
             "name_en": "Hekinan-chūō",
+            "prev": "Shinkawa-machi_Hekinan-chūō",
+            "next": "Hekinan-chūō_Hekinan",
             "coord": [
                 34.8872277,
                 136.9894601
@@ -1597,6 +1619,8 @@
         {
             "name": "碧南",
             "name_en": "Hekinan",
+            "prev": "Hekinan-chūō_Hekinan",
+            "next": "",
             "coord": [
                 34.8738224,
                 136.9856149

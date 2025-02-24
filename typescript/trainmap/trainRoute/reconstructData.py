@@ -82,6 +82,7 @@ for i in range(len(output['sections'])):
     for j in range(len(output['sections'][i]['coords'])-1):
         dist += math.sqrt((coords[i][0]-coords[i+1][0])**2+(coords[i][1]-coords[i+1][1])**2)
     output['sections'][i]['distaice'] = dist
+    # 前後のsectionのid
     if i != 0:
         output['sections'][i]['prev'] = output['sections'][i-1]['id']
     if i != len(output['sections'])-1:
@@ -92,9 +93,17 @@ for i in range(len(stationIndex)):
     station ={
         "name": stationData[stationIndex[i]]['properties']['name'],
         "name_en": stationData[stationIndex[i]]['properties']['name:en'],
+        "prev": '',
+        "next": '',
         "coord": startToEnd[stationIndexInStartToEnd[i]]
     }
     output['stations'].append(station)
+# 前後のsectionのid
+for i in range(len(output['stations'])):
+    if i != 0:
+        output['stations'][i]['prev'] = output['sections'][i-1]['id']
+    if i !=len(output['stations'])-1:
+        output['stations'][i]['next'] = output['sections'][i]['id']
 
 jsonfile = open('./mikawaLine.json', 'w')
 json.dump(output, jsonfile, indent=4, ensure_ascii=False)

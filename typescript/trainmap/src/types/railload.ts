@@ -10,6 +10,8 @@ export interface Section {
 export interface Station {
     name:string,
     name_en:string,
+    prev:string,
+    next:string,
     coord:number[]
 }
 
