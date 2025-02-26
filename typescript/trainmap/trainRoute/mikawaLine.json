@@ -4,7 +4,7 @@
             "id": "Chiryuu_Shigehara",
             "prev": "",
             "next": "Shigehara_Kariya",
-            "distaice": 0.02974475844953931,
+            "distance": 0.022061807288857198,
             "coords": [
                 [
                     35.0056828,
@@ -244,7 +244,7 @@
             "id": "Shigehara_Kariya",
             "prev": "Chiryuu_Shigehara",
             "next": "Kariya_Kariyashi",
-            "distaice": 0.010788931498724254,
+            "distance": 0.017657458503289855,
             "coords": [
                 [
                     34.9950889,
@@ -388,7 +388,7 @@
             "id": "Kariya_Kariyashi",
             "prev": "Shigehara_Kariya",
             "next": "Kariyashi_Ogakie",
-            "distaice": 0.012764231906421076,
+            "distance": 0.016861453857817586,
             "coords": [
                 [
                     34.9907665,
@@ -544,7 +544,7 @@
             "id": "Kariyashi_Ogakie",
             "prev": "Kariya_Kariyashi",
             "next": "Ogakie_Yoshihama",
-            "distaice": 0.0007356915724363178,
+            "distance": 0.02369970420347644,
             "coords": [
                 [
                     34.9846615,
@@ -760,7 +760,7 @@
             "id": "Ogakie_Yoshihama",
             "prev": "Kariyashi_Ogakie",
             "next": "Yoshihama_Mikawa Takahama",
-            "distaice": 0.021295727271213365,
+            "distance": 0.01875318466688435,
             "coords": [
                 [
                     34.9636822,
@@ -932,7 +932,7 @@
             "id": "Yoshihama_Mikawa Takahama",
             "prev": "Ogakie_Yoshihama",
             "next": "Mikawa Takahama_Takahama-minato",
-            "distaice": 0.01651119800394364,
+            "distance": 0.017958560838847323,
             "coords": [
                 [
                     34.9464221,
@@ -1048,7 +1048,7 @@
             "id": "Mikawa Takahama_Takahama-minato",
             "prev": "Yoshihama_Mikawa Takahama",
             "next": "Takahama-minato_Kita Shinkawa",
-            "distaice": 0.00849140566984375,
+            "distance": 0.009539191564921562,
             "coords": [
                 [
                     34.9305508,
@@ -1120,7 +1120,7 @@
             "id": "Takahama-minato_Kita Shinkawa",
             "prev": "Mikawa Takahama_Takahama-minato",
             "next": "Kita Shinkawa_Shinkawa-machi",
-            "distaice": 0.022124694785083058,
+            "distance": 0.015479395525357393,
             "coords": [
                 [
                     34.9211817,
@@ -1216,7 +1216,7 @@
             "id": "Kita Shinkawa_Shinkawa-machi",
             "prev": "Takahama-minato_Kita Shinkawa",
             "next": "Shinkawa-machi_Hekinan-chūō",
-            "distaice": 0.0012532085220996146,
+            "distance": 0.01007761373792227,
             "coords": [
                 [
                     34.9061018,
@@ -1316,7 +1316,7 @@
             "id": "Shinkawa-machi_Hekinan-chūō",
             "prev": "Kita Shinkawa_Shinkawa-machi",
             "next": "Hekinan-chūō_Hekinan",
-            "distaice": 0.014532868264663766,
+            "distance": 0.009454050156818914,
             "coords": [
                 [
                     34.8965858,
@@ -1400,7 +1400,7 @@
             "id": "Hekinan-chūō_Hekinan",
             "prev": "Shinkawa-machi_Hekinan-chūō",
             "next": "",
-            "distaice": 0.016464436087383506,
+            "distance": 0.014037512298426372,
             "coords": [
                 [
                     34.8872277,

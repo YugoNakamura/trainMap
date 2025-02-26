@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Marker } from "react-leaflet";
+import { Marker, Popup } from "react-leaflet";
 import { Railload, Section, Station } from "../types/railload";
 
 interface Prop {
@@ -10,9 +10,8 @@ interface Prop {
 export const Train = (prop:Prop) => {
     //station, sectionのmap化
     const sections = new Map(prop.railload.sections.map(section => [section.id, section]));
-    //走行しているsection番号
+    //走行しているsectionID
     const sectionID = useRef<string>('');
-//    const sections:Section[] = prop.railload.sections;
     //出発駅と終着駅を取得
     const stations:Station[] = prop.railload.stations;
     //出発駅
@@ -36,27 +35,24 @@ export const Train = (prop:Prop) => {
     //通過したrailChkPointsのインデックス
     const railChkPointsIndex = useRef<number>(0);
 
-    //更新周期ごとにspeedだけ移動
-    const speed = useRef(0.0001);
     //更新周期(msec)
-    const mtime = 50;
-    //駅間の移動時間(sec)
-    const timeToSta = 10
-    //加速度
-    const accRate = useRef(0);
-    //加速or定速
-    const isAccel = useRef(false);
+    const frameRate = 17;
 
+    const distance = useRef(0);
+    //速度制御用インスタンス
+    const speedControler = new SpeedControler(frameRate);
     //setIntervalのID
     const intervalID = useRef<number>();
     useEffect(() => {
         //railChkPointsの初期設定
-        [railChkPoints.current, sectionID.current] = addNextSection(isInBound, sections, stations[depStaNo]);
-
+        [railChkPoints.current, sectionID.current, distance.current] = 
+            getNextSection(isInBound, sections, stations[depStaNo]);
+        speedControler.setNextSection(distance.current, 10*1000);
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
-            calcNextPosition(speed.current);
-        }, mtime);
+            calcNextPosition(speedControler.getSpeed());
+        }, frameRate);
+
         return ()=> clearInterval(intervalID.current);
     },[]);
 
@@ -71,12 +67,16 @@ export const Train = (prop:Prop) => {
             }
 
             //次のSectionの座標情報とsectionIDを受け取る
-            [railChkPoints.current, sectionID.current] = addNextSection(isInBound, sections, sections.get(sectionID.current));
+            [railChkPoints.current, sectionID.current, distance.current] = 
+                getNextSection(isInBound, sections, sections.get(sectionID.current));
             railChkPointsIndex.current = 0;
+
+            //次のsection間の加減速設定
+            speedControler.setNextSection(distance.current, 10*1000);
         }
+
         const prevCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
         const nextCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];
-
         //現在位置を挟む2つのチェックポイント間の距離
         const distChkPoint = getDist(prevCheckPoint, nextCheckPoint);
         //現在位置から次のチェックポイントまでの距離
@@ -100,26 +100,88 @@ export const Train = (prop:Prop) => {
         }
         return;
     }
-
     return (
-        <Marker position={[position[0], position[1]]}/>
+        <Marker position={[position[0], position[1]]}><Popup>Train</Popup></Marker>
     );
-
 }
 
 // 次の駅までのsectionを追加
-const addNextSection = (isInBound:boolean, sections:Map<string, Section>, currSection:Section|Station|undefined):[number[][], string] => {
+const getNextSection = (isInBound:boolean, sections:Map<string, Section>, currSection:Section|Station|undefined):[number[][], string, number] => {
     if (!currSection) throw new Error("input was undefined");
     //返り値にするsectionのidを取得してget
     const secID = isInBound ? currSection.next : currSection.prev;
     const sec = sections.get(secID);
     if (!sec) throw new Error("Section Data Load Failed");
 
-    if(isInBound) {return [sec.coords, secID];}
-    else {return [sec.coords.slice().reverse(), secID];}
+    if(isInBound) {return [sec.coords, secID, sec.distance];}
+    else {return [sec.coords.slice().reverse(), secID, sec.distance];}
 }
 
 //2点間の距離を算出
 const getDist = (coord1:number[], coord2:number[]) => {
     return Math.sqrt((coord2[0]-coord1[0])**2+(coord2[1]-coord1[1])**2);        
+}
+
+class SpeedControler {
+    speed:number = 0;
+    //加減速時間(msec)
+    accelTime:number = 2*1000;
+
+    //駅間の距離
+    distance:number = 0;
+    //駅間の移動時間(msec)
+    arriveTime:number = 0;
+    //画面更新の周期(msec)
+    frameRate:number;
+    //定速移動時の速度
+    constantSpeed:number = 0;
+    //加減速時間中の速度の変化量((constantSpeed/accelTime)*frameRate)
+    accelRate:number = 0;
+    //現在の加減速の状態を表す(減速:-1, 定速:0, 加速:1)
+    ACCEL = 1 as const;
+    CONST = 0 as const;
+    DECEL = -1 as const;
+    accelState:number = 0;
+
+    //setTimeoutを管理するID
+    accelTimeoutID:number = -1;
+    constTimeoutID:number = -1;
+    decelTimeoutID:number = -1;
+
+    constructor(frameRate:number) {
+        this.frameRate = frameRate;
+    }
+
+    setNextSection(distance:number, arriveTime:number) {
+        this.distance = distance;
+        this.arriveTime = arriveTime;
+        this.constantSpeed = this.distance/(this.arriveTime-this.accelTime)*this.frameRate;
+        this.accelRate = this.constantSpeed/this.accelTime*this.frameRate;
+
+        clearTimeout(this.accelTimeoutID);
+        clearTimeout(this.constTimeoutID);
+        clearTimeout(this.decelTimeoutID);
+
+        this.speed = 0;
+        //加速時間
+        this.accelState = this.ACCEL;
+        this.accelTimeoutID = setTimeout(() =>{
+            this.accelState = this.CONST;
+        }, (this.accelTime+this.frameRate));
+        //定速時間
+        this.constTimeoutID = setTimeout(() =>{
+            this.accelState = this.DECEL;
+        }, (this.arriveTime-this.accelTime+this.frameRate));
+        //減速時間
+        this.decelTimeoutID = setTimeout(() =>{
+            this.accelState = this.CONST;
+            //計算誤差でsectionの終了直前に
+            this.speed = 0.0001;
+        }, (this.arriveTime+this.frameRate));
+    }
+
+    getSpeed = ():number => {
+        this.speed += this.accelRate*this.accelState;
+        return this.speed;
+    }
 }

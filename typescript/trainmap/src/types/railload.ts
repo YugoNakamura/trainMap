@@ -3,6 +3,7 @@ export interface Section {
     id:string,
     prev:string,
     next:string,
+    distance:number,
     coords:number[][]
 }
 

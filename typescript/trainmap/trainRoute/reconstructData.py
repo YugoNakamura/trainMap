@@ -69,7 +69,7 @@ for i in range(len(stationIndex)-1):
         'id': stationData[stationIndex[i]]['properties']['name:en'] + '_' + stationData[stationIndex[i+1]]['properties']['name:en'],
         'prev': '',
         'next': '',
-        'distaice': 0,
+        'distance': 0,
         # [start:end]のend-1番目の要素までスライスされるので[i:[i+1]+1]
         'coords': startToEnd[stationIndexInStartToEnd[i]:stationIndexInStartToEnd[i+1]+1]
     }
@@ -80,8 +80,8 @@ for i in range(len(output['sections'])):
     dist=0;
     coords = output['sections'][i]['coords'];
     for j in range(len(output['sections'][i]['coords'])-1):
-        dist += math.sqrt((coords[i][0]-coords[i+1][0])**2+(coords[i][1]-coords[i+1][1])**2)
-    output['sections'][i]['distaice'] = dist
+        dist += math.sqrt((coords[j][0]-coords[j+1][0])**2 + (coords[j][1]-coords[j+1][1])**2)
+    output['sections'][i]['distance'] = dist
     # 前後のsectionのid
     if i != 0:
         output['sections'][i]['prev'] = output['sections'][i-1]['id']
