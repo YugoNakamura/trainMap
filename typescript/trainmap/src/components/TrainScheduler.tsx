@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Railload } from "../types/railload"
-import { Train } from "./Train";
+import {Train} from "./Train"
 
 export const TrainScheduler = () => {
     const [railload, setRailload] = useState<Railload>();
@@ -16,8 +16,8 @@ export const TrainScheduler = () => {
         return <div></div>
     } else {
         const trains:JSX.Element[] = [
-            <Train railload={railload} depStaName='Chiryuu' desStaName='Hekinan' key={1}/>,
-            <Train railload={railload} depStaName='Hekinan' desStaName='Chiryuu' key={2}/>
+            <Train railload={railload} depStaName='Chiryuu' desStaName='Hekinan' key={1}/>
+//            <TrainJSX railload={railload} depStaName='Hekinan' desStaName='Chiryuu' key={2}/>
         ]
         return <div>{trains}</div>
     }

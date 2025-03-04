@@ -1,50 +1,14 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# 列車の進め方
+# 速度制御の方法
+駅から駅までの速度変化を加速，等速，減速のみとし，加速時間と減速時間は等しいとする．駅間の運行時間 $t_u$，電車の加減速時間$t_a$，駅間の距離$x$，等速時の速度$v$とすると，$v-t$グラフは台形となり，その面積が駅間の距離となる
+$$\frac{\{(t_u-2t_a)+t_u\}\cdot v}{2}=x$$
+$t_u$は時刻表から読み取れるので既知，$t_a$は任意で決められる値とする，$x$は地図から求められる値なので既知なので$v$を求める式に変形すると
+$$\{(t_u-2t_a)+t_u\}\cdot v=2x$$
+$$v=\frac{2x}{\{(t_u-2t_a)+t_u\}}$$
+$$v=\frac{2x}{2t_u-2t_a}$$
+$$v=\frac{x}{t_u-t_a}$$
+以上により，等速時の速度が求められた．また，加減速時の加速度は$a$は
+$$a=\frac{v}{t_a}$$
+で求められる．
+# 分岐選択の方法
+線路の座標を駅-駅，駅-分岐，分岐-分岐で1つの配列としSectionというオブジェクトで定義する．分岐点はSwitchというオブジェクトで定義されてる．SectionもSwitchもそれぞれがidを持っている．Sectionは前後のSectionまたはSwitchのidをnext，prevという属性で持っている．Sectionは右または左へ向かう条件と左右へ曲がった先のSectionのidが定義されている．TrainはSectionの座標を取り込んでいく最中にSwitchオブジェクトに差し掛かった際は，自身の運行情報（次の駅の何番線に停車するか，通過するか，路線を跨ぐのか等）とSwitchの条件とを比較し，右または左のSectionのidを選択し，取り込んでいく．
