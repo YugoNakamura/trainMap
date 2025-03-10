@@ -10,7 +10,9 @@ jsonfile.close()
 railroads = jsondata['coordinates']
 
 # 始点の緯度経度と終点の緯度経度
+# 知立
 startPoint = [137.0397465, 35.0056828]
+# 碧南
 endPoint = [136.9856149, 34.8738224]
 # 既に参照したindexを格納する配列
 usedIndex = []

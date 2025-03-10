@@ -26,9 +26,9 @@ export const Train = (prop:Prop) => {
 
     //現在の緯度経度
     //レンダリング用の座標変数
-    const [position, setPosition] = useState<number[]>(stations[depStaNo].coord);
+    const [renderPos, setRenderPos] = useState<number[]>(stations[depStaNo].coord);
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
-    const prevPosition = useRef<number[]>(stations[depStaNo].coord);
+    const position = useRef<number[]>(stations[depStaNo].coord);
 
     //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
@@ -75,37 +75,37 @@ export const Train = (prop:Prop) => {
             speedControler.setNextSection(distance.current, 10*1000);
         }
 
-        const prevCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
-        const nextCheckPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];
+        const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
+        const nextChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];
         //現在位置を挟む2つのチェックポイント間の距離
-        const distChkPoint = getDist(prevCheckPoint, nextCheckPoint);
+        const distChkPoint = getDist(prevChkPoint, nextChkPoint);
         //現在位置から次のチェックポイントまでの距離
-        const distPositionToNext = getDist(prevPosition.current, nextCheckPoint);
+        const distToNext = getDist(position.current, nextChkPoint);
 
-        if(distToMove > distPositionToNext) {
-            setPosition(nextCheckPoint);
-            prevPosition.current = nextCheckPoint;
+        if(distToMove > distToNext) {
+            setRenderPos(nextChkPoint);
+            position.current = nextChkPoint;
             railChkPointsIndex.current += 1;
-            calcNextPosition(distToMove-distPositionToNext);
+            calcNextPosition(distToMove-distToNext);
         } else {
             //前のチェックポイントから現在位置までの距離
-            const distPrevToPosition = distChkPoint-distPositionToNext;
+            const distToPrev = distChkPoint-distToNext;
             //チェックポイント間の距離中の進行割合
-            const progressRate = (distPrevToPosition+distToMove)/distChkPoint;
-            const newLat = prevCheckPoint[0]+(nextCheckPoint[0]-prevCheckPoint[0])*progressRate;
-            const newLng = prevCheckPoint[1]+(nextCheckPoint[1]-prevCheckPoint[1])*progressRate;
+            const progressRate = (distToPrev+distToMove)/distChkPoint;
+            const newLat = prevChkPoint[0]+(nextChkPoint[0]-prevChkPoint[0])*progressRate;
+            const newLng = prevChkPoint[1]+(nextChkPoint[1]-prevChkPoint[1])*progressRate;
             //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
-            setPosition([newLat, newLng]);
-            prevPosition.current = [newLat, newLng];
+            setRenderPos([newLat, newLng]);
+            position.current = [newLat, newLng];
         }
         return;
     }
     return (
-        <Marker position={[position[0], position[1]]}><Popup>Train</Popup></Marker>
+        <Marker position={[renderPos[0], renderPos[1]]}><Popup>Train</Popup></Marker>
     );
 }
 
-// 次の駅までのsectionを追加
+// 現在のSectionIDから次のSectionを出力
 const getNextSection = (isInBound:boolean, sections:Map<string, Section>, currSection:Section|Station|undefined):[number[][], string, number] => {
     if (!currSection) throw new Error("input was undefined");
     //返り値にするsectionのidを取得してget
