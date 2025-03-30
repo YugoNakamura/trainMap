@@ -16,7 +16,13 @@ export interface Station {
     coord:number[]
 }
 
+export interface Switch {
+    name:string,
+    coord:number[]
+}
+
 export interface Railload {
     sections:Section[],
-    stations:Station[]
+    stations:Station[],
+    swiches:Switch[]
 }
