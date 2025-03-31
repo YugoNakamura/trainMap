@@ -69,7 +69,7 @@ for data in jsondata:
     elif data['geometry']['type'] == 'Point':
         stations.append(data)
 
-output = {'sections':[], 'stations':[], 'switches':[]}
+output = {'sections':[], 'stations':[], 'switchPoints':[]}
 
 startCoord = [136.9855133,34.8738334]
 indexes = searchUnUsedRailRoad(startCoord)
@@ -132,11 +132,23 @@ for i in range(len(switchCoords)):
         if dist < mindist:
             mindist = dist
             switchCoords[i]['name'] = output['stations'][j]['name']
-    output['switches'].append({
+    output['switchPoints'].append({
         'name': switchCoords[i]['name'],
         'coord': switchCoords[i]['coord']
     })
 
+stationList = []
+for i in range(len(stations)):
+    if stations[i]['properties']['name'] not in stationList:
+        stationList.append(stations[i]['properties']['name'])
+
+for i in range(len(stationList)):
+    trackList = list(filter(lambda switchPoint: switchPoint['name'] == stationList[i], output['switchPoints']))
+    ch = 64
+    for j in range(len(trackList)):
+        trackList[j]['name'] = stationList[i] + chr(ch)
+        ch += 1
+        # 駅名 + A/B/C...
 
 jsonfile = open('./mikawaLine.json', 'w')
 json.dump(output, jsonfile, indent=4, ensure_ascii=False)

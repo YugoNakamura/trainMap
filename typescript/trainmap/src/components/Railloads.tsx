@@ -1,5 +1,5 @@
 import { Marker, Polyline, Popup } from "react-leaflet";
-import {Railload, Section, Station} from "../types/railload"
+import {Railload, Section, Station, SwitchPoint} from "../types/railload"
 import { LatLngExpression } from "leaflet";
 
 export interface Prop {
@@ -26,8 +26,17 @@ export function Railloads(prop:Prop) {
             </Marker>
         );
     });
-    //sectionLinesとstationMarkersを結合してelementsにセットする
-    const elements = stationMarkers.concat(sectionLines);
+
+    //駅情報
+    const switches:SwitchPoint[] = prop.railload.switchPoints;
+    const switchMarkers:JSX.Element[] = switches.map((switchPoint, index) => {
+        return (<Marker position={switchPoint.coord as LatLngExpression} key={'switch'+index}>
+            <Popup>
+                {switchPoint.name}
+            </Popup>
+        </Marker>);
+    });
+    const elements = switchMarkers.concat(stationMarkers.concat(sectionLines));
     return <div>{elements}</div>
 
 }

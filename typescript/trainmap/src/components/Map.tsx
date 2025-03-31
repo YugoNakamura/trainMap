@@ -11,7 +11,7 @@ const initialPosition:LatLng = new LatLng(35.0056828, 137.0397465);
 const initialZoom: number = 16;
 
 export const Map = () => {
-  const [railData, setRailData] = useState<Railload>({ sections: [], stations: [] });
+  const [railData, setRailData] = useState<Railload>({ sections: [], stations: [], switchPoints: []});
   useEffect(() => {
     LoadJson<Railload>('./trainRoute/mikawaLine.json')
     .then(railData => {
@@ -22,12 +22,14 @@ export const Map = () => {
   return (
     <div>
       <MapContainer
-        maxZoom={18}
+        maxZoom={21}
         center={initialPosition}
         zoom={initialZoom}
         style={{ width: '100%', height: '100dvh'}}
       >
         <TileLayer 
+        maxNativeZoom={19}
+        maxZoom={21}
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
