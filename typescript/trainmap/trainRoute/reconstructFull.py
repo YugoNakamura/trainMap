@@ -115,14 +115,21 @@ switchCoords = []
 for i in range(len(sections)):
     coord = sections[i][0]
     count = 0
-    for i in range(len(sections)):
-        if sections[i][0] == coord or sections[i][-1] == coord:
-            count += 1
-    if count > 2:
-        switchCoords.append({
-            'name': '',
-            'coord': coord
-        })
+    appended = False
+    # 既にswitchCoordsに同じ座標があるか
+    for j in range(len(switchCoords)):
+        if switchCoords[j]['coord'] == coord:
+            appended = True
+    if not appended:
+        for i in range(len(sections)):
+            if sections[i][0] == coord or sections[i][-1] == coord:
+                count += 1
+            
+        if count > 2:
+            switchCoords.append({
+                'name': '',
+                'coord': coord
+            })
 
 # 分岐点に最も違い駅の名前を取得
 for i in range(len(switchCoords)):
@@ -144,7 +151,7 @@ for i in range(len(stations)):
 
 for i in range(len(stationList)):
     trackList = list(filter(lambda switchPoint: switchPoint['name'] == stationList[i], output['switchPoints']))
-    ch = 64
+    ch = 65
     for j in range(len(trackList)):
         trackList[j]['name'] = stationList[i] + chr(ch)
         ch += 1
