@@ -5441,6 +5441,7 @@
         {
             "name": "猿投",
             "name_en": "Sanage",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5451,6 +5452,7 @@
         {
             "name": "猿投",
             "name_en": "Sanage",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5461,6 +5463,7 @@
         {
             "name": "碧南",
             "name_en": "Hekinan",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5471,6 +5474,7 @@
         {
             "name": "碧南",
             "name_en": "Hekinan",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5481,6 +5485,7 @@
         {
             "name": "土橋",
             "name_en": "Tsuchihashi",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5491,6 +5496,7 @@
         {
             "name": "刈谷",
             "name_en": "Kariya",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5501,6 +5507,7 @@
         {
             "name": "重原",
             "name_en": "Shigehara",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5511,6 +5518,7 @@
         {
             "name": "三河知立",
             "name_en": "Mikawa Chiryū",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5521,6 +5529,7 @@
         {
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5531,6 +5540,7 @@
         {
             "name": "越戸",
             "name_en": "Koshido",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5541,6 +5551,7 @@
         {
             "name": "平戸橋",
             "name_en": "Hirato-bashi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5551,6 +5562,7 @@
         {
             "name": "知立",
             "name_en": "Chiryuu",
+            "trackNo": "4",
             "prev": "",
             "next": "",
             "coord": [
@@ -5561,6 +5573,7 @@
         {
             "name": "刈谷市",
             "name_en": "Kariyashi",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5571,6 +5584,7 @@
         {
             "name": "上挙母",
             "name_en": "Uwa Goromo",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5581,6 +5595,7 @@
         {
             "name": "吉浜",
             "name_en": "Yoshihama",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5591,6 +5606,7 @@
         {
             "name": "碧南中央",
             "name_en": "Hekinan-chūō",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5601,6 +5617,7 @@
         {
             "name": "高浜港",
             "name_en": "Takahama-minato",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5611,6 +5628,7 @@
         {
             "name": "小垣江",
             "name_en": "Ogakie",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5621,6 +5639,7 @@
         {
             "name": "北新川",
             "name_en": "Kita Shinkawa",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5631,6 +5650,7 @@
         {
             "name": "新川町",
             "name_en": "Shinkawa-machi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5641,6 +5661,7 @@
         {
             "name": "竹村",
             "name_en": "Takemura",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5651,6 +5672,7 @@
         {
             "name": "梅坪",
             "name_en": "Umetsubo",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5661,6 +5683,7 @@
         {
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5671,6 +5694,7 @@
         {
             "name": "梅坪",
             "name_en": "Umetsubo",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5681,6 +5705,7 @@
         {
             "name": "知立",
             "name_en": "Chiryuu",
+            "trackNo": "3",
             "prev": "",
             "next": "",
             "coord": [
@@ -5691,6 +5716,7 @@
         {
             "name": "知立",
             "name_en": "Chiryuu",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5701,6 +5727,7 @@
         {
             "name": "重原",
             "name_en": "Shigehara",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5711,6 +5738,7 @@
         {
             "name": "刈谷",
             "name_en": "Kariya",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5721,6 +5749,7 @@
         {
             "name": "刈谷市",
             "name_en": "Kariyashi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5731,6 +5760,7 @@
         {
             "name": "小垣江",
             "name_en": "Ogakie",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5741,6 +5771,7 @@
         {
             "name": "竹村",
             "name_en": "Takemura",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5751,6 +5782,7 @@
         {
             "name": "若林",
             "name_en": "Wakabayashi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5761,6 +5793,7 @@
         {
             "name": "若林",
             "name_en": "Wakabayashi",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5771,6 +5804,7 @@
         {
             "name": "土橋",
             "name_en": "Tsuchihashi",
+            "trackNo": "3",
             "prev": "",
             "next": "",
             "coord": [
@@ -5781,6 +5815,7 @@
         {
             "name": "猿投",
             "name_en": "Sanage",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
@@ -5791,6 +5826,7 @@
         {
             "name": "越戸",
             "name_en": "Koshido",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5801,6 +5837,7 @@
         {
             "name": "猿投",
             "name_en": "Sanage",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5811,6 +5848,7 @@
         {
             "name": "上挙母",
             "name_en": "Uwa Goromo",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5821,6 +5859,7 @@
         {
             "name": "土橋",
             "name_en": "Tsuchihashi",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5831,6 +5870,7 @@
         {
             "name": "三河知立",
             "name_en": "Mikawa Chiryū",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5841,6 +5881,7 @@
         {
             "name": "北新川",
             "name_en": "Kita Shinkawa",
+            "trackNo": "1",
             "prev": "",
             "next": "",
             "coord": [
@@ -5851,265 +5892,328 @@
         {
             "name": "新川町",
             "name_en": "Shinkawa-machi",
+            "trackNo": "2",
             "prev": "",
             "next": "",
             "coord": [
                 34.8965958,
                 136.9902858
             ]
+        },
+        {
+            "name": "豊田市",
+            "name_en": "Toyotashi",
+            "trackNo": "1",
+            "prev": "",
+            "next": "",
+            "coord": [
+                35.0872593,
+                137.1562017
+            ]
+        },
+        {
+            "name": "豊田市",
+            "name_en": "Toyotashi",
+            "trackNo": "3",
+            "prev": "",
+            "next": "",
+            "coord": [
+                35.0872178,
+                137.1563337
+            ]
+        },
+        {
+            "name": "豊田市",
+            "name_en": "Toyotashi",
+            "trackNo": "2",
+            "prev": "",
+            "next": "",
+            "coord": [
+                35.0872544,
+                137.1562359
+            ]
+        },
+        {
+            "name": "三河高浜",
+            "name_en": "Mikawa Takahama",
+            "trackNo": "1",
+            "prev": "",
+            "next": "",
+            "coord": [
+                34.9305508,
+                136.989997
+            ]
+        },
+        {
+            "name": "三河高浜",
+            "name_en": "Mikawa Takahama",
+            "trackNo": "2",
+            "prev": "",
+            "next": "",
+            "coord": [
+                34.9305736,
+                136.9900965
+            ]
         }
     ],
     "switchPoints": [
         {
-            "name": "碧南A",
+            "id": "HekinanA",
             "coord": [
                 34.8747605,
                 136.9857395
             ]
         },
         {
-            "name": "新川町A",
+            "id": "Shinkawa-machiA",
             "coord": [
                 34.895927,
                 136.990051
             ]
         },
         {
-            "name": "新川町B",
+            "id": "Shinkawa-machiB",
             "coord": [
                 34.8974082,
                 136.9906558
             ]
         },
         {
-            "name": "北新川A",
+            "id": "Kita ShinkawaA",
             "coord": [
                 34.9049918,
                 136.9927097
             ]
         },
         {
-            "name": "北新川B",
+            "id": "Kita ShinkawaB",
             "coord": [
                 34.9073338,
                 136.9920763
             ]
         },
         {
-            "name": "高浜港A",
+            "id": "Mikawa TakahamaA",
             "coord": [
                 34.9298193,
                 136.9902278
             ]
         },
         {
-            "name": "高浜港B",
+            "id": "Mikawa TakahamaB",
             "coord": [
                 34.9317006,
                 136.9895421
             ]
         },
         {
-            "name": "小垣江A",
+            "id": "OgakieA",
             "coord": [
                 34.9628873,
                 136.9947546
             ]
         },
         {
-            "name": "小垣江B",
+            "id": "OgakieB",
             "coord": [
                 34.9665022,
                 136.9972038
             ]
         },
         {
-            "name": "刈谷市A",
+            "id": "KariyashiA",
             "coord": [
                 34.9840956,
                 136.9934617
             ]
         },
         {
-            "name": "刈谷A",
+            "id": "KariyaA",
             "coord": [
                 34.9902095,
                 137.0101589
             ]
         },
         {
-            "name": "重原A",
+            "id": "ShigeharaA",
             "coord": [
                 34.9936347,
                 137.0224098
             ]
         },
         {
-            "name": "知立A",
+            "id": "ChiryuuA",
             "coord": [
                 35.0045287,
                 137.0408998
             ]
         },
         {
-            "name": "知立B",
+            "id": "ChiryuuB",
             "coord": [
                 35.0044507,
                 137.0409878
             ]
         },
         {
-            "name": "知立C",
+            "id": "ChiryuuC",
             "coord": [
                 35.0048309,
                 137.040722
             ]
         },
         {
-            "name": "知立D",
+            "id": "ChiryuuD",
             "coord": [
                 35.0045374,
                 137.0409434
             ]
         },
         {
-            "name": "知立E",
+            "id": "ChiryuuE",
             "coord": [
                 35.0049006,
                 137.0406837
             ]
         },
         {
-            "name": "三河知立A",
+            "id": "Mikawa ChiryūA",
             "coord": [
                 35.0051852,
                 137.0523039
             ]
         },
         {
-            "name": "三河知立B",
+            "id": "Mikawa ChiryūB",
             "coord": [
                 35.0059187,
                 137.0567313
             ]
         },
         {
-            "name": "知立F",
+            "id": "ChiryuuF",
             "coord": [
                 35.0067053,
                 137.03831
             ]
         },
         {
-            "name": "三河八橋A",
+            "id": "Mikawa YatsuhashiA",
             "coord": [
                 35.0094408,
                 137.0722743
             ]
         },
         {
-            "name": "三河八橋B",
+            "id": "Mikawa YatsuhashiB",
             "coord": [
                 35.0116868,
                 137.078108
             ]
         },
         {
-            "name": "若林A",
+            "id": "WakabayashiA",
             "coord": [
                 35.0261639,
                 137.0952118
             ]
         },
         {
-            "name": "若林B",
+            "id": "WakabayashiB",
             "coord": [
                 35.0273364,
                 137.0972978
             ]
         },
         {
-            "name": "竹村A",
+            "id": "TakemuraA",
             "coord": [
                 35.0394886,
                 137.1140616
             ]
         },
         {
-            "name": "竹村B",
+            "id": "TakemuraB",
             "coord": [
                 35.0406249,
                 137.1155835
             ]
         },
         {
-            "name": "土橋A",
+            "id": "TsuchihashiA",
             "coord": [
                 35.0577302,
                 137.1286344
             ]
         },
         {
-            "name": "土橋B",
+            "id": "TsuchihashiB",
             "coord": [
                 35.0587602,
                 137.1309424
             ]
         },
         {
-            "name": "上挙母A",
+            "id": "Uwa GoromoA",
             "coord": [
                 35.0710986,
                 137.1533241
             ]
         },
         {
-            "name": "上挙母B",
+            "id": "Uwa GoromoB",
             "coord": [
                 35.0723611,
                 137.1553654
             ]
         },
         {
-            "name": "上挙母C",
+            "id": "ToyotashiA",
             "coord": [
                 35.0856623,
                 137.1557177
             ]
         },
         {
-            "name": "梅坪A",
+            "id": "UmetsuboA",
             "coord": [
                 35.1008915,
                 137.1630784
             ]
         },
         {
-            "name": "越戸A",
+            "id": "KoshidoA",
             "coord": [
                 35.1074488,
                 137.1787553
             ]
         },
         {
-            "name": "越戸B",
+            "id": "KoshidoB",
             "coord": [
                 35.1079322,
                 137.1821105
             ]
         },
         {
-            "name": "猿投A",
+            "id": "SanageA",
             "coord": [
                 35.1210385,
                 137.1783366
             ]
         },
         {
-            "name": "猿投B",
+            "id": "SanageB",
             "coord": [
                 35.123075,
                 137.1791086
+            ]
+        },
+        {
+            "id": "ChiryuuG",
+            "coord": [
+                35.0064256,
+                137.038705
             ]
         }
     ]

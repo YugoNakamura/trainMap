@@ -1,0 +1,378 @@
+[
+    {
+        "coord": [
+            137.1786511,
+            35.1221836
+        ],
+        "name_en": "Sanage",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1787685,
+            35.1221533
+        ],
+        "name_en": "Sanage",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            136.9856149,
+            34.8738224
+        ],
+        "name_en": "Hekinan",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            136.9855133,
+            34.8738334
+        ],
+        "name_en": "Hekinan",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1297803,
+            35.0582387
+        ],
+        "name_en": "Tsuchihashi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.0087734,
+            34.9907665
+        ],
+        "name_en": "Kariya",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.0241199,
+            34.9950889
+        ],
+        "name_en": "Shigehara",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0549673,
+            35.0056128
+        ],
+        "name_en": "Mikawa Chiryū",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.077474,
+            35.0109842
+        ],
+        "name_en": "Mikawa Yatsuhashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.179867,
+            35.1076099
+        ],
+        "name_en": "Koshido",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1846251,
+            35.1147032
+        ],
+        "name_en": "Hirato-bashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0398592,
+            35.0057646
+        ],
+        "name_en": "Chiryuu",
+        "trackNo": "4"
+    },
+    {
+        "coord": [
+            136.9937874,
+            34.9846615
+        ],
+        "name_en": "Kariyashi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1543402,
+            35.0717142
+        ],
+        "name_en": "Uwa Goromo",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            136.9890153,
+            34.9464221
+        ],
+        "name_en": "Yoshihama",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9894601,
+            34.8872277
+        ],
+        "name_en": "Hekinan-chūō",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9893201,
+            34.9211817
+        ],
+        "name_en": "Takahama-minato",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9952897,
+            34.9636822
+        ],
+        "name_en": "Ogakie",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9924749,
+            34.9061018
+        ],
+        "name_en": "Kita Shinkawa",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            136.9903221,
+            34.8965858
+        ],
+        "name_en": "Shinkawa-machi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1149782,
+            35.0401312
+        ],
+        "name_en": "Takemura",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1623777,
+            35.099998
+        ],
+        "name_en": "Umetsubo",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0773992,
+            35.011044
+        ],
+        "name_en": "Mikawa Yatsuhashi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1624503,
+            35.099941
+        ],
+        "name_en": "Umetsubo",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.0398353,
+            35.0057346
+        ],
+        "name_en": "Chiryuu",
+        "trackNo": "3"
+    },
+    {
+        "coord": [
+            137.0397465,
+            35.0056828
+        ],
+        "name_en": "Chiryuu",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.024148,
+            34.9950688
+        ],
+        "name_en": "Shigehara",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.0088196,
+            34.9908416
+        ],
+        "name_en": "Kariya",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9936882,
+            34.9846872
+        ],
+        "name_en": "Kariyashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9953471,
+            34.9636401
+        ],
+        "name_en": "Ogakie",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1149254,
+            35.0401803
+        ],
+        "name_en": "Takemura",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0960439,
+            35.0267442
+        ],
+        "name_en": "Wakabayashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0960822,
+            35.0266563
+        ],
+        "name_en": "Wakabayashi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1297957,
+            35.0582126
+        ],
+        "name_en": "Tsuchihashi",
+        "trackNo": "3"
+    },
+    {
+        "coord": [
+            137.1787685,
+            35.1221533
+        ],
+        "name_en": "Sanage",
+        "trackNo": ""
+    },
+    {
+        "coord": [
+            137.1798593,
+            35.1076453
+        ],
+        "name_en": "Koshido",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1786511,
+            35.1221836
+        ],
+        "name_en": "Sanage",
+        "trackNo": ""
+    },
+    {
+        "coord": [
+            137.1542778,
+            35.0718054
+        ],
+        "name_en": "Uwa Goromo",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1297209,
+            35.0583066
+        ],
+        "name_en": "Tsuchihashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.0549586,
+            35.0056394
+        ],
+        "name_en": "Mikawa Chiryū",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9923744,
+            34.9060966
+        ],
+        "name_en": "Kita Shinkawa",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9902858,
+            34.8965958
+        ],
+        "name_en": "Shinkawa-machi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            137.1562017,
+            35.0872593
+        ],
+        "name_en": "Toyotashi",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            137.1563337,
+            35.0872178
+        ],
+        "name_en": "Toyotashi",
+        "trackNo": "3"
+    },
+    {
+        "coord": [
+            137.1562359,
+            35.0872544
+        ],
+        "name_en": "Toyotashi",
+        "trackNo": "2"
+    },
+    {
+        "coord": [
+            136.989997,
+            34.9305508
+        ],
+        "name_en": "Mikawa Takahama",
+        "trackNo": "1"
+    },
+    {
+        "coord": [
+            136.9900965,
+            34.9305736
+        ],
+        "name_en": "Mikawa Takahama",
+        "trackNo": "2"
+    }
+]

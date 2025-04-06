@@ -21,7 +21,7 @@ export function Railloads(prop:Prop) {
         return (
             <Marker position={station.coord as LatLngExpression} key={'station'+index}>
                 <Popup>
-                    {station.name}
+                    {station.coord}
                 </Popup>
             </Marker>
         );

@@ -71,6 +71,7 @@ for data in jsondata:
 
 output = {'sections':[], 'stations':[], 'switchPoints':[]}
 
+# 区間情報を生成
 startCoord = [136.9855133,34.8738334]
 indexes = searchUnUsedRailRoad(startCoord)
 searchIndexes.append(indexes[0])
@@ -99,66 +100,75 @@ for i in range(len(sections)):
         'coords': sections[i]
     })
 
+# 駅情報を生成
+jsonfile = open('./mikawaLineTrackNo.json', 'r')
+trackList = json.load(jsonfile)
+jsonfile.close()
+
 for i in range(len(stations)):
+    for j in range(len(trackList)):
+        if stations[i]['geometry']['coordinates'] == trackList[j]['coord']:
+            trackNo = trackList[j]['trackNo']
+            break
     output['stations'].append({
         "name": stations[i]['properties']['name'],
         "name_en": stations[i]['properties']['name:en'],
+        "trackNo":trackNo,
         "prev": '',
         "next": '',
         "coord": [stations[i]['geometry']['coordinates'][1], stations[i]['geometry']['coordinates'][0]]
     })
 
-# チェックポイントの座標
-switchCoords = []
-
 # 分岐点の座標を取得
-for i in range(len(sections)):
-    coord = sections[i][0]
-    count = 0
-    appended = False
-    # 既にswitchCoordsに同じ座標があるか
-    for j in range(len(switchCoords)):
-        if switchCoords[j]['coord'] == coord:
-            appended = True
-    if not appended:
-        for i in range(len(sections)):
-            if sections[i][0] == coord or sections[i][-1] == coord:
-                count += 1
-            
-        if count > 2:
-            switchCoords.append({
-                'name': '',
-                'coord': coord
-            })
+# sectionの始点，終点それぞれで分岐点を取得
+searchIndexes = [0, -1]
+for k in range(len(searchIndexes)):
+    for i in range(len(sections)):
+        coord = sections[i][searchIndexes[k]]
+        count = 0
+        appended = False
+        # 既にoutput['switchPoints']に同じ座標があるか確認
+        # ある場合はスキップ
+        for j in range(len(output['switchPoints'])):
+            if output['switchPoints'][j]['coord'] == coord:
+                appended = True
+        # もし同じ座標がなければ同一の座標で始まる/終わるsectionの数をカウント
+        if not appended:
+            for i in range(len(sections)):
+                if sections[i][0] == coord or sections[i][-1] == coord:
+                    count += 1
+            # section[i]以外に同じ座標で始まる/終わるsectionがあれば分岐点
+            # とみなして追加
+            if count > 2:
+                output['switchPoints'].append({
+                    'id': '',
+                    'coord': coord
+                })
 
-# 分岐点に最も違い駅の名前を取得
-for i in range(len(switchCoords)):
-    mindist = 999999
-    for j in range(len(stations)):
-        dist = getDistance(switchCoords[i]['coord'], output['stations'][j]['coord'])
-        if dist < mindist:
-            mindist = dist
-            switchCoords[i]['name'] = output['stations'][j]['name']
-    output['switchPoints'].append({
-        'name': switchCoords[i]['name'],
-        'coord': switchCoords[i]['coord']
-    })
+# 分岐点に最も近い駅の名前を取得
+for i in range(len(output['switchPoints'])):
+    minDist = 999999
+    for j in range(len(output['stations'])):
+        dist = getDistance(output['switchPoints'][i]['coord'], output['stations'][j]['coord'])
+        if dist < minDist:
+            minDist = dist
+            output['switchPoints'][i]['id'] = output['stations'][j]['name_en']
 
+# 分岐点の名前を駅名(英文) + A/B/C...のようにする
+# 駅名のリストを作成
 stationList = []
-for i in range(len(stations)):
-    if stations[i]['properties']['name'] not in stationList:
-        stationList.append(stations[i]['properties']['name'])
+for i in range(len(output['stations'])):
+    if output['stations'][i]['name_en'] not in stationList:
+        stationList.append(output['stations'][i]['name_en'])
 
 for i in range(len(stationList)):
-    trackList = list(filter(lambda switchPoint: switchPoint['name'] == stationList[i], output['switchPoints']))
+    trackList = list(filter(lambda switchPoint: switchPoint['id'] == stationList[i], output['switchPoints']))
     ch = 65
     for j in range(len(trackList)):
-        trackList[j]['name'] = stationList[i] + chr(ch)
+        trackList[j]['id'] = trackList[j]['id'] + chr(ch)
         ch += 1
         # 駅名 + A/B/C...
 
 jsonfile = open('./mikawaLine.json', 'w')
 json.dump(output, jsonfile, indent=4, ensure_ascii=False)
 jsonfile.close()
-
-
