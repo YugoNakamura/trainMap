@@ -108,12 +108,13 @@ jsonfile.close()
 for i in range(len(stations)):
     for j in range(len(trackList)):
         if stations[i]['geometry']['coordinates'] == trackList[j]['coord']:
-            trackNo = trackList[j]['trackNo']
+            trackListIndex = j
             break
     output['stations'].append({
         "name": stations[i]['properties']['name'],
         "name_en": stations[i]['properties']['name:en'],
-        "trackNo":trackNo,
+        "trackNo":trackList[j]['trackNo'],
+        "code": trackList[j]['code'],
         "prev": '',
         "next": '',
         "coord": [stations[i]['geometry']['coordinates'][1], stations[i]['geometry']['coordinates'][0]]
