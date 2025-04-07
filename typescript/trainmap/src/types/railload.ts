@@ -9,17 +9,17 @@ export interface Section {
 
 //駅を表す
 export interface Station {
+    id:string,
     name:string,
     name_en:string,
-    trackNo:number,
-    code:string,
+    code:string
     prev:string,
     next:string,
     coord:number[]
 }
 
 export interface SwitchPoint {
-    name:string,
+    id:string,
     coord:number[]
 }
 

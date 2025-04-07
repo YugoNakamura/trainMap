@@ -5439,9 +5439,9 @@
     ],
     "stations": [
         {
+            "id": "MY11-1",
             "name": "猿投",
             "name_en": "Sanage",
-            "trackNo": "1",
             "code": "MY11",
             "prev": "",
             "next": "",
@@ -5451,9 +5451,9 @@
             ]
         },
         {
+            "id": "MY11-2",
             "name": "猿投",
             "name_en": "Sanage",
-            "trackNo": "2",
             "code": "MY11",
             "prev": "",
             "next": "",
@@ -5463,9 +5463,9 @@
             ]
         },
         {
+            "id": "MU11-2",
             "name": "碧南",
             "name_en": "Hekinan",
-            "trackNo": "2",
             "code": "MU11",
             "prev": "",
             "next": "",
@@ -5475,9 +5475,9 @@
             ]
         },
         {
+            "id": "MU11-1",
             "name": "碧南",
             "name_en": "Hekinan",
-            "trackNo": "1",
             "code": "MU11",
             "prev": "",
             "next": "",
@@ -5487,9 +5487,9 @@
             ]
         },
         {
+            "id": "MY05-2",
             "name": "土橋",
             "name_en": "Tsuchihashi",
-            "trackNo": "2",
             "code": "MY05",
             "prev": "",
             "next": "",
@@ -5499,9 +5499,9 @@
             ]
         },
         {
+            "id": "MU02-2",
             "name": "刈谷",
             "name_en": "Kariya",
-            "trackNo": "2",
             "code": "MU02",
             "prev": "",
             "next": "",
@@ -5511,9 +5511,9 @@
             ]
         },
         {
+            "id": "MU01-1",
             "name": "重原",
             "name_en": "Shigehara",
-            "trackNo": "1",
             "code": "MU01",
             "prev": "",
             "next": "",
@@ -5523,9 +5523,9 @@
             ]
         },
         {
+            "id": "MY01-2",
             "name": "三河知立",
             "name_en": "Mikawa Chiryū",
-            "trackNo": "2",
             "code": "MY01",
             "prev": "",
             "next": "",
@@ -5535,9 +5535,9 @@
             ]
         },
         {
+            "id": "MY02-1",
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
-            "trackNo": "1",
             "code": "MY02",
             "prev": "",
             "next": "",
@@ -5547,9 +5547,9 @@
             ]
         },
         {
+            "id": "MY11-2",
             "name": "越戸",
             "name_en": "Koshido",
-            "trackNo": "2",
             "code": "MY11",
             "prev": "",
             "next": "",
@@ -5559,9 +5559,9 @@
             ]
         },
         {
+            "id": "MY10-1",
             "name": "平戸橋",
             "name_en": "Hirato-bashi",
-            "trackNo": "1",
             "code": "MY10",
             "prev": "",
             "next": "",
@@ -5571,9 +5571,9 @@
             ]
         },
         {
+            "id": "NH19-4",
             "name": "知立",
             "name_en": "Chiryuu",
-            "trackNo": "4",
             "code": "NH19",
             "prev": "",
             "next": "",
@@ -5583,9 +5583,9 @@
             ]
         },
         {
+            "id": "MU03-2",
             "name": "刈谷市",
             "name_en": "Kariyashi",
-            "trackNo": "2",
             "code": "MU03",
             "prev": "",
             "next": "",
@@ -5595,9 +5595,9 @@
             ]
         },
         {
+            "id": "MY06-2",
             "name": "上挙母",
             "name_en": "Uwa Goromo",
-            "trackNo": "2",
             "code": "MY06",
             "prev": "",
             "next": "",
@@ -5607,9 +5607,9 @@
             ]
         },
         {
+            "id": "MU05-1",
             "name": "吉浜",
             "name_en": "Yoshihama",
-            "trackNo": "1",
             "code": "MU05",
             "prev": "",
             "next": "",
@@ -5619,9 +5619,9 @@
             ]
         },
         {
+            "id": "MU10-1",
             "name": "碧南中央",
             "name_en": "Hekinan-chūō",
-            "trackNo": "1",
             "code": "MU10",
             "prev": "",
             "next": "",
@@ -5631,9 +5631,9 @@
             ]
         },
         {
+            "id": "MU07-1",
             "name": "高浜港",
             "name_en": "Takahama-minato",
-            "trackNo": "1",
             "code": "MU07",
             "prev": "",
             "next": "",
@@ -5643,9 +5643,9 @@
             ]
         },
         {
+            "id": "MU04-1",
             "name": "小垣江",
             "name_en": "Ogakie",
-            "trackNo": "1",
             "code": "MU04",
             "prev": "",
             "next": "",
@@ -5655,9 +5655,9 @@
             ]
         },
         {
+            "id": "MU08-2",
             "name": "北新川",
             "name_en": "Kita Shinkawa",
-            "trackNo": "2",
             "code": "MU08",
             "prev": "",
             "next": "",
@@ -5667,9 +5667,9 @@
             ]
         },
         {
+            "id": "MU09-1",
             "name": "新川町",
             "name_en": "Shinkawa-machi",
-            "trackNo": "1",
             "code": "MU09",
             "prev": "",
             "next": "",
@@ -5679,9 +5679,9 @@
             ]
         },
         {
+            "id": "MY04-2",
             "name": "竹村",
             "name_en": "Takemura",
-            "trackNo": "2",
             "code": "MY04",
             "prev": "",
             "next": "",
@@ -5691,9 +5691,9 @@
             ]
         },
         {
+            "id": "MY08-1",
             "name": "梅坪",
             "name_en": "Umetsubo",
-            "trackNo": "1",
             "code": "MY08",
             "prev": "",
             "next": "",
@@ -5703,9 +5703,9 @@
             ]
         },
         {
+            "id": "MY02-2",
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
-            "trackNo": "2",
             "code": "MY02",
             "prev": "",
             "next": "",
@@ -5715,9 +5715,9 @@
             ]
         },
         {
+            "id": "MY08-2",
             "name": "梅坪",
             "name_en": "Umetsubo",
-            "trackNo": "2",
             "code": "MY08",
             "prev": "",
             "next": "",
@@ -5727,9 +5727,9 @@
             ]
         },
         {
+            "id": "NH19-3",
             "name": "知立",
             "name_en": "Chiryuu",
-            "trackNo": "3",
             "code": "NH19",
             "prev": "",
             "next": "",
@@ -5739,9 +5739,9 @@
             ]
         },
         {
+            "id": "NH19-2",
             "name": "知立",
             "name_en": "Chiryuu",
-            "trackNo": "2",
             "code": "NH19",
             "prev": "",
             "next": "",
@@ -5751,9 +5751,9 @@
             ]
         },
         {
+            "id": "MU01-2",
             "name": "重原",
             "name_en": "Shigehara",
-            "trackNo": "2",
             "code": "MU01",
             "prev": "",
             "next": "",
@@ -5763,9 +5763,9 @@
             ]
         },
         {
+            "id": "MU02-1",
             "name": "刈谷",
             "name_en": "Kariya",
-            "trackNo": "1",
             "code": "MU02",
             "prev": "",
             "next": "",
@@ -5775,9 +5775,9 @@
             ]
         },
         {
+            "id": "MU03-1",
             "name": "刈谷市",
             "name_en": "Kariyashi",
-            "trackNo": "1",
             "code": "MU03",
             "prev": "",
             "next": "",
@@ -5787,9 +5787,9 @@
             ]
         },
         {
+            "id": "MU04-2",
             "name": "小垣江",
             "name_en": "Ogakie",
-            "trackNo": "2",
             "code": "MU04",
             "prev": "",
             "next": "",
@@ -5799,9 +5799,9 @@
             ]
         },
         {
+            "id": "MY04-1",
             "name": "竹村",
             "name_en": "Takemura",
-            "trackNo": "1",
             "code": "MY04",
             "prev": "",
             "next": "",
@@ -5811,9 +5811,9 @@
             ]
         },
         {
+            "id": "MY03-1",
             "name": "若林",
             "name_en": "Wakabayashi",
-            "trackNo": "1",
             "code": "MY03",
             "prev": "",
             "next": "",
@@ -5823,9 +5823,9 @@
             ]
         },
         {
+            "id": "MY03-2",
             "name": "若林",
             "name_en": "Wakabayashi",
-            "trackNo": "2",
             "code": "MY03",
             "prev": "",
             "next": "",
@@ -5835,9 +5835,9 @@
             ]
         },
         {
+            "id": "MY05-3",
             "name": "土橋",
             "name_en": "Tsuchihashi",
-            "trackNo": "3",
             "code": "MY05",
             "prev": "",
             "next": "",
@@ -5847,9 +5847,9 @@
             ]
         },
         {
+            "id": "MY11-2",
             "name": "猿投",
             "name_en": "Sanage",
-            "trackNo": "2",
             "code": "MY11",
             "prev": "",
             "next": "",
@@ -5859,9 +5859,9 @@
             ]
         },
         {
+            "id": "MY09-1",
             "name": "越戸",
             "name_en": "Koshido",
-            "trackNo": "1",
             "code": "MY09",
             "prev": "",
             "next": "",
@@ -5871,9 +5871,9 @@
             ]
         },
         {
+            "id": "MY11-1",
             "name": "猿投",
             "name_en": "Sanage",
-            "trackNo": "1",
             "code": "MY11",
             "prev": "",
             "next": "",
@@ -5883,9 +5883,9 @@
             ]
         },
         {
+            "id": "MY06-1",
             "name": "上挙母",
             "name_en": "Uwa Goromo",
-            "trackNo": "1",
             "code": "MY06",
             "prev": "",
             "next": "",
@@ -5895,9 +5895,9 @@
             ]
         },
         {
+            "id": "MY01-1",
             "name": "三河知立",
             "name_en": "Mikawa Chiryū",
-            "trackNo": "1",
             "code": "MY01",
             "prev": "",
             "next": "",
@@ -5907,9 +5907,9 @@
             ]
         },
         {
+            "id": "MU08-1",
             "name": "北新川",
             "name_en": "Kita Shinkawa",
-            "trackNo": "1",
             "code": "MU08",
             "prev": "",
             "next": "",
@@ -5919,9 +5919,9 @@
             ]
         },
         {
+            "id": "MU09-2",
             "name": "新川町",
             "name_en": "Shinkawa-machi",
-            "trackNo": "2",
             "code": "MU09",
             "prev": "",
             "next": "",
@@ -5931,9 +5931,9 @@
             ]
         },
         {
+            "id": "MY07-1",
             "name": "豊田市",
             "name_en": "Toyotashi",
-            "trackNo": "1",
             "code": "MY07",
             "prev": "",
             "next": "",
@@ -5943,9 +5943,9 @@
             ]
         },
         {
+            "id": "MY07-3",
             "name": "豊田市",
             "name_en": "Toyotashi",
-            "trackNo": "3",
             "code": "MY07",
             "prev": "",
             "next": "",
@@ -5955,9 +5955,9 @@
             ]
         },
         {
+            "id": "MY07-2",
             "name": "豊田市",
             "name_en": "Toyotashi",
-            "trackNo": "2",
             "code": "MY07",
             "prev": "",
             "next": "",
@@ -5967,9 +5967,9 @@
             ]
         },
         {
+            "id": "MU06-1",
             "name": "三河高浜",
             "name_en": "Mikawa Takahama",
-            "trackNo": "1",
             "code": "MU06",
             "prev": "",
             "next": "",
@@ -5979,9 +5979,9 @@
             ]
         },
         {
+            "id": "MU06-2",
             "name": "三河高浜",
             "name_en": "Mikawa Takahama",
-            "trackNo": "2",
             "code": "MU06",
             "prev": "",
             "next": "",
@@ -5993,259 +5993,259 @@
     ],
     "switchPoints": [
         {
-            "id": "HekinanA",
+            "id": "MU11-A",
             "coord": [
                 34.8747605,
                 136.9857395
             ]
         },
         {
-            "id": "Shinkawa-machiA",
+            "id": "MU09-A",
             "coord": [
                 34.895927,
                 136.990051
             ]
         },
         {
-            "id": "Shinkawa-machiB",
+            "id": "MU09-B",
             "coord": [
                 34.8974082,
                 136.9906558
             ]
         },
         {
-            "id": "Kita ShinkawaA",
+            "id": "MU08-A",
             "coord": [
                 34.9049918,
                 136.9927097
             ]
         },
         {
-            "id": "Kita ShinkawaB",
+            "id": "MU08-B",
             "coord": [
                 34.9073338,
                 136.9920763
             ]
         },
         {
-            "id": "Mikawa TakahamaA",
+            "id": "MU06-A",
             "coord": [
                 34.9298193,
                 136.9902278
             ]
         },
         {
-            "id": "Mikawa TakahamaB",
+            "id": "MU06-B",
             "coord": [
                 34.9317006,
                 136.9895421
             ]
         },
         {
-            "id": "OgakieA",
+            "id": "MU04-A",
             "coord": [
                 34.9628873,
                 136.9947546
             ]
         },
         {
-            "id": "OgakieB",
+            "id": "MU04-B",
             "coord": [
                 34.9665022,
                 136.9972038
             ]
         },
         {
-            "id": "KariyashiA",
+            "id": "MU03-A",
             "coord": [
                 34.9840956,
                 136.9934617
             ]
         },
         {
-            "id": "KariyaA",
+            "id": "MU02-A",
             "coord": [
                 34.9902095,
                 137.0101589
             ]
         },
         {
-            "id": "ShigeharaA",
+            "id": "MU01-A",
             "coord": [
                 34.9936347,
                 137.0224098
             ]
         },
         {
-            "id": "ChiryuuA",
+            "id": "NH19-A",
             "coord": [
                 35.0045287,
                 137.0408998
             ]
         },
         {
-            "id": "ChiryuuB",
+            "id": "NH19-B",
             "coord": [
                 35.0044507,
                 137.0409878
             ]
         },
         {
-            "id": "ChiryuuC",
+            "id": "NH19-C",
             "coord": [
                 35.0048309,
                 137.040722
             ]
         },
         {
-            "id": "ChiryuuD",
+            "id": "NH19-D",
             "coord": [
                 35.0045374,
                 137.0409434
             ]
         },
         {
-            "id": "ChiryuuE",
+            "id": "NH19-E",
             "coord": [
                 35.0049006,
                 137.0406837
             ]
         },
         {
-            "id": "Mikawa ChiryūA",
+            "id": "MY01-A",
             "coord": [
                 35.0051852,
                 137.0523039
             ]
         },
         {
-            "id": "Mikawa ChiryūB",
+            "id": "MY01-B",
             "coord": [
                 35.0059187,
                 137.0567313
             ]
         },
         {
-            "id": "ChiryuuF",
+            "id": "NH19-F",
             "coord": [
                 35.0067053,
                 137.03831
             ]
         },
         {
-            "id": "Mikawa YatsuhashiA",
+            "id": "MY02-A",
             "coord": [
                 35.0094408,
                 137.0722743
             ]
         },
         {
-            "id": "Mikawa YatsuhashiB",
+            "id": "MY02-B",
             "coord": [
                 35.0116868,
                 137.078108
             ]
         },
         {
-            "id": "WakabayashiA",
+            "id": "MY03-A",
             "coord": [
                 35.0261639,
                 137.0952118
             ]
         },
         {
-            "id": "WakabayashiB",
+            "id": "MY03-B",
             "coord": [
                 35.0273364,
                 137.0972978
             ]
         },
         {
-            "id": "TakemuraA",
+            "id": "MY04-A",
             "coord": [
                 35.0394886,
                 137.1140616
             ]
         },
         {
-            "id": "TakemuraB",
+            "id": "MY04-B",
             "coord": [
                 35.0406249,
                 137.1155835
             ]
         },
         {
-            "id": "TsuchihashiA",
+            "id": "MY05-A",
             "coord": [
                 35.0577302,
                 137.1286344
             ]
         },
         {
-            "id": "TsuchihashiB",
+            "id": "MY05-B",
             "coord": [
                 35.0587602,
                 137.1309424
             ]
         },
         {
-            "id": "Uwa GoromoA",
+            "id": "MY06-A",
             "coord": [
                 35.0710986,
                 137.1533241
             ]
         },
         {
-            "id": "Uwa GoromoB",
+            "id": "MY06-B",
             "coord": [
                 35.0723611,
                 137.1553654
             ]
         },
         {
-            "id": "ToyotashiA",
+            "id": "MY07-A",
             "coord": [
                 35.0856623,
                 137.1557177
             ]
         },
         {
-            "id": "UmetsuboA",
+            "id": "MY08-A",
             "coord": [
                 35.1008915,
                 137.1630784
             ]
         },
         {
-            "id": "KoshidoA",
+            "id": "MY09-A",
             "coord": [
                 35.1074488,
                 137.1787553
             ]
         },
         {
-            "id": "KoshidoB",
+            "id": "MY11-A",
             "coord": [
                 35.1079322,
                 137.1821105
             ]
         },
         {
-            "id": "SanageA",
+            "id": "MY11-B",
             "coord": [
                 35.1210385,
                 137.1783366
             ]
         },
         {
-            "id": "SanageB",
+            "id": "MY11-C",
             "coord": [
                 35.123075,
                 137.1791086
             ]
         },
         {
-            "id": "ChiryuuG",
+            "id": "NH19-G",
             "coord": [
                 35.0064256,
                 137.038705

@@ -111,9 +111,9 @@ for i in range(len(stations)):
             trackListIndex = j
             break
     output['stations'].append({
+        "id": trackList[j]['code']+"-"+trackList[j]['trackNo'],
         "name": stations[i]['properties']['name'],
         "name_en": stations[i]['properties']['name:en'],
-        "trackNo":trackList[j]['trackNo'],
         "code": trackList[j]['code'],
         "prev": '',
         "next": '',
@@ -153,20 +153,20 @@ for i in range(len(output['switchPoints'])):
         dist = getDistance(output['switchPoints'][i]['coord'], output['stations'][j]['coord'])
         if dist < minDist:
             minDist = dist
-            output['switchPoints'][i]['id'] = output['stations'][j]['name_en']
+            output['switchPoints'][i]['id'] = output['stations'][j]['code']
 
 # 分岐点の名前を駅名(英文) + A/B/C...のようにする
 # 駅名のリストを作成
 stationList = []
 for i in range(len(output['stations'])):
     if output['stations'][i]['name_en'] not in stationList:
-        stationList.append(output['stations'][i]['name_en'])
+        stationList.append(output['stations'][i]['code'])
 
 for i in range(len(stationList)):
     trackList = list(filter(lambda switchPoint: switchPoint['id'] == stationList[i], output['switchPoints']))
     ch = 65
     for j in range(len(trackList)):
-        trackList[j]['id'] = trackList[j]['id'] + chr(ch)
+        trackList[j]['id'] = trackList[j]['id'] + "-" + chr(ch)
         ch += 1
         # 駅名 + A/B/C...
 

@@ -21,18 +21,18 @@ export function Railloads(prop:Prop) {
         return (
             <Marker position={station.coord as LatLngExpression} key={'station'+index}>
                 <Popup>
-                    {station.code+station.trackNo}
+                    {station.id}
                 </Popup>
             </Marker>
         );
     });
 
-    //駅情報
+    //分岐点
     const switches:SwitchPoint[] = prop.railload.switchPoints;
     const switchMarkers:JSX.Element[] = switches.map((switchPoint, index) => {
         return (<Marker position={switchPoint.coord as LatLngExpression} key={'switch'+index}>
             <Popup>
-                {switchPoint.name}
+                {switchPoint.id}
             </Popup>
         </Marker>);
     });
