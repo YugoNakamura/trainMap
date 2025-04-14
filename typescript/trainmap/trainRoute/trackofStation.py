@@ -1,9 +1,9 @@
 import json
+# ホーム番号と緯度経度を別ファイルで管理するためのスクリプト
 
 jsonfile = open('./mikawaLineFull.json', 'r')
 jsondata = json.load(jsonfile)
 jsonfile.close()
-
 
 stations = list(filter(lambda data: data['geometry']['type']=='Point', jsondata['features']))
 output = []
