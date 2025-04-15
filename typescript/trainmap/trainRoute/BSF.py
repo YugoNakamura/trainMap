@@ -5,12 +5,14 @@ class BSF:
         self.searchedIndexes = []
         # 探索予定のrailIndex
         self.searchIndexes = []
+        # 区間情報
+        self.coords = []
+        # 路線区間情報
+        self.sections = []
         # 未加工の路線情報
         self.railRoads = railRoads
         # 探索を開始する座標(路線の末端)
         self.startPoint = startPoint
-        # 区間生成の最後に出力するリスト
-        self.output = []
 
     # 指定した座標から始まる/終わる要素がいくつあるか
     def countRailload(self, coord):
@@ -52,7 +54,7 @@ class BSF:
             # railRoads[railIndex]の後が分岐しているか
             count = self.countRailload(section[-1])
             if count !=1:
-                self.sections.append(section)
+                self.coords.append(section)
                 return [section[-1][1], section[-1][0]]
             else:
                 indexes = self.searchUnUsedRailRoad(section[-1])
@@ -62,7 +64,7 @@ class BSF:
                 # sectionの末尾を削除
                 section = section[:-1]
 
-    def getDistance(coord1, coord2):
+    def getDistance(self, coord1, coord2):
         # 緯度経度から距離を計算する
         lat1, lon1 = coord1
         lat2, lon2 = coord2
@@ -92,15 +94,15 @@ class BSF:
                 break
 
         # 出力用リストにsectionを追加
-        for i in range(len(self.sections)):
+        for i in range(len(self.coords)):
             dist = 0
-            for j in range(len(self.sections[i])-1):
-                dist += self.getDistance(self.sections[i][j], self.sections[i][j+1])
+            for j in range(len(self.coords[i])-1):
+                dist += self.getDistance(self.coords[i][j], self.coords[i][j+1])
 
-            self.output.append({
+            self.sections.append({
                 'id': '',
                 'prev': '',
                 'next': '',
                 'distance': dist,
-                'coords': self.sections[i]
+                'coords': self.coords[i]
             })

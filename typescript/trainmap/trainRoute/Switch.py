@@ -1,10 +1,10 @@
 class Switch:
-    def __init__(self, section, stations):
-        self.section = section
+    def __init__(self, sections, stations):
+        self.sections = sections
         self.stations = stations
         self.switch = []
 
-    def getDistance(coord1, coord2):
+    def getDistance(self, coord1, coord2):
         # 緯度経度から距離を計算する
         lat1, lon1 = coord1
         lat2, lon2 = coord2
@@ -46,7 +46,7 @@ class Switch:
                 dist = self.getDistance(self.switch[i]['coord'], self.stations[j]['coord'])
                 if dist < minDist:
                     minDist = dist
-                    self.switch['switchPoints'][i]['id'] = self.stations[j]['code']
+                    self.switch[i]['id'] = self.stations[j]['code']
 
         # 分岐点のIDを駅名コード + A/B/C...のようにする
         # 駅名のリストを作成
