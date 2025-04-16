@@ -1,5 +1,5 @@
 import json
-import BSF
+import Section
 import Station
 import Switch
 if __name__ == '__main__':
@@ -21,8 +21,8 @@ if __name__ == '__main__':
     output = {'sections':[], 'stations':[], 'switchPoints':[]}
     # 路線関係
     # 幅優先探索で路線の座標をまとめる
-    bsf = BSF.BSF(railRoads, [136.9855133,34.8738334])
-    bsf.start()
+    section = Section.Section(railRoads, [136.9855133,34.8738334])
+    section.start()
     # 配列の向きを上り順にする
 
     # 駅関係
@@ -31,12 +31,12 @@ if __name__ == '__main__':
     sta.start()
     # 分岐点関係
     # 分岐点の座標を集計
-    sw = Switch.Switch(bsf.coords, sta.output)
+    sw = Switch.Switch(section.coords, sta.output)
     sw.searchSwitch()
     # 駅と分岐点との距離から各分岐点ごとにIDを付与
     sw.setSwitchId()
 
-    output['sections'] = bsf.sections
+    output['sections'] = section.sections
     output['stations'] = sta.output
     output['switchPoints'] = sw.switch
     jsonfile = open('./mikawaLine.json', 'w')
@@ -47,4 +47,4 @@ if __name__ == '__main__':
 
     # 路線，駅，分岐点のそれぞれのnext, prevを設定する
     # 路線，駅，分岐点を統合してJSON形式で保存
-    print()
+    

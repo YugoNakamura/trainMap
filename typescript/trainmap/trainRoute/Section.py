@@ -1,5 +1,5 @@
 import json
-class BSF:
+class Section:
     def __init__(self, railRoads, startPoint):
         # 既に探索したindex
         self.searchedIndexes = []
@@ -70,7 +70,18 @@ class BSF:
         lat2, lon2 = coord2
         return ((lat2 - lat1)**2 + (lon2 - lon1)**2) ** 0.5
 
-    def start(self):
+    # coordの向きをある点を基準に並びを整える
+    def setCoordDirection(self):
+        originPoint = [35.0069959, 137.0378692]
+        for i in range(len(self.coords)):
+            top = self.getDistance(self.coords[i][0], originPoint)
+            bottom = self.getDistance(self.coords[i][-1], originPoint)
+            # coodsの先頭から末尾にかけてoriginPointに近づく様にする            
+            if top < bottom:
+                self.coords[i].reverse()    
+
+    # 幅優先探索で路線の座標をまとめる
+    def bsf(self):
         # 区間情報を生成
         # 路線の末端の座標
         startCoord = self.startPoint
@@ -92,6 +103,10 @@ class BSF:
                     self.searchIndexes.append(index)
             if len(self.searchIndexes) == 0:
                 break
+
+    def start(self):
+        self.bsf()
+        self.setCoordDirection()
 
         # 出力用リストにsectionを追加
         for i in range(len(self.coords)):
