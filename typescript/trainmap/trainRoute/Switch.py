@@ -37,7 +37,8 @@ class Switch:
                             'id': '',
                             'coord': coord
                         })
-                        
+
+    # 駅と分岐点との距離から各分岐点ごとにIDを付与
     def setSwitchId(self):
         # 分岐点に最も近い駅の名前を取得
         for i in range(len(self.switch)):
@@ -62,3 +63,7 @@ class Switch:
                 trackList[j]['id'] = trackList[j]['id'] + "-" + chr(ch)
                 ch += 1
                 # 駅名 + A/B/C...
+
+    def start(self):
+        self.searchSwitch()
+        self.setSwitchId()

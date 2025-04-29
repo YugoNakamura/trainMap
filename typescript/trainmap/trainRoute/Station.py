@@ -2,9 +2,9 @@ import json
 
 
 class Station:
-    def __init__(self, stations):
-        self.stations = stations
-        self.output = []
+    def __init__(self, jsonStas):
+        self.jsonStas = jsonStas
+        self.stations = []
     
     def start(self):
         # 駅情報を生成
@@ -12,17 +12,17 @@ class Station:
         trackList = json.load(jsonfile)
         jsonfile.close()
 
-        for i in range(len(self.stations)):
+        for i in range(len(self.jsonStas)):
             for j in range(len(trackList)):
-                if self.stations[i]['geometry']['coordinates'] == trackList[j]['coord']:
+                if self.jsonStas[i]['geometry']['coordinates'] == trackList[j]['coord']:
                     trackListIndex = j
                     break
-            self.output.append({
+            self.stations.append({
                 "id": trackList[j]['code']+"-"+trackList[j]['trackNo'],
-                "name": self.stations[i]['properties']['name'],
-                "name_en": self.stations[i]['properties']['name:en'],
+                "name": self.jsonStas[i]['properties']['name'],
+                "name_en": self.jsonStas[i]['properties']['name:en'],
                 "code": trackList[j]['code'],
                 "prev": '',
                 "next": '',
-                "coord": [self.stations[i]['geometry']['coordinates'][1], self.stations[i]['geometry']['coordinates'][0]]
+                "coord": [self.jsonStas[i]['geometry']['coordinates'][1], self.jsonStas[i]['geometry']['coordinates'][0]]
             })
