@@ -6,12 +6,10 @@ class Station:
         self.jsonStas = jsonStas
         self.stations = []
     
-    def start(self):
         # 駅情報を生成
         jsonfile = open('./mikawaLineTrackNo.json', 'r')
         trackList = json.load(jsonfile)
         jsonfile.close()
-
         for i in range(len(self.jsonStas)):
             for j in range(len(trackList)):
                 if self.jsonStas[i]['geometry']['coordinates'] == trackList[j]['coord']:

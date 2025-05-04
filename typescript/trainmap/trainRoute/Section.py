@@ -1,15 +1,33 @@
 import json
 import numpy as np
-import BFS
+
 class Section:
-    def __init__(self, railRoads, startPoint, stations):
-        bfs = BFS.BFS(railRoads, startPoint)
+    def __init__(self, coods, stations, switches):
         # 区間情報
-        self.coords = bfs.start()
+        self.coords = coods
         # 路線区間情報
         self.sections = []
         # sectionを駅の座標で分割する
         self.stations = stations
+        # ID付与用
+        self.switches = switches
+
+        self.setCoordDirection()
+#        self.splitSections()
+        # 出力用リストにsectionを追加
+        for i in range(len(self.coords)):
+            dist = 0
+            for j in range(len(self.coords[i])-1):
+                dist += self.getDistance(self.coords[i][j], self.coords[i][j+1])
+
+            self.sections.append({
+                'id': '',
+                'prev': '',
+                'next': '',
+                'distance': dist,
+                'coords': self.coords[i]
+            })
+        self.setID()
 
     def getDistance(self, coord1, coord2):
         # 緯度経度から距離を計算する
@@ -46,21 +64,20 @@ class Section:
             return list.index(element)
         else:
             return -1
-
-    def start(self):
-        self.setCoordDirection()
-        self.splitSections()
-
-        # 出力用リストにsectionを追加
-        for i in range(len(self.coords)):
-            dist = 0
-            for j in range(len(self.coords[i])-1):
-                dist += self.getDistance(self.coords[i][j], self.coords[i][j+1])
-
-            self.sections.append({
-                'id': '',
-                'prev': '',
-                'next': '',
-                'distance': dist,
-                'coords': self.coords[i]
-            })
+        
+    def setID(self):
+        points = self.stations + self.switches
+        for i in range(len(self.sections)):
+            id = ''
+            for j in range(len(points)):
+                if self.sections[i]['coords'][0] == points[j]['coord']:
+                    id = points[j]['id']
+                    self.sections[i]['prev'] = points[j]['id']
+                    break
+            id += '-'
+            for j in range(len(points)):
+                if self.sections[i]['coords'][-1] == points[j]['coord']:
+                    id += points[j]['id']
+                    self.sections[i]['next'] = points[j]['id']
+                    break
+            self.sections[i]['id'] = id

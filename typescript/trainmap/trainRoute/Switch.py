@@ -2,7 +2,10 @@ class Switch:
     def __init__(self, sections, stations):
         self.sections = sections
         self.stations = stations
-        self.switch = []
+        self.switches = []
+
+        self.searchSwitch()
+        self.setSwitchId()
 
     def getDistance(self, coord1, coord2):
         # 緯度経度から距離を計算する
@@ -20,8 +23,8 @@ class Switch:
                 count = 0
                 appended = False
                 # ある場合はスキップ
-                for j in range(len(self.switch)):
-                    if self.switch[j]['coord'] == coord:
+                for j in range(len(self.switches)):
+                    if self.switches[j]['coord'] == coord:
                         appended = True
                 # もし同じ座標がなければ同一の座標で始まる/終わるsectionの数をカウント
                 if not appended:
@@ -33,7 +36,7 @@ class Switch:
                     # section[i]以外に同じ座標で始まる/終わるsectionがあれば分岐点
                     # とみなして追加
                     if count > 1:
-                        self.switch.append({
+                        self.switches.append({
                             'id': '',
                             'coord': coord
                         })
@@ -41,13 +44,13 @@ class Switch:
     # 駅と分岐点との距離から各分岐点ごとにIDを付与
     def setSwitchId(self):
         # 分岐点に最も近い駅の名前を取得
-        for i in range(len(self.switch)):
+        for i in range(len(self.switches)):
             minDist = 999999
             for j in range(len(self.stations)):
-                dist = self.getDistance(self.switch[i]['coord'], self.stations[j]['coord'])
+                dist = self.getDistance(self.switches[i]['coord'], self.stations[j]['coord'])
                 if dist < minDist:
                     minDist = dist
-                    self.switch[i]['id'] = self.stations[j]['code']
+                    self.switches[i]['id'] = self.stations[j]['code']
 
         # 分岐点のIDを駅名コード + A/B/C...のようにする
         # 駅名のリストを作成
@@ -57,13 +60,9 @@ class Switch:
                 stationList.append(self.stations[i]['code'])
 
         for i in range(len(stationList)):
-            trackList = list(filter(lambda switchId: switchId['id'] == stationList[i], self.switch))
+            trackList = list(filter(lambda switchId: switchId['id'] == stationList[i], self.switches))
             ch = 65
             for j in range(len(trackList)):
                 trackList[j]['id'] = trackList[j]['id'] + "-" + chr(ch)
                 ch += 1
                 # 駅名 + A/B/C...
-
-    def start(self):
-        self.searchSwitch()
-        self.setSwitchId()
