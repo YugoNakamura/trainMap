@@ -40,8 +40,12 @@ if __name__ == '__main__':
     # 幅優先探索で路線の座標をまとめる
     sec = Section.Section(bfs.coords, sta.stations, sw.switches)
 
+    # Stationにその前後のSectionのIDを記入
     sta.setID(sec.sections)
 
+    # Switchに接続しているSectionのIDと通行の条件を記入
+    sw.setDirection(sec.sections)
+    
     # 路線，駅，分岐点を統合してJSON形式で保存
     output['sections'] = sec.sections
     output['stations'] = sta.stations

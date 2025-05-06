@@ -5583,10 +5583,10 @@
             ]
         },
         {
-            "id": "MU06-2",
+            "id": "MY07-2",
             "name": "豊田市",
             "name_en": "Toyotashi",
-            "code": "MU06",
+            "code": "MY07",
             "prev": "end",
             "next": "end",
             "coord": [
@@ -5625,6 +5625,28 @@
             "coord": [
                 34.8747605,
                 136.9857395
+            ],
+            "direction": [
+                {
+                    "from": "MU11-2-MU11-A",
+                    "to": "MU11-A-MU10-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU11-1-MU11-A",
+                    "to": "MU11-A-MU10-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU11-A-MU10-1",
+                    "to": "MU11-2-MU11-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MU11-A-MU10-1",
+                    "to": "MU11-1-MU11-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5632,6 +5654,28 @@
             "coord": [
                 34.895927,
                 136.990051
+            ],
+            "direction": [
+                {
+                    "from": "MU09-A-MU09-1",
+                    "to": "MU10-1-MU09-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU09-A-MU09-2",
+                    "to": "MU10-1-MU09-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU10-1-MU09-A",
+                    "to": "MU09-A-MU09-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MU10-1-MU09-A",
+                    "to": "MU09-A-MU09-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5639,6 +5683,28 @@
             "coord": [
                 34.8974082,
                 136.9906558
+            ],
+            "direction": [
+                {
+                    "from": "MU09-1-MU09-B",
+                    "to": "MU09-B-MU08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU09-2-MU09-B",
+                    "to": "MU09-B-MU08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU09-B-MU08-A",
+                    "to": "MU09-1-MU09-B",
+                    "condition": ""
+                },
+                {
+                    "from": "MU09-B-MU08-A",
+                    "to": "MU09-2-MU09-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5646,6 +5712,28 @@
             "coord": [
                 34.9049918,
                 136.9927097
+            ],
+            "direction": [
+                {
+                    "from": "MU08-A-MU08-1",
+                    "to": "MU09-B-MU08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU08-A-MU08-2",
+                    "to": "MU09-B-MU08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU09-B-MU08-A",
+                    "to": "MU08-A-MU08-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MU09-B-MU08-A",
+                    "to": "MU08-A-MU08-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5653,6 +5741,28 @@
             "coord": [
                 34.9073338,
                 136.9920763
+            ],
+            "direction": [
+                {
+                    "from": "MU08-1-MU08-B",
+                    "to": "MU08-B-MU07-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU08-2-MU08-B",
+                    "to": "MU08-B-MU07-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU08-B-MU07-1",
+                    "to": "MU08-1-MU08-B",
+                    "condition": ""
+                },
+                {
+                    "from": "MU08-B-MU07-1",
+                    "to": "MU08-2-MU08-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5660,6 +5770,28 @@
             "coord": [
                 34.9298193,
                 136.9902278
+            ],
+            "direction": [
+                {
+                    "from": "MU06-A-MU06-1",
+                    "to": "MU07-1-MU06-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU06-A-MU06-2",
+                    "to": "MU07-1-MU06-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU07-1-MU06-A",
+                    "to": "MU06-A-MU06-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MU07-1-MU06-A",
+                    "to": "MU06-A-MU06-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5667,6 +5799,28 @@
             "coord": [
                 34.9317006,
                 136.9895421
+            ],
+            "direction": [
+                {
+                    "from": "MU06-1-MU06-B",
+                    "to": "MU06-B-MU05-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU06-2-MU06-B",
+                    "to": "MU06-B-MU05-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU06-B-MU05-1",
+                    "to": "MU06-1-MU06-B",
+                    "condition": ""
+                },
+                {
+                    "from": "MU06-B-MU05-1",
+                    "to": "MU06-2-MU06-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5674,6 +5828,28 @@
             "coord": [
                 34.9628873,
                 136.9947546
+            ],
+            "direction": [
+                {
+                    "from": "MU04-A-MU04-2",
+                    "to": "MU05-1-MU04-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU04-A-MU04-1",
+                    "to": "MU05-1-MU04-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU05-1-MU04-A",
+                    "to": "MU04-A-MU04-2",
+                    "condition": ""
+                },
+                {
+                    "from": "MU05-1-MU04-A",
+                    "to": "MU04-A-MU04-1",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5681,6 +5857,28 @@
             "coord": [
                 34.9665022,
                 136.9972038
+            ],
+            "direction": [
+                {
+                    "from": "MU04-2-MU04-B",
+                    "to": "MU04-B-MU03-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU04-1-MU04-B",
+                    "to": "MU04-B-MU03-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU04-B-MU03-A",
+                    "to": "MU04-2-MU04-B",
+                    "condition": ""
+                },
+                {
+                    "from": "MU04-B-MU03-A",
+                    "to": "MU04-1-MU04-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5688,6 +5886,28 @@
             "coord": [
                 34.9840956,
                 136.9934617
+            ],
+            "direction": [
+                {
+                    "from": "MU03-A-MU03-1",
+                    "to": "MU04-B-MU03-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU03-A-MU03-2",
+                    "to": "MU04-B-MU03-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU04-B-MU03-A",
+                    "to": "MU03-A-MU03-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MU04-B-MU03-A",
+                    "to": "MU03-A-MU03-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5695,6 +5915,28 @@
             "coord": [
                 34.9902095,
                 137.0101589
+            ],
+            "direction": [
+                {
+                    "from": "MU02-1-MU02-A",
+                    "to": "MU02-A-MU01-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU02-2-MU02-A",
+                    "to": "MU02-A-MU01-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU02-A-MU01-A",
+                    "to": "MU02-1-MU02-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MU02-A-MU01-A",
+                    "to": "MU02-2-MU02-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5702,6 +5944,28 @@
             "coord": [
                 34.9936347,
                 137.0224098
+            ],
+            "direction": [
+                {
+                    "from": "MU01-A-MU01-1",
+                    "to": "MU02-A-MU01-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU01-A-MU01-2",
+                    "to": "MU02-A-MU01-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU02-A-MU01-A",
+                    "to": "MU01-A-MU01-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MU02-A-MU01-A",
+                    "to": "MU01-A-MU01-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5709,6 +5973,28 @@
             "coord": [
                 35.0045287,
                 137.0408998
+            ],
+            "direction": [
+                {
+                    "from": "NH19-A-NH19-C",
+                    "to": "MU01-1-NH19-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-A-end",
+                    "to": "MU01-1-NH19-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MU01-1-NH19-A",
+                    "to": "NH19-A-NH19-C",
+                    "condition": ""
+                },
+                {
+                    "from": "MU01-1-NH19-A",
+                    "to": "NH19-A-end",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5716,6 +6002,28 @@
             "coord": [
                 35.0044507,
                 137.0409878
+            ],
+            "direction": [
+                {
+                    "from": "MU01-2-NH19-B",
+                    "to": "NH19-B-NH19-D",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY01-A-NH19-B",
+                    "to": "NH19-B-NH19-D",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-B-NH19-D",
+                    "to": "MU01-2-NH19-B",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-B-NH19-D",
+                    "to": "MY01-A-NH19-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5723,6 +6031,28 @@
             "coord": [
                 35.0048309,
                 137.040722
+            ],
+            "direction": [
+                {
+                    "from": "NH19-A-NH19-C",
+                    "to": "NH19-C-NH19-E",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-D-NH19-C",
+                    "to": "NH19-C-NH19-E",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-C-NH19-E",
+                    "to": "NH19-A-NH19-C",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-C-NH19-E",
+                    "to": "NH19-D-NH19-C",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5730,6 +6060,28 @@
             "coord": [
                 35.0051852,
                 137.0523039
+            ],
+            "direction": [
+                {
+                    "from": "MY01-2-MY01-A",
+                    "to": "MY01-A-NH19-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY01-1-MY01-A",
+                    "to": "MY01-A-NH19-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY01-A-NH19-B",
+                    "to": "MY01-2-MY01-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY01-A-NH19-B",
+                    "to": "MY01-1-MY01-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5737,6 +6089,28 @@
             "coord": [
                 35.0045374,
                 137.0409434
+            ],
+            "direction": [
+                {
+                    "from": "NH19-D-NH19-C",
+                    "to": "NH19-B-NH19-D",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-D-NH19-4",
+                    "to": "NH19-B-NH19-D",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-B-NH19-D",
+                    "to": "NH19-D-NH19-C",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-B-NH19-D",
+                    "to": "NH19-D-NH19-4",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5744,6 +6118,28 @@
             "coord": [
                 35.0049006,
                 137.0406837
+            ],
+            "direction": [
+                {
+                    "from": "NH19-E-NH19-3",
+                    "to": "NH19-C-NH19-E",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-E-NH19-2",
+                    "to": "NH19-C-NH19-E",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-C-NH19-E",
+                    "to": "NH19-E-NH19-3",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-C-NH19-E",
+                    "to": "NH19-E-NH19-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5751,6 +6147,28 @@
             "coord": [
                 35.0059187,
                 137.0567313
+            ],
+            "direction": [
+                {
+                    "from": "MY01-B-MY01-2",
+                    "to": "MY02-A-MY01-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY01-B-MY01-1",
+                    "to": "MY02-A-MY01-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY02-A-MY01-B",
+                    "to": "MY01-B-MY01-2",
+                    "condition": ""
+                },
+                {
+                    "from": "MY02-A-MY01-B",
+                    "to": "MY01-B-MY01-1",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5758,6 +6176,28 @@
             "coord": [
                 35.0067053,
                 137.03831
+            ],
+            "direction": [
+                {
+                    "from": "NH19-4-NH19-F",
+                    "to": "NH19-F-end",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-G-NH19-F",
+                    "to": "NH19-F-end",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-F-end",
+                    "to": "NH19-4-NH19-F",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-F-end",
+                    "to": "NH19-G-NH19-F",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5765,6 +6205,28 @@
             "coord": [
                 35.0094408,
                 137.0722743
+            ],
+            "direction": [
+                {
+                    "from": "MY02-2-MY02-A",
+                    "to": "MY02-A-MY01-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY02-1-MY02-A",
+                    "to": "MY02-A-MY01-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY02-A-MY01-B",
+                    "to": "MY02-2-MY02-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY02-A-MY01-B",
+                    "to": "MY02-1-MY02-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5772,6 +6234,28 @@
             "coord": [
                 35.0116868,
                 137.078108
+            ],
+            "direction": [
+                {
+                    "from": "MY02-B-MY02-2",
+                    "to": "MY03-A-MY02-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY02-B-MY02-1",
+                    "to": "MY03-A-MY02-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY03-A-MY02-B",
+                    "to": "MY02-B-MY02-2",
+                    "condition": ""
+                },
+                {
+                    "from": "MY03-A-MY02-B",
+                    "to": "MY02-B-MY02-1",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5779,6 +6263,28 @@
             "coord": [
                 35.0261639,
                 137.0952118
+            ],
+            "direction": [
+                {
+                    "from": "MY03-1-MY03-A",
+                    "to": "MY03-A-MY02-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY03-2-MY03-A",
+                    "to": "MY03-A-MY02-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY03-A-MY02-B",
+                    "to": "MY03-1-MY03-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY03-A-MY02-B",
+                    "to": "MY03-2-MY03-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5786,6 +6292,28 @@
             "coord": [
                 35.0273364,
                 137.0972978
+            ],
+            "direction": [
+                {
+                    "from": "MY03-B-MY03-1",
+                    "to": "MY04-A-MY03-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY03-B-MY03-2",
+                    "to": "MY04-A-MY03-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY04-A-MY03-B",
+                    "to": "MY03-B-MY03-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MY04-A-MY03-B",
+                    "to": "MY03-B-MY03-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5793,6 +6321,28 @@
             "coord": [
                 35.0394886,
                 137.1140616
+            ],
+            "direction": [
+                {
+                    "from": "MY04-2-MY04-A",
+                    "to": "MY04-A-MY03-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY04-1-MY04-A",
+                    "to": "MY04-A-MY03-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY04-A-MY03-B",
+                    "to": "MY04-2-MY04-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY04-A-MY03-B",
+                    "to": "MY04-1-MY04-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5800,6 +6350,28 @@
             "coord": [
                 35.0406249,
                 137.1155835
+            ],
+            "direction": [
+                {
+                    "from": "MY04-B-MY04-2",
+                    "to": "MY05-A-MY04-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY04-B-MY04-1",
+                    "to": "MY05-A-MY04-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY05-A-MY04-B",
+                    "to": "MY04-B-MY04-2",
+                    "condition": ""
+                },
+                {
+                    "from": "MY05-A-MY04-B",
+                    "to": "MY04-B-MY04-1",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5807,6 +6379,28 @@
             "coord": [
                 35.0577302,
                 137.1286344
+            ],
+            "direction": [
+                {
+                    "from": "MY05-3-MY05-A",
+                    "to": "MY05-A-MY04-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY05-2-MY05-A",
+                    "to": "MY05-A-MY04-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY05-A-MY04-B",
+                    "to": "MY05-3-MY05-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY05-A-MY04-B",
+                    "to": "MY05-2-MY05-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5814,6 +6408,28 @@
             "coord": [
                 35.0587602,
                 137.1309424
+            ],
+            "direction": [
+                {
+                    "from": "MY05-B-MY05-3",
+                    "to": "MY06-A-MY05-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY05-B-MY05-2",
+                    "to": "MY06-A-MY05-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY06-A-MY05-B",
+                    "to": "MY05-B-MY05-3",
+                    "condition": ""
+                },
+                {
+                    "from": "MY06-A-MY05-B",
+                    "to": "MY05-B-MY05-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5821,6 +6437,28 @@
             "coord": [
                 35.0710986,
                 137.1533241
+            ],
+            "direction": [
+                {
+                    "from": "MY06-2-MY06-A",
+                    "to": "MY06-A-MY05-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY06-1-MY06-A",
+                    "to": "MY06-A-MY05-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY06-A-MY05-B",
+                    "to": "MY06-2-MY06-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY06-A-MY05-B",
+                    "to": "MY06-1-MY06-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5828,6 +6466,28 @@
             "coord": [
                 35.0723611,
                 137.1553654
+            ],
+            "direction": [
+                {
+                    "from": "MY06-B-MY06-2",
+                    "to": "MY07-A-MY06-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY06-B-MY06-1",
+                    "to": "MY07-A-MY06-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY07-A-MY06-B",
+                    "to": "MY06-B-MY06-2",
+                    "condition": ""
+                },
+                {
+                    "from": "MY07-A-MY06-B",
+                    "to": "MY06-B-MY06-1",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5835,6 +6495,28 @@
             "coord": [
                 35.0856623,
                 137.1557177
+            ],
+            "direction": [
+                {
+                    "from": "MY07-1-MY07-A",
+                    "to": "MY07-A-MY06-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY07-3-MY07-A",
+                    "to": "MY07-A-MY06-B",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY07-A-MY06-B",
+                    "to": "MY07-1-MY07-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY07-A-MY06-B",
+                    "to": "MY07-3-MY07-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5842,6 +6524,28 @@
             "coord": [
                 35.1008915,
                 137.1630784
+            ],
+            "direction": [
+                {
+                    "from": "MY08-A-MY08-1",
+                    "to": "MY09-A-MY08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY08-A-MY08-2",
+                    "to": "MY09-A-MY08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY09-A-MY08-A",
+                    "to": "MY08-A-MY08-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MY09-A-MY08-A",
+                    "to": "MY08-A-MY08-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5849,6 +6553,28 @@
             "coord": [
                 35.1074488,
                 137.1787553
+            ],
+            "direction": [
+                {
+                    "from": "MY09-1-MY09-A",
+                    "to": "MY09-A-MY08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY11-2-MY09-A",
+                    "to": "MY09-A-MY08-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY09-A-MY08-A",
+                    "to": "MY09-1-MY09-A",
+                    "condition": ""
+                },
+                {
+                    "from": "MY09-A-MY08-A",
+                    "to": "MY11-2-MY09-A",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5856,6 +6582,28 @@
             "coord": [
                 35.1079322,
                 137.1821105
+            ],
+            "direction": [
+                {
+                    "from": "MY11-A-MY09-1",
+                    "to": "MY10-1-MY11-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY11-A-MY11-2",
+                    "to": "MY10-1-MY11-A",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY10-1-MY11-A",
+                    "to": "MY11-A-MY09-1",
+                    "condition": ""
+                },
+                {
+                    "from": "MY10-1-MY11-A",
+                    "to": "MY11-A-MY11-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5863,6 +6611,28 @@
             "coord": [
                 35.1210385,
                 137.1783366
+            ],
+            "direction": [
+                {
+                    "from": "MY11-1-MY11-B",
+                    "to": "MY11-B-MY10-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY11-2-MY11-B",
+                    "to": "MY11-B-MY10-1",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY11-B-MY10-1",
+                    "to": "MY11-1-MY11-B",
+                    "condition": ""
+                },
+                {
+                    "from": "MY11-B-MY10-1",
+                    "to": "MY11-2-MY11-B",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5870,6 +6640,28 @@
             "coord": [
                 35.123075,
                 137.1791086
+            ],
+            "direction": [
+                {
+                    "from": "MY11-C-MY11-1",
+                    "to": "end-MY11-C",
+                    "condition": "none"
+                },
+                {
+                    "from": "MY11-C-MY11-2",
+                    "to": "end-MY11-C",
+                    "condition": "none"
+                },
+                {
+                    "from": "end-MY11-C",
+                    "to": "MY11-C-MY11-1",
+                    "condition": ""
+                },
+                {
+                    "from": "end-MY11-C",
+                    "to": "MY11-C-MY11-2",
+                    "condition": ""
+                }
             ]
         },
         {
@@ -5877,6 +6669,28 @@
             "coord": [
                 35.0064256,
                 137.038705
+            ],
+            "direction": [
+                {
+                    "from": "NH19-3-NH19-G",
+                    "to": "NH19-G-NH19-F",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-2-NH19-G",
+                    "to": "NH19-G-NH19-F",
+                    "condition": "none"
+                },
+                {
+                    "from": "NH19-G-NH19-F",
+                    "to": "NH19-3-NH19-G",
+                    "condition": ""
+                },
+                {
+                    "from": "NH19-G-NH19-F",
+                    "to": "NH19-2-NH19-G",
+                    "condition": ""
+                }
             ]
         }
     ]
