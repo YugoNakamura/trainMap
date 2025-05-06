@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # 駅関係
     # 駅名と座標，ホーム番号，駅番号を結びつける
     sta = Station.Station(jsonSta)
-#    bfs = BFS.BFS(jsonRail, [34.8872277, 136.9894601])
+
     bfs = BFS.BFS(jsonRail, [34.8738334, 136.9855133])
 
     # 分岐点関係
@@ -40,12 +40,12 @@ if __name__ == '__main__':
     # 幅優先探索で路線の座標をまとめる
     sec = Section.Section(bfs.coords, sta.stations, sw.switches)
 
-    # 路線，駅，分岐点のそれぞれのnext, prevを設定する
+    sta.setID(sec.sections)
+
     # 路線，駅，分岐点を統合してJSON形式で保存
-    
     output['sections'] = sec.sections
     output['stations'] = sta.stations
     output['switchPoints'] = sw.switches
-    jsonfile = open('./testout.json', 'w')
+    jsonfile = open('./mikawaLine.json', 'w')
     json.dump(output, jsonfile, indent=4, ensure_ascii=False)
     jsonfile.close()

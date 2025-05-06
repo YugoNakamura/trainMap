@@ -13,7 +13,7 @@ class Section:
         self.switches = switches
 
         self.setCoordDirection()
-#        self.splitSections()
+        self.splitSections()
         # 出力用リストにsectionを追加
         for i in range(len(self.coords)):
             dist = 0
@@ -68,16 +68,18 @@ class Section:
     def setID(self):
         points = self.stations + self.switches
         for i in range(len(self.sections)):
-            id = ''
+            idPrev = 'end'
+            idNext = 'end'
             for j in range(len(points)):
+                self.sections[i]['prev'] = 'end'
                 if self.sections[i]['coords'][0] == points[j]['coord']:
-                    id = points[j]['id']
+                    idPrev = points[j]['id']
                     self.sections[i]['prev'] = points[j]['id']
                     break
-            id += '-'
             for j in range(len(points)):
+                self.sections[i]['next'] = 'end'
                 if self.sections[i]['coords'][-1] == points[j]['coord']:
-                    id += points[j]['id']
+                    idNext = points[j]['id']
                     self.sections[i]['next'] = points[j]['id']
                     break
-            self.sections[i]['id'] = id
+            self.sections[i]['id'] = idPrev + '-' + idNext

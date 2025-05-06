@@ -24,3 +24,13 @@ class Station:
                 "next": '',
                 "coord": [self.jsonStas[i]['geometry']['coordinates'][1], self.jsonStas[i]['geometry']['coordinates'][0]]
             })
+
+    def setID(self, sections):
+        for i in range(len(self.stations)):
+            self.stations[i]['prev'] = 'end'
+            self.stations[i]['next'] = 'end'
+            for j in range(len(sections)):
+                if self.stations[i]['coord'] == sections[j]['coords'][0]:
+                    self.stations[i]['prev'] = sections[j]['id']
+                if self.stations[i]['coord'] == sections[j]['coords'][-1]:
+                    self.stations[i]['next'] = sections[j]['id']
