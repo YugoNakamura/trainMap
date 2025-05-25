@@ -1,4 +1,5 @@
 import math
+import re
 class Switch:
     def __init__(self, coords, stations):
         self.coords = coords
@@ -65,7 +66,7 @@ class Switch:
             trackList = list(filter(lambda switchId: switchId['id'] == stationList[i], self.switches))
             ch = 65
             for j in range(len(trackList)):
-                trackList[j]['id'] = trackList[j]['id'] + "-" + chr(ch)
+                trackList[j]['id'] = trackList[j]['id'] + "_" + chr(ch)
                 ch += 1
                 # 駅名 + A/B/C...
 
@@ -74,6 +75,7 @@ class Switch:
             # Switchに繋がるSectionのから座標とIDを取得
             miniSecs = []
             for j in range(len(sections)):
+                # Switchの座標とSectionの始点/終点が一致する場合
                 if self.switches[i]['coord'] == sections[j]['coords'][0]:
                     miniSecs.append({
                         'id': sections[j]['id'],
@@ -119,7 +121,7 @@ class Switch:
                     'to': minAngle['angleSecId'][j],
                     'condition': ''
                 })
-
+        self.getCondition()
 
     # setDirection内で用いているmin関数の用関数 
     def min_func(self, angle):
@@ -132,6 +134,46 @@ class Switch:
         inner = ((coord1[0]-coordO[0])*(coord2[0]-coordO[0]) + (coord1[1]-coordO[1])*(coord2[1]-coordO[1]))
         theta = math.degrees(math.acos(inner/(distO1*distO2)))
         return theta
+    
+    def getCondition(self):
+        for sw in self.switches:
+            for dir in sw['direction']:
+                if dir['condition'] == '':
+                    condlist = self.getConditionList(sw["id"], dir['to'])
+                    print(f'condlist: {condlist}')
+                    print()
+                    dir['condition'] = condlist
 
+
+    # stationIdの正規表現
+    p = re.compile(r'([A-Z]{2}\d{2}_\d+)')
+    def getConditionList(self, switchId, sectionId):
+        trackNos = []
+        print(f'switchId: {switchId}, sectionId: {sectionId}')
+        matchObj = self.p.search(sectionId)
+        if matchObj == None:
+            # sectionIdに繋がっている分岐点のIDを取得
+            nextSwitchId = ''
+            for id in sectionId.split('-'):
+                if id != switchId:
+                    nextSwitchId = id
+                    break
+            print(f'nextSwitchId: {nextSwitchId}')
+            # nextSwitchIdから次のsectionIdを取得
+            for switch in self.switches:
+                if switch['id'] == nextSwitchId:
+                    for direction in switch['direction']:
+                        if direction['from'] == sectionId:
+                            nos = self.getConditionList(nextSwitchId, direction['to'])
+                            for no in nos:
+                                trackNos.append(no)
+            return trackNos
+        else:
+            trackNos.append(matchObj.group())
+            return trackNos
+
+
+
+        
 
 

@@ -16,7 +16,7 @@ class Station:
                     trackListIndex = j
                     break
             self.stations.append({
-                "id": trackList[j]['code']+"-"+trackList[j]['trackNo'],
+                "id": trackList[j]['code']+"_"+trackList[j]['trackNo'],
                 "name": self.jsonStas[i]['properties']['name'],
                 "name_en": self.jsonStas[i]['properties']['name:en'],
                 "code": trackList[j]['code'],

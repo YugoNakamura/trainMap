@@ -14,15 +14,34 @@ if __name__ == '__main__':
     jsonSta = []
     jsondata = jsondata['features']
 
+    # JSONのデータから鉄道と駅の情報を抽出
     for data in jsondata:
         if data['geometry']['type'] == 'LineString':
             # 座標部分を抽出/緯度経度の順番に変更
             jsonCoords = data['geometry']['coordinates']
+            # 緯度経度の順番を[緯度, 経度]に変更
             for i in range(len(jsonCoords)):
                 jsonCoords[i] = [jsonCoords[i][1], jsonCoords[i][0]]
             jsonRail.append(jsonCoords)
         elif data['geometry']['type'] == 'Point':
             jsonSta.append(data)
+    
+    # jsonRailの各要素の先頭と末尾が別の要素の先頭と末尾以外にある時は分割
+    for i in range(len(jsonRail)):
+        popList = []
+        for j in range(len(jsonRail)):
+            for k in range(len(jsonRail[j])):
+                if (jsonRail[i][0] == jsonRail[j][k] or jsonRail[i][-1] == jsonRail[j][k]) and\
+                      k != 0 and k != len(jsonRail[j])-1:
+                    popList.append([j, k])
+        for n in range(len(popList)):
+            before = jsonRail[popList[n][0]][:popList[n][1]+1]
+            after = jsonRail[popList[n][0]][popList[n][1]:]
+            jsonRail.pop(popList[n][0])
+            jsonRail.insert(popList[n][0], after)
+            jsonRail.insert(popList[n][0], before)
+            
+
 
     output = {'sections':[], 'stations':[], 'switchPoints':[]}
 
