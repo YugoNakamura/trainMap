@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Railload, Section, Station } from "../types/railload";
+import { timeTable, dia } from "../types/timeTable";
 
 interface Prop {
     railload:Railload,
     depStaName:string,
     desStaName:string,
+    timeTable:timeTable[]
 }
 export const Train = (prop:Prop) => {
     //station, sectionのmap化
