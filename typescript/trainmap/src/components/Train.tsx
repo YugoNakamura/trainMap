@@ -1,36 +1,41 @@
 import { useEffect, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
-import { Railload, Section, Station } from "../types/railload";
-import { timeTable, dia } from "../types/timeTable";
+import { Railload, Section, Station, SwitchPoint } from "../types/railload";
+import { timeTable} from "../types/timeTable";
+import { point } from "leaflet";
 
 interface Prop {
     railload:Railload,
-    depStaName:string,
-    desStaName:string,
-    timeTable:timeTable[]
+    timeTable:timeTable
 }
 export const Train = (prop:Prop) => {
     //station, sectionのmap化
     const sections = new Map(prop.railload.sections.map(section => [section.id, section]));
-    //走行しているsectionID
-    const sectionID = useRef<string>('');
     //出発駅と終着駅を取得
-    const stations:Station[] = prop.railload.stations;
+    const stations = new Map(prop.railload.stations.map(station => [station.id, station]));
     //出発駅
-    const depStaNo = stations.findIndex(station => station.name_en===prop.depStaName);
-    if (depStaNo===-1) throw new Error("Station Data Load Failed");
+    const fromSta = stations.get(prop.timeTable.fromStaId);
+    if (!fromSta) throw new Error("Station Data Load Failed");
     //終着駅
-    const desStaNo = stations.findIndex(station => station.name_en===prop.desStaName);
-    if (desStaNo===-1) throw new Error("Station Data Load Failed");
+    const toSta = stations.get(prop.timeTable.toStaId);
+    if (!toSta) throw new Error("Station Data Load Failed");
 
-    //上りか下りか
-    const isInBound:boolean = desStaNo > depStaNo;
+    //timetable
+    const tt = prop.timeTable.tt;
+    //走行しているtimeTableのインデックス
+    const ttIndex = useRef(0);
+
+
+    const switchPoints = new Map(prop.railload.switchPoints.map(switchPoints => [switchPoints.id, switchPoints]));
+
+    //上り:true, 下り:false
+    const isInBound:boolean = prop.timeTable.bound;
 
     //現在の緯度経度
     //レンダリング用の座標変数
-    const [renderPos, setRenderPos] = useState<number[]>(stations[depStaNo].coord);
+    const [renderPos, setRenderPos] = useState<number[]>(fromSta.coord);
     //setPositionでpositionを変更しても即座に反映されないため，別の変数で管理する
-    const position = useRef<number[]>(stations[depStaNo].coord);
+    const position = useRef<number[]>(fromSta.coord);
 
     //トレースする座標配列
     const railChkPoints = useRef<number[][]>([[]]);
@@ -40,16 +45,18 @@ export const Train = (prop:Prop) => {
     //更新周期(msec)
     const frameRate = 17;
 
-    const distance = useRef(0);
+    const distance = useRef<number>(0);
     //速度制御用インスタンス
     const speedControler = new SpeedControler(frameRate);
     //setIntervalのID
     const intervalID = useRef<number>();
     useEffect(() => {
         //railChkPointsの初期設定
-        [railChkPoints.current, sectionID.current, distance.current] = 
-            getNextSection(isInBound, sections, stations[depStaNo]);
-        speedControler.setNextSection(distance.current, 10*1000);
+        [railChkPoints.current, distance.current] = 
+            getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
+        ttIndex.current += 1;
+
+        speedControler.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
             calcNextPosition(speedControler.getSpeed());
@@ -63,18 +70,19 @@ export const Train = (prop:Prop) => {
         //Sectionの最後のChkpointを通過したら
         if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
             //指定した終着駅に到着したら
-            if(railChkPoints.current[railChkPointsIndex.current].toString() === stations[desStaNo].coord.toString()) {
+            if(railChkPoints.current[railChkPointsIndex.current].toString() === toSta.coord.toString()) {
                 clearInterval(intervalID.current);
                 return;
             }
 
             //次のSectionの座標情報とsectionIDを受け取る
-            [railChkPoints.current, sectionID.current, distance.current] = 
-                getNextSection(isInBound, sections, sections.get(sectionID.current));
+            [railChkPoints.current, distance.current] = 
+                getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
+            ttIndex.current += 1;
             railChkPointsIndex.current = 0;
 
             //次のsection間の加減速設定
-            speedControler.setNextSection(distance.current, 10*1000);
+            speedControler.setNextSection(distance.current, 60*1000);
         }
 
         const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
@@ -108,20 +116,62 @@ export const Train = (prop:Prop) => {
 }
 
 // 現在のSectionIDから次のSectionを出力
-const getNextSection = (isInBound:boolean, sections:Map<string, Section>, currSection:Section|Station|undefined):[number[][], string, number] => {
-    if (!currSection) throw new Error("input was undefined");
-    //返り値にするsectionのidを取得してget
-    const secID = isInBound ? currSection.next : currSection.prev;
-    const sec = sections.get(secID);
-    if (!sec) throw new Error("Section Data Load Failed");
+const getNextSection = (isInBound:boolean, sections:Map<string, Section>, stations:Map<string, Station>, switches:Map<string, SwitchPoint>,depStaID:string, desStaID:string):[number[][], number] => {
+    let resCoords:number[][] = [];
+    let dist = 0;
 
-    if(isInBound) {return [sec.coords, secID, sec.distance];}
-    else {return [sec.coords.slice().reverse(), secID, sec.distance];}
+    let postSecID = "";
+    let depSta = stations.get(depStaID);
+    if (!depSta) throw new Error("Station Data Load Failed");
+    let secID = isInBound ? depSta.next : depSta.prev;
+    while(true) {
+        let sec = sections.get(secID);
+        if (!sec) throw new Error("Section Data Load Failed");
+        let coords = isInBound ? sec.coords : sec.coords.reverse();
+        coords.forEach(coord => resCoords.push(coord));
+        dist += sec.distance;
+        postSecID = secID;
+
+        //次のポイントのIDを取得
+        let pointID = isInBound ? sec.next : sec.prev;
+        if(switches.has(pointID)) {
+            let switchPoint = switches.get(pointID);
+            if (!switchPoint) throw new Error("Switch Data Load Failed");
+            secID = getNextSecID(switchPoint, postSecID, desStaID);
+        } else if(pointID === desStaID) {
+            return [resCoords, dist];
+        }
+    }
+}
+
+// 通過したsecIDと目的の駅から次に通過するべきsecIDを取得
+const getNextSecID = (switchPoint:SwitchPoint, postSecID:string, desStaID:string):string => {
+    let dirs = switchPoint.direction.filter(function(dir) {
+        return dir.from === postSecID
+    });
+    let nextSecID = "";
+    for(let i = 0; i < dirs.length; i++) {
+        if(dirs[i].condition === "none" || dirs[i].condition.includes(desStaID)) {
+            nextSecID = dirs[i].to;
+        }
+    }
+    return nextSecID;
 }
 
 //2点間の距離を算出
 const getDist = (coord1:number[], coord2:number[]) => {
     return Math.sqrt((coord2[0]-coord1[0])**2+(coord2[1]-coord1[1])**2);        
+}
+
+const getTimeDiff = (from:string, to:string):number => {
+    const [fromHour, fromMin] = from.split(":").map(Number);
+    const [toHour, toMin] = to.split(":").map(Number);
+    let fromTime = fromHour * 60 + fromMin;
+    let toTime = toHour * 60 + toMin;
+    if (toTime < fromTime) {
+        toTime += 24 * 60; // 翌日の時間に調整
+    }
+    return (toTime - fromTime) * 60 * 1000; // ミリ秒に変換
 }
 
 class SpeedControler {

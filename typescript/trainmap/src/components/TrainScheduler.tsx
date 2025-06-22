@@ -9,7 +9,7 @@ export const TrainScheduler = () => {
 
     // 路線情報を読み込み
     useEffect(()=>{
-        fetch('./trainRoute/singleRail/mikawaLine.json')
+        fetch('./trainRoute/mikawaLine.json')
         .then(response => response.json())
         .then(data => setRailload(data));
     }, []);
@@ -26,7 +26,7 @@ export const TrainScheduler = () => {
         return <div></div>
     } else {
         const trains:JSX.Element[] = [
-            <Train railload={railload} depStaName='Chiryuu' desStaName='Hekinan' timeTable={tt} key={1}/>
+            <Train railload={railload} timeTable={tt[0]} key={1}/>
 //            <TrainJSX railload={railload} depStaName='Hekinan' desStaName='Chiryuu' key={2}/>
         ]
         return <div>{trains}</div>

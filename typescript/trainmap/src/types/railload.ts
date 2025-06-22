@@ -20,7 +20,14 @@ export interface Station {
 
 export interface SwitchPoint {
     id:string,
-    coord:number[]
+    coord:number[],
+    direction:way[]
+}
+
+export interface way {
+    from:string,
+    to:string,
+    condition:string[] | string
 }
 
 export interface Railload {

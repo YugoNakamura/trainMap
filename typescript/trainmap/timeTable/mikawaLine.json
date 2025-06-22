@@ -1,10 +1,11 @@
     [
         {
             "line": "Mikawa Line",
-            "depSta": "Chiryuu",
-            "depId": "NH19-4",
-            "arrSta": "Hekinan",
-            "arrId": "MU11_1",
+            "fromSta": "Chiryuu",
+            "fromStaId": "NH19_4",
+            "toSta": "Hekinan",
+            "toStaId": "MU11_1",
+            "bound": false,
             "tt": [
                 {
                     "s": "NH19_4",
@@ -12,8 +13,8 @@
                 },
                 {
                     "s": "MU01_1",
-                    "d": "12:01",
-                    "a": "12:01"
+                    "a": "12:01",
+                    "d": "12:01"
                 },
                 {
                     "s": "MU02_1",

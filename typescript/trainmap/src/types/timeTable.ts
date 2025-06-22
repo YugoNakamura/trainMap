@@ -1,9 +1,10 @@
 export interface timeTable{
     line: string,
-    depSta: string,
-    depId: string,
-    arrSta:string,
-    arrId: string,
+    fromSta: string,
+    fromStaId: string,
+    toSta:string,
+    toStaId: string,
+    bound: boolean,
     tt: dia[]
 }
 

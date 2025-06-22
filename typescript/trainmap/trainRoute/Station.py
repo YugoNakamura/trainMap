@@ -31,6 +31,6 @@ class Station:
             self.stations[i]['next'] = 'end'
             for j in range(len(sections)):
                 if self.stations[i]['coord'] == sections[j]['coords'][0]:
-                    self.stations[i]['prev'] = sections[j]['id']
-                if self.stations[i]['coord'] == sections[j]['coords'][-1]:
                     self.stations[i]['next'] = sections[j]['id']
+                if self.stations[i]['coord'] == sections[j]['coords'][-1]:
+                    self.stations[i]['prev'] = sections[j]['id']
