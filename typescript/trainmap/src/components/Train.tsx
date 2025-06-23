@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Railload, Section, Station, SwitchPoint } from "../types/railload";
 import { timeTable} from "../types/timeTable";
-import { point } from "leaflet";
+import L from "leaflet";
 
 interface Prop {
     railload:Railload,
     timeTable:timeTable
+    speedRate:number
 }
 export const Train = (prop:Prop) => {
     //station, sectionのmap化
@@ -25,7 +26,6 @@ export const Train = (prop:Prop) => {
     //走行しているtimeTableのインデックス
     const ttIndex = useRef(0);
 
-
     const switchPoints = new Map(prop.railload.switchPoints.map(switchPoints => [switchPoints.id, switchPoints]));
 
     //上り:true, 下り:false
@@ -43,13 +43,16 @@ export const Train = (prop:Prop) => {
     const railChkPointsIndex = useRef<number>(0);
 
     //更新周期(msec)
-    const frameRate = 17;
+    const frameRate = 33;
 
     const distance = useRef<number>(0);
     //速度制御用インスタンス
     const speedControler = new SpeedControler(frameRate);
     //setIntervalのID
     const intervalID = useRef<number>();
+
+//    speedControler.setSpeedRate(prop.speedRate);
+
     useEffect(() => {
         //railChkPointsの初期設定
         [railChkPoints.current, distance.current] = 
@@ -82,7 +85,7 @@ export const Train = (prop:Prop) => {
             railChkPointsIndex.current = 0;
 
             //次のsection間の加減速設定
-            speedControler.setNextSection(distance.current, 60*1000);
+            speedControler.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         }
 
         const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
@@ -110,8 +113,14 @@ export const Train = (prop:Prop) => {
         }
         return;
     }
+
+    const customIcon = L.icon({
+        iconUrl: './asset/trainIcon.svg',
+        iconSize: [30, 30], // アイコンのサイズ
+        iconAnchor: [15, 15], // アイコンのアンカー位置
+    });
     return (
-        <Marker position={[renderPos[0], renderPos[1]]}><Popup>Train</Popup></Marker>
+        <Marker position={[renderPos[0], renderPos[1]]} icon={customIcon}><Popup>Train</Popup></Marker>
     );
 }
 
@@ -163,6 +172,7 @@ const getDist = (coord1:number[], coord2:number[]) => {
     return Math.sqrt((coord2[0]-coord1[0])**2+(coord2[1]-coord1[1])**2);        
 }
 
+// 時刻の差をミリ秒で取得
 const getTimeDiff = (from:string, to:string):number => {
     const [fromHour, fromMin] = from.split(":").map(Number);
     const [toHour, toMin] = to.split(":").map(Number);
@@ -174,13 +184,19 @@ const getTimeDiff = (from:string, to:string):number => {
     return (toTime - fromTime) * 60 * 1000; // ミリ秒に変換
 }
 
+
 class SpeedControler {
     speed:number = 0;
+    private speedRate:number = 1; //速度倍率
     //加減速時間(msec)
     accelTime:number = 2*1000;
+    //加速区間の距離
+    accDist:number = 0;
+    //積算走行距離
+    sumDist = 0;
 
     //駅間の距離
-    distance:number = 0;
+    staDist:number = 0;
     //駅間の移動時間(msec)
     arriveTime:number = 0;
     //画面更新の周期(msec)
@@ -195,45 +211,44 @@ class SpeedControler {
     DECEL = -1 as const;
     accelState:number = 0;
 
-    //setTimeoutを管理するID
-    accelTimeoutID:number = -1;
-    constTimeoutID:number = -1;
-    decelTimeoutID:number = -1;
-
     constructor(frameRate:number) {
         this.frameRate = frameRate;
     }
 
+    setSpeedRate = (speedRate:number) => {
+        this.speedRate = speedRate;
+        console.log("speedRate:", this.speedRate);
+    }
+
     setNextSection(distance:number, arriveTime:number) {
-        this.distance = distance;
+        this.staDist = distance;
         this.arriveTime = arriveTime;
-        this.constantSpeed = this.distance/(this.arriveTime-this.accelTime)*this.frameRate;
+        this.constantSpeed = this.staDist/(this.arriveTime-this.accelTime)*this.frameRate;
         this.accelRate = this.constantSpeed/this.accelTime*this.frameRate;
 
-        clearTimeout(this.accelTimeoutID);
-        clearTimeout(this.constTimeoutID);
-        clearTimeout(this.decelTimeoutID);
+        this.accDist = 0;
+        for(let i = 0; i < this.accelTime/this.frameRate; i++) {
+            this.accDist += this.accelRate * (i+1);
+        }
 
+        this.sumDist = 0;
         this.speed = 0;
         //加速時間
         this.accelState = this.ACCEL;
-        this.accelTimeoutID = setTimeout(() =>{
-            this.accelState = this.CONST;
-        }, (this.accelTime+this.frameRate));
-        //定速時間
-        this.constTimeoutID = setTimeout(() =>{
-            this.accelState = this.DECEL;
-        }, (this.arriveTime-this.accelTime+this.frameRate));
-        //減速時間
-        this.decelTimeoutID = setTimeout(() =>{
-            this.accelState = this.CONST;
-            //計算誤差でsectionの終了直前に
-            this.speed = 0.0001;
-        }, (this.arriveTime+this.frameRate));
     }
 
     getSpeed = ():number => {
+        if(this.sumDist <= this.accDist) {
+            this.accelState = this.ACCEL;
+        } else if(this.sumDist <= this.staDist-this.accDist) {
+            this.accelState = this.CONST;
+        } else {
+            this.accelState = this.DECEL;
+        }
         this.speed += this.accelRate*this.accelState;
-        return this.speed;
+        this.speed = this.speed < 0 ? 0.0001 : this.speed;
+        this.sumDist += this.speed * this.speedRate;
+        console.log("speedRate:", this.speedRate, "speed:", this.speed);
+        return this.speed * this.speedRate;
     }
 }

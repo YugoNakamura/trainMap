@@ -3,7 +3,11 @@ import { Railload } from "../types/railload"
 import { timeTable } from "../types/timeTable"
 import {Train} from "./Train"
 
-export const TrainScheduler = () => {
+interface Prop {
+    speedRate:number
+}
+
+export const TrainScheduler = (prop:Prop) => {
     const [railload, setRailload] = useState<Railload>();
     const [tt, setTimeTable] = useState<timeTable[]>();
 
@@ -26,7 +30,7 @@ export const TrainScheduler = () => {
         return <div></div>
     } else {
         const trains:JSX.Element[] = [
-            <Train railload={railload} timeTable={tt[0]} key={1}/>
+            <Train railload={railload} timeTable={tt[0]} speedRate={prop.speedRate} key={1}/>
 //            <TrainJSX railload={railload} depStaName='Hekinan' desStaName='Chiryuu' key={2}/>
         ]
         return <div>{trains}</div>
