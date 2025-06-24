@@ -46,23 +46,24 @@ export const Train = (prop:Prop) => {
     const frameRate = 33;
 
     const distance = useRef<number>(0);
-    //速度制御用インスタンス
-    const speedControler = new SpeedControler(frameRate);
+
     //setIntervalのID
     const intervalID = useRef<number>();
 
-//    speedControler.setSpeedRate(prop.speedRate);
-
+    //速度制御用インスタンス
+    const speedControler = useRef<SpeedControler>(new SpeedControler(frameRate));
+    speedControler.current.setSpeedRate(prop.speedRate);
+    
     useEffect(() => {
         //railChkPointsの初期設定
         [railChkPoints.current, distance.current] = 
             getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
         ttIndex.current += 1;
 
-        speedControler.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
+        speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
-            calcNextPosition(speedControler.getSpeed());
+            calcNextPosition(speedControler.current.getSpeed());
         }, frameRate);
 
         return ()=> clearInterval(intervalID.current);
@@ -85,7 +86,7 @@ export const Train = (prop:Prop) => {
             railChkPointsIndex.current = 0;
 
             //次のsection間の加減速設定
-            speedControler.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
+            speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         }
 
         const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
@@ -187,7 +188,7 @@ const getTimeDiff = (from:string, to:string):number => {
 
 class SpeedControler {
     speed:number = 0;
-    private speedRate:number = 1; //速度倍率
+    speedRate:number = 1; //速度倍率
     //加減速時間(msec)
     accelTime:number = 2*1000;
     //加速区間の距離
@@ -205,11 +206,6 @@ class SpeedControler {
     constantSpeed:number = 0;
     //加減速時間中の速度の変化量((constantSpeed/accelTime)*frameRate)
     accelRate:number = 0;
-    //現在の加減速の状態を表す(減速:-1, 定速:0, 加速:1)
-    ACCEL = 1 as const;
-    CONST = 0 as const;
-    DECEL = -1 as const;
-    accelState:number = 0;
 
     constructor(frameRate:number) {
         this.frameRate = frameRate;
@@ -217,38 +213,35 @@ class SpeedControler {
 
     setSpeedRate = (speedRate:number) => {
         this.speedRate = speedRate;
-        console.log("speedRate:", this.speedRate);
     }
 
     setNextSection(distance:number, arriveTime:number) {
         this.staDist = distance;
         this.arriveTime = arriveTime;
         this.constantSpeed = this.staDist/(this.arriveTime-this.accelTime)*this.frameRate;
-        this.accelRate = this.constantSpeed/this.accelTime*this.frameRate;
+        this.accelRate = this.constantSpeed/(this.accelTime/this.frameRate);
 
-        this.accDist = 0;
-        for(let i = 0; i < this.accelTime/this.frameRate; i++) {
-            this.accDist += this.accelRate * (i+1);
-        }
+        this.accDist = this.accelTime/this.frameRate * this.constantSpeed / 2;
 
         this.sumDist = 0;
         this.speed = 0;
-        //加速時間
-        this.accelState = this.ACCEL;
     }
 
     getSpeed = ():number => {
         if(this.sumDist <= this.accDist) {
-            this.accelState = this.ACCEL;
+            this.speed += this.accelRate;
+            if(this.speed > this.constantSpeed) {
+                this.speed = this.constantSpeed;
+            }
         } else if(this.sumDist <= this.staDist-this.accDist) {
-            this.accelState = this.CONST;
+            this.speed = this.constantSpeed;
         } else {
-            this.accelState = this.DECEL;
+            this.speed -= this.accelRate;
+            if(this.speed < 0) {
+                this.speed = 0.0001;
+            }
         }
-        this.speed += this.accelRate*this.accelState;
-        this.speed = this.speed < 0 ? 0.0001 : this.speed;
         this.sumDist += this.speed * this.speedRate;
-        console.log("speedRate:", this.speedRate, "speed:", this.speed);
         return this.speed * this.speedRate;
     }
 }
