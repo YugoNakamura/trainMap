@@ -13,15 +13,22 @@ const initialZoom: number = 16;
 
 export const Map = () => {
   const [railData, setRailData] = useState<Railload>({ sections: [], stations: [], switchPoints: []});
+  const [speedSel, setSpeedSel] = useState<number>(1);
+  const [speedRate, setSpeedRate] = useState<number>(1);
+  const [date, setDate] = useState<Date>(new Date(2025, 1, 1, 11, 59, 55));
+
   useEffect(() => {
     LoadJson<Railload>('./trainRoute/mikawaLine.json')
     .then(railData => {
       setRailData(railData);
     });
+
+    setInterval(() => {
+      setDate(new Date(date.setSeconds(date.getSeconds() + 1)));
+    }, 1000);
   },[])
 
-  const [speedRate, setSpeedRate] = useState<number>(1);
-  const [trainSchProp, setTrainSchProp] = useState<number>(1);
+
 
   return (
     <div>
@@ -37,19 +44,19 @@ export const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
-        <TrainScheduler speedRate={trainSchProp}/>
+        <TrainScheduler speedRate={speedRate} date={date}/>
       </MapContainer>
 
-      <form style={{position: 'absolute', top: 20, left: 50, zIndex: 1000}}>
-        <input type="datetime-local" name="date" />
-        <select name="speedRate" onChange={(e) => setSpeedRate(Number(e.target.value))}>
+      <form style={{position: 'absolute', top: 10, left: 50, zIndex: 1000}}>
+        <h3>{date.toString()}</h3>
+        <select name="speedRate" onChange={(e) => setSpeedSel(Number(e.target.value))}>
           <option value="1">x1</option>
           <option value="2">x2</option>
           <option value="5">x5</option>
           <option value="10">x10</option>
           <option value="60">x60</option>        
         </select>
-        <button type="button" onClick={() => setTrainSchProp(speedRate)}>OK</button>
+        <button type="button" onClick={() => setSpeedRate(speedSel)}>OK</button>
       </form>
     </div>
   );

@@ -58,9 +58,9 @@ export const Train = (prop:Prop) => {
         //railChkPointsの初期設定
         [railChkPoints.current, distance.current] = 
             getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
+        speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         ttIndex.current += 1;
 
-        speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
         //mtime周期でspeedだけ移動させる
         intervalID.current = setInterval(()=>{
             calcNextPosition(speedControler.current.getSpeed());
@@ -82,11 +82,10 @@ export const Train = (prop:Prop) => {
             //次のSectionの座標情報とsectionIDを受け取る
             [railChkPoints.current, distance.current] = 
                 getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
-            ttIndex.current += 1;
             railChkPointsIndex.current = 0;
-
             //次のsection間の加減速設定
             speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
+            ttIndex.current += 1;
         }
 
         const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];

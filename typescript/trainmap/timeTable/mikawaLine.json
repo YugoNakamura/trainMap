@@ -1,6 +1,7 @@
 [
     {
         "line": "Mikawa Line",
+        "trainNo": "001",
         "fromSta": "Chiryuu",
         "fromStaId": "NH19_4",
         "toSta": "Hekinan",
@@ -64,6 +65,30 @@
             {
                 "s": "MU11_1",
                 "a": "12:11"
+            }
+        ]
+    },
+    {
+        "line": "Mikawa Line",
+        "trainNo": "002",
+        "fromSta": "Chiryuu",
+        "fromStaId": "NH19_4",
+        "toSta": "Mikawa-yatsuhashi",
+        "toStaId": "MY02_2",
+        "bound": false,
+        "tt": [
+            {
+                "s": "NH19_3",
+                "d": "12:01"
+            },
+            {
+                "s": "MY01_2",
+                "a": "12:02",
+                "d": "12:02"
+            },
+            {
+                "s": "MY02_2",
+                "a": "12:03"
             }
         ]
     }

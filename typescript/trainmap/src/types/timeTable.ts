@@ -1,5 +1,6 @@
 export interface timeTable{
     line: string,
+    trainNo: string,
     fromSta: string,
     fromStaId: string,
     toSta:string,
