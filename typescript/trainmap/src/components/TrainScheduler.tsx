@@ -8,11 +8,20 @@ interface Prop {
     date:Date
 }
 
+interface trainProp {
+    railload:Railload,
+    timeTable:timeTable,
+    speedRate:number,
+    key:string
+}
+
 export const TrainScheduler = (prop:Prop) => {
     const railload = useRef<Railload>({"sections": [], "stations": [], "switchPoints": []});
     const tt = useRef<timeTable[]>([]);
     const isLoaded = useRef<boolean>(false);
-    const [trains, setTrains] = useState<JSX.Element[]>([]);
+    const [trains, setTrains] = useState<trainProp[]>([]);
+
+//    const [trains, setTrains] = useState<JSX.Element[]>([]);
 
     useEffect(()=>{
         const trPromise = fetch('./trainRoute/mikawaLine.json');
@@ -38,23 +47,33 @@ export const TrainScheduler = (prop:Prop) => {
             setTrains(trains);
         });
     }, [prop.date]);
-    return <div>{trains}</div>;    
+
+    return <div>
+        {trains.map(
+            train => <Train 
+            railload={train.railload} 
+            timeTable={train.timeTable} 
+            speedRate={train.speedRate} 
+            key={train.key}
+            /> 
+    )}</div>;    
 }
 
-const depTrains = (date:Date, railload:Railload, tt:timeTable[], speedRate:number):JSX.Element[] => {
+const depTrains = (date:Date, railload:Railload, tt:timeTable[], speedRate:number):trainProp[] => {
     let currHour = date.getHours();
     let currMinute = date.getMinutes();
     let currSecond = date.getSeconds();
-    const trains:JSX.Element[] = [];
+    const trainProps:trainProp[] = [];
 
     for (let i = 0; i < tt.length; i++) {
         let depTime = tt[i].tt[0].d;
         let depHour = Number(depTime.split(":")[0]);
         let depMinute = Number(depTime.split(":")[1]);
+        //毎分出発する電車を検索
         if(currHour === depHour && currMinute === depMinute && currSecond === 0) {
             // 現在時刻と一致する出発時刻を持つ列車を返す
-            trains.push(<Train railload={railload} timeTable={tt[i]} speedRate={speedRate} key={tt[i].trainNo}/>);
+            trainProps.push({"railload":railload,"timeTable":tt[i],"speedRate":speedRate,"key":tt[i].trainNo});
         }
     }
-    return trains;
+    return trainProps;
 }
