@@ -21,8 +21,6 @@ export const TrainScheduler = (prop:Prop) => {
     const isLoaded = useRef<boolean>(false);
     const [trains, setTrains] = useState<trainProp[]>([]);
 
-//    const [trains, setTrains] = useState<JSX.Element[]>([]);
-
     useEffect(()=>{
         const trPromise = fetch('./trainRoute/mikawaLine.json');
         const ttPromise = fetch('./timeTable/mikawaLine.json');
@@ -48,12 +46,26 @@ export const TrainScheduler = (prop:Prop) => {
         });
     }, [prop.date]);
 
+    useEffect(() => {
+        const newTrain = trains.map((train) => {
+            train.speedRate = prop.speedRate;
+            return train;
+        });
+        setTrains(newTrain);
+    }, [prop.speedRate]);
+
+    const delTrain = (trainNo:string) => {
+        const newTrains = trains.filter(train => train.key !== trainNo);
+        setTrains(newTrains);
+    }
+
     return <div>
         {trains.map(
             train => <Train 
             railload={train.railload} 
             timeTable={train.timeTable} 
             speedRate={train.speedRate} 
+            delTrain={delTrain}
             key={train.key}
             /> 
     )}</div>;    

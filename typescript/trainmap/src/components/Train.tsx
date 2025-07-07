@@ -8,6 +8,7 @@ interface Prop {
     railload:Railload,
     timeTable:timeTable
     speedRate:number
+    delTrain:(trainNo:string) => void
 }
 export const Train = (prop:Prop) => {
     //station, sectionのmap化
@@ -44,7 +45,7 @@ export const Train = (prop:Prop) => {
 
     //更新周期(msec)
     const frameRate = 33;
-
+    //駅間の距離
     const distance = useRef<number>(0);
 
     //setIntervalのID
@@ -76,6 +77,7 @@ export const Train = (prop:Prop) => {
             //指定した終着駅に到着したら
             if(railChkPoints.current[railChkPointsIndex.current].toString() === toSta.coord.toString()) {
                 clearInterval(intervalID.current);
+                prop.delTrain(prop.timeTable.trainNo);
                 return;
             }
 

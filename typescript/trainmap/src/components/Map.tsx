@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { LatLng } from 'leaflet';
 import { Railloads} from './Railloads';
 import { LoadJson } from './LoadJson';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 import './Map.css';
@@ -16,6 +16,7 @@ export const Map = () => {
   const [speedSel, setSpeedSel] = useState<number>(1);
   const [speedRate, setSpeedRate] = useState<number>(1);
   const [date, setDate] = useState<Date>(new Date(2025, 1, 1, 11, 59, 55));
+  const intervalID = useRef<number>(-1);
 
   useEffect(() => {
     LoadJson<Railload>('./trainRoute/mikawaLine.json')
@@ -23,12 +24,18 @@ export const Map = () => {
       setRailData(railData);
     });
 
-    setInterval(() => {
+    intervalID.current =  setInterval(() => {
       setDate(new Date(date.setSeconds(date.getSeconds() + 1)));
     }, 1000);
   },[])
 
-
+  const onClkOKBtn = () => {
+    clearInterval(intervalID.current);
+    intervalID.current = setInterval(() => {
+      setDate(new Date(date.setSeconds(date.getSeconds() + 1)));
+    }, 1000/speedSel);
+    setSpeedRate(speedSel);
+  }
 
   return (
     <div>
@@ -56,7 +63,7 @@ export const Map = () => {
           <option value="10">x10</option>
           <option value="60">x60</option>        
         </select>
-        <button type="button" onClick={() => setSpeedRate(speedSel)}>OK</button>
+        <button type="button" onClick={onClkOKBtn}>OK</button>
       </form>
     </div>
   );
