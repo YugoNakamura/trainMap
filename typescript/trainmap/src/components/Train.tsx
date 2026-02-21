@@ -9,8 +9,15 @@ interface Prop {
     timeTable:timeTable
     speedRate:number
     delTrain:(trainNo:string) => void
+    date:Date
+    frameRate:number
 }
+
+//station:駅
+//switchPoint:線路の分岐点
+//railCoords:駅と駅を結ぶ線路の座標配列
 export const Train = (prop:Prop) => {
+
     //station, sectionのmap化
     const sections = new Map(prop.railload.sections.map(section => [section.id, section]));
     //出発駅と終着駅を取得
@@ -22,11 +29,13 @@ export const Train = (prop:Prop) => {
     const toSta = stations.get(prop.timeTable.toStaId);
     if (!toSta) throw new Error("Station Data Load Failed");
 
+    //現在時刻
+    const date = useRef<Date>(prop.date);
     //timetable
     const tt = prop.timeTable.tt;
     //走行しているtimeTableのインデックス
-    const ttIndex = useRef(0);
-
+    const ttIdx = useRef(0);
+    //分岐点をmap化
     const switchPoints = new Map(prop.railload.switchPoints.map(switchPoints => [switchPoints.id, switchPoints]));
 
     //上り:true, 下り:false
@@ -39,12 +48,10 @@ export const Train = (prop:Prop) => {
     const position = useRef<number[]>(fromSta.coord);
 
     //トレースする座標配列
-    const railChkPoints = useRef<number[][]>([[]]);
-    //通過したrailChkPointsのインデックス
-    const railChkPointsIndex = useRef<number>(0);
+    const railCoords = useRef<number[][]>([[]]);
+    //通過したrailCoordsのインデックス
+    const railCoordsIdx = useRef<number>(0);
 
-    //更新周期(msec)
-    const frameRate = 33;
     //駅間の距離
     const distance = useRef<number>(0);
 
@@ -52,46 +59,72 @@ export const Train = (prop:Prop) => {
     const intervalID = useRef<number>();
 
     //速度制御用インスタンス
-    const speedControler = useRef<SpeedControler>(new SpeedControler(frameRate));
+    const speedControler = useRef<SpeedControler>(new SpeedControler(prop.frameRate));
     speedControler.current.setSpeedRate(prop.speedRate);
     
+    //初回のみ実行
     useEffect(() => {
-        //railChkPointsの初期設定
-        [railChkPoints.current, distance.current] = 
-            getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
-        speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
-        ttIndex.current += 1;
+        //railCoordsの初期設定
+        [railCoords.current, distance.current] = 
+            getNextRailCoords(
+                isInBound, 
+                sections, 
+                stations, 
+                switchPoints, 
+                tt[ttIdx.current].s, //出発駅ID
+                tt[ttIdx.current+1].s //到着駅ID
+            );
+        speedControler.current.setNextDistance(
+            distance.current, 
+            getTimeDiff(date.current, tt[ttIdx.current+1].a)
+        );
+        ttIdx.current += 1;
 
         //mtime周期でspeedだけ移動させる
-        intervalID.current = setInterval(()=>{
-            calcNextPosition(speedControler.current.getSpeed());
-        }, frameRate);
+        /*intervalID.current = setInterval(()=>{
+            calcNextPosition(speedControler.current.getSpeed(), date.current);
+        }, frameRate);*/
 
         return ()=> clearInterval(intervalID.current);
     },[]);
 
-    //distToMove:次の更新で進む距離, intervalID:setIntervalのID
-    const calcNextPosition = (distToMove:number) => {
-        //Sectionの最後のChkpointを通過したら
-        if(railChkPointsIndex.current >= railChkPoints.current.length-1) {
-            //指定した終着駅に到着したら
-            if(railChkPoints.current[railChkPointsIndex.current].toString() === toSta.coord.toString()) {
+    useEffect(() => {
+        //console.log(prop.date.toString());
+        calcNextPosition(speedControler.current.getSpeed(), prop.date);
+    }, [prop.date]);
+
+    //進行距離とそれを挟むchkPointをもとに次の列車の位置を計算
+    //distToMove:次のレンダリングで進む距離
+    //position:次のレンダリング時の列車の位置
+    //chkPoint:OSMから取得した線路の緯度経度
+    const calcNextPosition = (distToMove:number, date:Date) => {
+        //駅に到着したら
+        if(railCoordsIdx.current >= railCoords.current.length-1) {
+            //終着駅に到着したら
+            if(railCoords.current[railCoordsIdx.current].toString() === toSta.coord.toString()) {
                 clearInterval(intervalID.current);
                 prop.delTrain(prop.timeTable.trainNo);
                 return;
             }
 
-            //次のSectionの座標情報とsectionIDを受け取る
-            [railChkPoints.current, distance.current] = 
-                getNextSection(isInBound, sections, stations, switchPoints, tt[ttIndex.current].s, tt[ttIndex.current+1].s);
-            railChkPointsIndex.current = 0;
-            //次のsection間の加減速設定
-            speedControler.current.setNextSection(distance.current, getTimeDiff(tt[ttIndex.current].d, tt[ttIndex.current+1].a));
-            ttIndex.current += 1;
+            //次の駅間の座標情報と駅間距離を取得
+            [railCoords.current, distance.current] = 
+                getNextRailCoords(
+                    isInBound, 
+                    sections, 
+                    stations, 
+                    switchPoints, 
+                    tt[ttIdx.current].s, 
+                    tt[ttIdx.current+1].s
+                );
+            railCoordsIdx.current = 0;
+            //次の駅間の加減速設定
+            speedControler.current.setNextDistance(distance.current, getTimeDiff(date, tt[ttIdx.current+1].a));
+            ttIdx.current += 1;
         }
 
-        const prevChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current];
-        const nextChkPoint:number[] = railChkPoints.current[railChkPointsIndex.current+1];
+        const prevChkPoint:number[] = railCoords.current[railCoordsIdx.current];
+        const nextChkPoint:number[] = railCoords.current[railCoordsIdx.current+1];
         //現在位置を挟む2つのチェックポイント間の距離
         const distChkPoint = getDist(prevChkPoint, nextChkPoint);
         //現在位置から次のチェックポイントまでの距離
@@ -100,8 +133,8 @@ export const Train = (prop:Prop) => {
         if(distToMove > distToNext) {
             setRenderPos(nextChkPoint);
             position.current = nextChkPoint;
-            railChkPointsIndex.current += 1;
-            calcNextPosition(distToMove-distToNext);
+            railCoordsIdx.current += 1;
+            calcNextPosition(distToMove-distToNext, date);
         } else {
             //前のチェックポイントから現在位置までの距離
             const distToPrev = distChkPoint-distToNext;
@@ -126,42 +159,63 @@ export const Train = (prop:Prop) => {
     );
 }
 
-// 現在のSectionIDから次のSectionを出力
-const getNextSection = (isInBound:boolean, sections:Map<string, Section>, stations:Map<string, Station>, switches:Map<string, SwitchPoint>,depStaID:string, desStaID:string):[number[][], number] => {
-    let resCoords:number[][] = [];
+//section:駅または分岐点間を結ぶ線路
+// 次の駅間の座標配列と距離を取得
+const getNextRailCoords = (
+    isInBound:boolean, //上り:true, 下り:false
+    sections:Map<string, Section>, //sectionIDをkeyとするmap
+    stations:Map<string, Station>, //stationIDをkeyとするmap
+    switches:Map<string, SwitchPoint>, //switchIDをkeyとするmap
+    depStaID:string, //出発駅ID
+    desStaID:string //目的駅ID
+):[number[][], number] => {
+    //駅間の座標配列
+    let nextRailCoords:number[][] = [];
+    //駅間距離
     let dist = 0;
 
     let postSecID = "";
     let depSta = stations.get(depStaID);
     if (!depSta) throw new Error("Station Data Load Failed");
+
+    //次に進むべきSectionID
+    //上りならnext，下りならprev
     let secID = isInBound ? depSta.next : depSta.prev;
     while(true) {
         let sec = sections.get(secID);
         if (!sec) throw new Error("Section Data Load Failed");
+
+        //次に進むべきSectionの座標配列を取得
         let coords = isInBound ? sec.coords : sec.coords.reverse();
-        coords.forEach(coord => resCoords.push(coord));
+        coords.forEach(coord => nextRailCoords.push(coord));
         dist += sec.distance;
         postSecID = secID;
 
-        //次のポイントのIDを取得
+        //次のポイント(分岐点もしくは駅)のIDを取得
         let pointID = isInBound ? sec.next : sec.prev;
+        //次のポイントが分岐点なら、分岐点の情報から次に進むべきSectionIDを取得
         if(switches.has(pointID)) {
             let switchPoint = switches.get(pointID);
             if (!switchPoint) throw new Error("Switch Data Load Failed");
             secID = getNextSecID(switchPoint, postSecID, desStaID);
+        //次のポイントが駅なら、目的駅かどうかを確認して、線路座標と距離を返す
         } else if(pointID === desStaID) {
-            return [resCoords, dist];
+            return [nextRailCoords, dist];
         }
     }
 }
 
-// 通過したsecIDと目的の駅から次に通過するべきsecIDを取得
-const getNextSecID = (switchPoint:SwitchPoint, postSecID:string, desStaID:string):string => {
-    let dirs = switchPoint.direction.filter(function(dir) {
-        return dir.from === postSecID
-    });
+// 線路の分岐点(Switches)において、通過したSectionのID(prevSecID)と目的駅ID(desStaID)から、次に進むべきSectionのIDを取得
+const getNextSecID = (switchPoint:SwitchPoint, prevSecID:string, desStaID:string):string => {
     let nextSecID = "";
+    //switchPointにおいてprevSecIDから出発する方向の分岐点の情報を取得
+    let dirs = switchPoint.direction.filter(function(dir) {
+        return dir.from === prevSecID
+    });
+
     for(let i = 0; i < dirs.length; i++) {
+        //Yの字型の分岐炉で根元から進行する場合:condition:"none"
+        //Yの字型の分岐点で枝から進行する場合:conditionに目的駅IDを含む
         if(dirs[i].condition === "none" || dirs[i].condition.includes(desStaID)) {
             nextSecID = dirs[i].to;
         }
@@ -175,15 +229,17 @@ const getDist = (coord1:number[], coord2:number[]) => {
 }
 
 // 時刻の差をミリ秒で取得
-const getTimeDiff = (from:string, to:string):number => {
-    const [fromHour, fromMin] = from.split(":").map(Number);
+//from:現在時刻, to:時刻表の出発時刻
+const getTimeDiff = (from:Date, to:string):number => {
+    const [fromHour, fromMin, fromSec] = [from.getHours(), from.getMinutes(), from.getSeconds()];
     const [toHour, toMin] = to.split(":").map(Number);
-    let fromTime = fromHour * 60 + fromMin;
-    let toTime = toHour * 60 + toMin;
+    console.log(`from: ${fromHour}:${fromMin}:${fromSec}, to: ${toHour}:${toMin}`);
+    let fromTime = fromHour * 60 * 60 + fromMin * 60 + fromSec;
+    let toTime = toHour * 60 * 60 + toMin * 60;
     if (toTime < fromTime) {
-        toTime += 24 * 60; // 翌日の時間に調整
+        toTime += 24 * 60 * 60; // 翌日の時間に調整
     }
-    return (toTime - fromTime) * 60 * 1000; // ミリ秒に変換
+    return (toTime - fromTime) * 1000; // ミリ秒に変換
 }
 
 
@@ -216,10 +272,10 @@ class SpeedControler {
         this.speedRate = speedRate;
     }
 
-    setNextSection(distance:number, arriveTime:number) {
+    setNextDistance(distance:number, arriveTime:number) {
         this.staDist = distance;
         this.arriveTime = arriveTime;
-        this.constantSpeed = this.staDist/(this.arriveTime-this.accelTime)*this.frameRate;
+        this.constantSpeed = this.staDist/(this.arriveTime-(this.accelTime*2))*this.frameRate;
         this.accelRate = this.constantSpeed/(this.accelTime/this.frameRate);
 
         this.accDist = this.accelTime/this.frameRate * this.constantSpeed / 2;

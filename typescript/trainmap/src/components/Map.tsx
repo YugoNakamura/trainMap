@@ -17,6 +17,7 @@ export const Map = () => {
   const [speedRate, setSpeedRate] = useState<number>(1);
   const [date, setDate] = useState<Date>(new Date(2025, 1, 1, 11, 59, 55));
   const intervalID = useRef<number>(-1);
+  const frameRate = 30;
 
   useEffect(() => {
     LoadJson<Railload>('./trainRoute/mikawaLine.json')
@@ -25,15 +26,16 @@ export const Map = () => {
     });
 
     intervalID.current =  setInterval(() => {
-      setDate(new Date(date.setSeconds(date.getSeconds() + 1)));
-    }, 1000);
+      setDate(new Date(date.setMilliseconds(date.getMilliseconds() + frameRate*speedRate)));
+    }, frameRate);
   },[])
 
   const onClkOKBtn = () => {
     clearInterval(intervalID.current);
-    intervalID.current = setInterval(() => {
-      setDate(new Date(date.setSeconds(date.getSeconds() + 1)));
-    }, 1000/speedSel);
+    console.log(`speedSel: ${speedSel}, speedRate: ${speedRate}`);
+    intervalID.current =  setInterval(() => {
+      setDate(new Date(date.setMilliseconds(date.getMilliseconds() + frameRate*speedSel)));
+    }, frameRate);
     setSpeedRate(speedSel);
   }
 
@@ -51,7 +53,7 @@ export const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
-        <TrainScheduler speedRate={speedRate} date={date}/>
+        <TrainScheduler speedRate={speedRate} date={date} frameRate={frameRate}/>
       </MapContainer>
 
       <form style={{position: 'absolute', top: 10, left: 50, zIndex: 1000}}>

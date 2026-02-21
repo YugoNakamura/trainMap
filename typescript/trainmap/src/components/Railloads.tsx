@@ -6,6 +6,7 @@ export interface Prop {
     railload:Railload
 }
 
+//線路や駅の情報を地図上に表示するコンポーネント
 export function Railloads(prop:Prop) {
     //区間情報
     const sections:Section[] = prop.railload.sections;
