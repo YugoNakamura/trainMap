@@ -4,7 +4,9 @@ export interface Section {
     prev:string,
     next:string,
     distance:number,
-    coords:number[][]
+    coords:number[][],
+    dist_coords:number[]
+
 }
 
 //駅を表す

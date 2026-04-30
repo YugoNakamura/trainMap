@@ -4,6 +4,8 @@ import { timeTable } from "../types/timeTable"
 import {Train} from "./Train"
 
 interface Prop {
+    railload:Railload,
+    timeTable:timeTable[],    
     speedRate:number,
     date:Date,
     frameRate:number
@@ -42,7 +44,7 @@ export const TrainScheduler = (prop:Prop) => {
     useEffect(() => {
         //データがロードされていない場合は処理しない
         if(!isLoaded.current) return;
-        const addTrains = getDepTrains(prop.date, railload.current, timeTables.current, prop.speedRate);
+        const addTrains = getDepTrains(prop.date, prop.railload, prop.timeTable, prop.speedRate);
         //始発する列車を運行中の列車に追加
         addTrains.map(addTrain => {
             trains.push(addTrain);
