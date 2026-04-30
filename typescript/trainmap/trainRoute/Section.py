@@ -16,16 +16,17 @@ class Section:
         self.splitSections()
         # 出力用リストにsectionを追加
         for i in range(len(self.coords)):
-            dist = 0
+            dist_coord = []
             for j in range(len(self.coords[i])-1):
-                dist += self.getDistance(self.coords[i][j], self.coords[i][j+1])
-
+                dist_coord.append(self.getDistance(self.coords[i][j], self.coords[i][j+1]))
+            dist = sum(dist_coord)
             self.sections.append({
                 'id': '',
                 'prev': '',
                 'next': '',
                 'distance': dist,
-                'coords': self.coords[i]
+                'coords': self.coords[i],
+                'dist_coord': dist_coord
             })
         self.setID()
 
