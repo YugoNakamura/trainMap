@@ -4,10 +4,11 @@ import { LatLng } from 'leaflet';
 import { Railloads} from './Railloads';
 import { timeTable } from "../types/timeTable"
 import { LoadJson } from './LoadJson';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 import './Map.css';
+import dayjs from "dayjs";
 
 const initialPosition:LatLng = new LatLng(35.0056828, 137.0397465);
 const initialZoom: number = 16;
@@ -17,11 +18,9 @@ export const Map = () => {
   const [timeTable, setTimeTable] = useState<timeTable[]>([]);
   const [speedSel, setSpeedSel] = useState<number>(1);
   const [speedRate, setSpeedRate] = useState<number>(1);
-  const [date, setDate] = useState<Date>(new Date(2025, 1, 1, 11, 59, 55));
-  const intervalID = useRef<number>(-1);
+  const [date, setDate] = useState<dayjs.Dayjs>(dayjs('2025/01/01 11:59:55'));
   const frameRate = 30;
 
-  // 初回レンダリング時実行事項 - 1. 鉄道路線データの読み込み - 2. タイマーのセット
   useEffect(() => {
     LoadJson<Railload>('./trainRoute/mikawaLine.json')
     .then(railData => {
@@ -32,18 +31,19 @@ export const Map = () => {
     .then(timeData => {
       setTimeTable(timeData);
     });
+  }, []);
 
-    intervalID.current =  setInterval(() => {
-      setDate(new Date(date.setMilliseconds(date.getMilliseconds() + frameRate*speedRate)));
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setDate(prevDate => prevDate.add(frameRate * speedRate, 'ms'));
     }, frameRate);
-  },[])
+    return () => {
+      window.clearInterval(id);
+    };
+  }, [speedRate]);
 
   const onClkOKBtn = () => {
-    clearInterval(intervalID.current);
     console.log(`speedSel: ${speedSel}, speedRate: ${speedRate}`);
-    intervalID.current =  setInterval(() => {
-      setDate(new Date(date.setMilliseconds(date.getMilliseconds() + frameRate*speedSel)));
-    }, frameRate);
     setSpeedRate(speedSel);
   }
 
@@ -61,11 +61,11 @@ export const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
-        <TrainScheduler railload={railData} timeTable={timeTable} speedRate={speedRate} date={date} frameRate={frameRate}/>
+        <TrainScheduler railload={railData} timeTable={timeTable} speedRate={speedRate} date={date}/>
       </MapContainer>
 
       <form style={{position: 'absolute', top: 10, left: 50, zIndex: 1000}}>
-        <h3>{date.toString()}</h3>
+        <h3>{date.format()}</h3>
         <select name="speedRate" onChange={(e) => setSpeedSel(Number(e.target.value))}>
           <option value="1">x1</option>
           <option value="2">x2</option>

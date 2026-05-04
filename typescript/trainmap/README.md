@@ -46,7 +46,7 @@ $$a=\frac{v}{t_a}$$
 1. $t_p<t_a$のとき(加速時間)の走行距離$x_1$
    底辺$t_p$，高さ$v\frac{t_p}{t_a}$の直角三角形の面積
    $$
-      x_1=\{t_p\times v\frac{t_p}{t_a}\}\times\frac{1}{2}
+      x_1=\frac{t_a\cdot v}{2}\cdot (\frac{t_p}{t_a})^2=\frac{vt_p^2}{2t_a}
    $$
    ![](./README_images/calcSpeed1.svg)
 2. $t_a<=t_p<t_u-t_a$のとき(等速時間)の走行距離$x_2$
@@ -58,7 +58,7 @@ $$a=\frac{v}{t_a}$$
 3. $t_p<=t_u-t_a$のとき(減速時間)の走行距離$x_3$
    台形である駅間距離$x_u$から底辺$t_u-t_p$，高さ$v\frac{t_u-t_p}{t_a}$を引いた面積
    $$
-      x_3=x_u-\{(t_u-t_p)\times v\frac{t_u-t_p}{t_a}\}\times \frac{1}{2}
+      x_3=x_u-\{\frac{t_av}{2}\cdot (\frac{t_u-t_p}{t_a})^2\}=x_u-\frac{v(t_u-t_p)^2}{2t_a}
    $$
    ![](./README_images/calcSpeed3.svg)
 # 列車の進め方
@@ -185,30 +185,34 @@ $$a=\frac{v}{t_a}$$
 graph TD
     A["index.tsx"]
     App["App"]
-    Map["Map<br/>(TrainRoute fetch)"]
-    Railloads["Railloads<br/>props: {railData}"]
-    TrainScheduler["TrainScheduler<br/>(TimeTable fetch)"]
-    Train["Train<br/>props: {railData,<br/>timeTable, speedRate<br/>delTrain, date}"]
-    TC["TrainController<br/>Class"]
-    SC["SpeedController<br/>Class"]
+    Map["Map"]
+    Railloads["Railloads"]
+    TrainScheduler["TrainScheduler"]
+    subgraph TrainSet
+      Train["Train"]
+      TC["TrainController<br/>Class"]
+      SC["SpeedController<br/>Class"]
+    end
     
     JSON1["./trainRoute/<br/>mikawaLine.json"]
     JSON2["./timeTable/<br/>mikawaLine.json"]
     
     A -->|renders| App
     App -->|renders| Map
-    Map -->|Railloads<br/>railData| Railloads
-    Map -->|TrainScheduler<br/>railData, speedRate<br/>date, frameRate| TrainScheduler
-    TrainScheduler -->|Train×複数<br/>railData, timeTable<br/>speedRate, delTrain<br/>date, frameRate| Train
-    
-    Map -.->|fetch| JSON1
-    TrainScheduler -.->|fetch| JSON2
-    
-    Train -->|create/use| TC
-    TC -->|内部で使用| SC
-    
+    Map -->|Railloads| Railloads
+    Map -->|Railloads, speedRate<br/>date, timeTable| TrainScheduler
+
+    JSON1 -.->|fetch<br/>Railloads|Map
+    JSON2 -.->|fetch<br/>timeTable|Map
+
+    TrainScheduler -->|Train×複数<br/>Railloads, timeTable<br/>speedRate, delTrain, date| Train
     Train -.->|delTrain<br/>callback| TrainScheduler
-    TrainScheduler -.->|speedRate<br/>変更イベント| Train
+
+    Train -->|Railloads,<br/>timeTable, speedRate<br/>delTrain, date| TC
+    TC -->|列車位置| Train
+
+    TC -->|speedRate, date, <br/>timeTable| SC
+    SC -->|駅間, <br/>出発駅からの距離|TC
     
     style A fill:#e1f5ff
     style App fill:#fff3e0
