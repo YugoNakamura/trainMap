@@ -155,8 +155,10 @@ class TrainControler {
             if (!sec) throw new Error("Section Data Load Failed");
 
             //上り下りに合わせて線路座標・線路座標間距離を並び替え
-            let coords      = this.isInBound ? sec.coords       : sec.coords.reverse();
-            let dist_coords = this.isInBound ? sec.dist_coords  : sec.dist_coords.reverse();
+            let coords_copy = [...sec.coords];
+            let dist_coords_copy = [...sec.dist_coords];
+            let coords      = this.isInBound ? sec.coords       : coords_copy.reverse();
+            let dist_coords = this.isInBound ? sec.dist_coords  : dist_coords_copy.reverse();
 
             //traceCoordsの末尾にcoordsを連結(Sectionの端は重複するため、coordsの末尾を捨てる)
             if(traceCoords.length > 0) traceCoords.pop();
@@ -258,8 +260,8 @@ class SpeedControler {
         let hmsDate = dayjs(this.baseDay + date.format("HH:mm:ss:SSS"), "YYYY/MM/DD HH:mm:ss:SSS");
         let depSta:string = '';
         let arrSta:string = '';
-        let depTime:dayjs.Dayjs;
-        let arrTime:dayjs.Dayjs;
+        let depTime:dayjs.Dayjs = dayjs(0);
+        let arrTime:dayjs.Dayjs = dayjs(0);
         //始発前の時刻を指定された場合、始発駅に停車しているとみなす
         if(hmsDate.isBefore(this.tt[0].d)) {
             this.delTrain(this.trainNo);

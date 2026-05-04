@@ -20,6 +20,7 @@ export const TrainScheduler = (prop:Prop) => {
     //運行中の列車
     const [trains, setTrains] = useState<trainProp[]>([]);
 
+    //1分ごとに現在時刻と一致する出発時刻を持つ列車を検索し、運行中の列車に追加する
     useEffect(() => {
         const addTrains = getDepTrains(prop.date, prop.railload, prop.timeTable);
         //始発する列車を運行中の列車に追加
@@ -27,7 +28,7 @@ export const TrainScheduler = (prop:Prop) => {
             trains.push(addTrain);
             setTrains(trains);
         });
-    }, [prop.date.second()]); //秒が変わるたびに実行
+    }, [prop.date.minute()]);
 
     const delTrain = (trainNo:string) => {
         const newTrains = trains.filter(train => train.key !== trainNo);
