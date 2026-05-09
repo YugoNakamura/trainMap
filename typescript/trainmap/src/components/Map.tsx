@@ -3,35 +3,26 @@ import 'leaflet/dist/leaflet.css';
 import { LatLng } from 'leaflet';
 import { Railloads} from './Railloads';
 import { timeTable } from "../types/timeTable"
-import { LoadJson } from './LoadJson';
 import { useEffect, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 import './Map.css';
 import dayjs from "dayjs";
+//ファイル読み込み
+import timeDataRaw from '../../timeTable/mikawaLine.json';
+import raillDataRaw from '../../trainRoute/mikawaLine.json';
 
 const initialPosition:LatLng = new LatLng(35.0056828, 137.0397465);
 const initialZoom: number = 16;
 
 export const Map = () => {
-    const [railData, setRailData] = useState<Railload>({ sections: [], stations: [], switchPoints: []});
-    const [timeTable, setTimeTable] = useState<timeTable[]>([]);
     const [speedSel, setSpeedSel] = useState<number>(1);
     const [speedRate, setSpeedRate] = useState<number>(1);
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs('2025/01/01 11:59:55'));
     const frameRate = 30;
 
-    useEffect(() => {
-    LoadJson<Railload>('./trainRoute/mikawaLine.json')
-    .then(railData => {
-        setRailData(railData);
-    });
-
-    LoadJson<timeTable[]>('./timeTable/mikawaLine.json')
-    .then(timeData => {
-        setTimeTable(timeData);
-    });
-    }, []);
+    const timeData = timeDataRaw as timeTable[];
+    const railData = raillDataRaw as Railload;
 
     useEffect(() => {
     const id = window.setInterval(() => {
@@ -61,7 +52,7 @@ export const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Railloads railload={railData} />
-        <TrainScheduler railload={railData} timeTable={timeTable} date={date}/>
+        <TrainScheduler railload={railData} timeTable={timeData} date={date}/>
         </MapContainer>
 
         <form style={{position: 'absolute', top: 10, left: 50, zIndex: 1000}}>
