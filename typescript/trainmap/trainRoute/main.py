@@ -10,19 +10,24 @@ if __name__ == '__main__':
     jsonfile.close()
 
     # JSONから鉄道(railRoads)と駅(stations)のデータを分割
+    # 各行の座標を要素とした2次元配列
     jsonRail = []
+    # 駅に関する1行全てを要素とした1次元配列
     jsonSta = []
+
     jsondata = jsondata['features']
 
     # JSONのデータから鉄道と駅の情報を抽出
     for data in jsondata:
+        # 線路のデータはLineString，駅のデータはPointで表されているため，タイプを確認して分割
         if data['geometry']['type'] == 'LineString':
-            # 座標部分を抽出/緯度経度の順番に変更
+            # 座標部分を抽出
             jsonCoords = data['geometry']['coordinates']
             # 緯度経度の順番を[緯度, 経度]に変更
             for i in range(len(jsonCoords)):
                 jsonCoords[i] = [jsonCoords[i][1], jsonCoords[i][0]]
             jsonRail.append(jsonCoords)
+
         elif data['geometry']['type'] == 'Point':
             jsonSta.append(data)
     
