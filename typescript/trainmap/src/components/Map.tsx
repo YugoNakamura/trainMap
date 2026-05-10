@@ -6,6 +6,7 @@ import { RawTimeTable, TimeTable } from "../types/timeTable"
 import { useEffect, useRef, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
+
 import './Map.css';
 //ファイル読み込み
 import timeDataRaw from '../../timeTable/mikawaLine.json';
