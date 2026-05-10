@@ -1,4 +1,4 @@
-import dayjs, { Dayjs, PluginFunc } from 'dayjs';
+import dayjs, { PluginFunc } from 'dayjs';
 const getSecondsFromDay = function (date:dayjs.Dayjs) {
     let hour = date.hour();
     let minute = date.minute();
