@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Railload, Section, Station, SwitchPoint } from "../types/railload";
-import { timeTable} from "../types/timeTable";
+import { TimeTable} from "../types/timeTable";
 import L from "leaflet";
 import dayjs from "dayjs";
 
 interface Prop {
     railload:Railload,
-    timeTable:timeTable,
-    delTrain:(trainNo:string) => void
+    timeTable:TimeTable,
     date:dayjs.Dayjs
 }
 
@@ -22,7 +21,6 @@ export const Train = (prop:Prop) => {
             prop.railload.switchPoints,
             prop.timeTable,
             prop.timeTable.bound,
-            prop.delTrain,
         );
     }
 
@@ -66,16 +64,15 @@ class TrainControler {
         sections:Section[], 
         stations:Station[], 
         switchPoints:SwitchPoint[],
-        timeTable:timeTable,
+        timeTable:TimeTable,
         isInBound:boolean,
-        delTrain:Function,
     ) {
         //それぞれのIDをkeyとするmapを作成
         this.sections = new Map(sections.map(section => [section.id, section]));
         this.stations = new Map(stations.map(station => [station.id, station]));
         this.switchPoints = new Map(switchPoints.map(switchPoint => [switchPoint.id, switchPoint]));
 
-        this.speedControler = new SpeedControler(timeTable, delTrain);
+        this.speedControler = new SpeedControler(timeTable);
         this.isInBound = isInBound;
 
         this.traceCoords = [[]];
@@ -204,85 +201,43 @@ class TrainControler {
     }
 }
 
-//import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-//dayjs.extend(isSameOrBefore);
-dayjs.extend(isSameOrAfter);
-
 class SpeedControler {
     //時刻表
     private tt:{s:string, a:dayjs.Dayjs, d:dayjs.Dayjs}[] = [];
     //加減速時間(msec)
     private accelTime:number = 2*1000;
-    //時刻比較の際に日付を無視するための基準日
-    private baseDay:string = '1970/01/01 ';
-
-    //終着駅到着通知用関数
-    private delTrain:Function;
-    //列車の識別番号
-    private trainNo:string;
     
-    constructor(timeTable:timeTable, delTrain:Function) {
-        this.delTrain = delTrain;
-        this.trainNo = timeTable.trainNo;
-        //到着・出発時刻をstring型からdayjs型に変換してttに格納
-        timeTable.tt.forEach((tt, i) => {
-            //始発駅と終着駅は到着もしくは出発のどちらかしかないため、aもしくはdのみをdayjs型に変換してttに格納。。
-            //始発駅(到着時間がない)：aは0に設定
-            if(i === 0) {
-                this.tt.push({
-                    s: tt.s,
-                    a: dayjs(0),
-                    d: dayjs(this.baseDay + tt.d, "YYYY/MM/DD HH:mm:ss")
-                });
-            //終着駅(出発時間がない)：dは0に設定
-            }else if(i === timeTable.tt.length-1) {
-                this.tt.push({
-                    s: tt.s,
-                    a: dayjs(this.baseDay + tt.a, "YYYY/MM/DD HH:mm:ss"),
-                    d: dayjs(0)
-                });
-            } else {
-                this.tt.push({
-                        s: tt.s,
-                        a: dayjs(this.baseDay + tt.a, "YYYY/MM/DD HH:mm:ss"),
-                        d: dayjs(this.baseDay + tt.d, "YYYY/MM/DD HH:mm:ss")
-                });
-            }
-        });
+    constructor(timeTable:TimeTable) {
+        this.tt = timeTable.tt;
     }
 
     //列車が駅間にいるか停車中か判定
     //depStaとarrStaが同じ：駅に停車中
     //depStaとarrStaが異なる：depStaからarrStaに向けて移動中
     getTrainSta(date:dayjs.Dayjs):[string, string, dayjs.Dayjs, dayjs.Dayjs] {
-        //現在時刻
-        let hmsDate = dayjs(this.baseDay + date.format("HH:mm:ss:SSS"), "YYYY/MM/DD HH:mm:ss:SSS");
         let depSta:string = '';
         let arrSta:string = '';
         let depTime:dayjs.Dayjs = dayjs(0);
         let arrTime:dayjs.Dayjs = dayjs(0);
         //始発前の時刻を指定された場合、始発駅に停車しているとみなす
-        if(hmsDate.isBefore(this.tt[0].d)) {
-            this.delTrain(this.trainNo);
+        if(date.isHMSBefore(this.tt[0].d)) {
             depSta = this.tt[0].s;
             arrSta = this.tt[0].s;
             depTime = this.tt[0].d;
             arrTime = this.tt[0].a;
-            return [depSta, arrSta, depTime!, arrTime!];
+            return [depSta, arrSta, depTime, arrTime];
         }
         //終着後の時刻を指定された場合、終着駅に停車しているとみなす
-        if(hmsDate.isSameOrAfter(this.tt[this.tt.length-1].a)) {
-            this.delTrain(this.trainNo);
+        if(date.isHMSSameOrAfter(this.tt[this.tt.length-1].a)) {
             depSta = this.tt[this.tt.length-1].s;
             arrSta = this.tt[this.tt.length-1].s;
             depTime = this.tt[this.tt.length-1].d;
             arrTime = this.tt[this.tt.length-1].a;
-            return [depSta, arrSta, depTime!, arrTime!];
+            return [depSta, arrSta, depTime, arrTime];
         }
         //現在時刻が駅間の移動中の場合
         for(let i = 0; i < this.tt.length-1; i++) {
-            if(hmsDate.isSameOrAfter(this.tt[i].d) && hmsDate.isBefore(this.tt[i+1].a)) {
+            if(date.isHMSSameOrAfter(this.tt[i].d) && date.isHMSBefore(this.tt[i+1].a)) {
                 depSta = this.tt[i].s;
                 arrSta = this.tt[i+1].s;
                 depTime = this.tt[i].d;
@@ -292,7 +247,7 @@ class SpeedControler {
         }
         //現在時刻に駅に停車している場合(現在時刻が駅の到着時刻より後で出発時刻より前)：depStaとarrStaは同じ
         for(let i = 1; i < this.tt.length-1; i++) {
-            if(hmsDate.isSameOrAfter(this.tt[i].a) && hmsDate.isBefore(this.tt[i].d)) {
+            if(date.isHMSSameOrAfter(this.tt[i].a) && date.isHMSBefore(this.tt[i].d)) {
                 depSta = this.tt[i].s;
                 arrSta = this.tt[i].s;
                 depTime = this.tt[i].d;
@@ -300,22 +255,21 @@ class SpeedControler {
                 break;
             }
         }
-        return [depSta, arrSta, depTime!, arrTime!];
+        return [depSta, arrSta, depTime, arrTime];
     }
 
     //getTrainStaで得られたdepStaとarrStaをもとに、駅間距離を受け取って列車の進行割合を算出
     getProgress(date:dayjs.Dayjs, depTime:dayjs.Dayjs, arrTime:dayjs.Dayjs, distance:number):number {
-        let hmsDate = dayjs(this.baseDay + date.format("HH:mm:ss:SSS"), "YYYY/MM/DD HH:mm:ss:SSS");
         //出発駅からの距離
         let progress = 0;
         //駅間の移動時間(msec)
         let travelTime = arrTime.diff(depTime, 'millisecond');
 
         //停止中の場合は例外を投げる
-        if(depTime.isAfter(arrTime)) throw new Error("This Train is currently stopped at a station.");
+        if(depTime.isHMSAfter(arrTime)) throw new Error("This Train is currently stopped at a station.");
 
         //出発駅を出発してからの経過時間(msec)
-        let elapsedTime = hmsDate.diff(depTime, 'millisecond');
+        let elapsedTime = date.diff(depTime, 'millisecond');
         //定速移動時の速度
         let constantSpeed = distance/(travelTime-this.accelTime);
         //経過時間が加速時間の場合
