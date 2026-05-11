@@ -4,6 +4,7 @@ import { Railload, Section, Station, SwitchPoint } from "../types/railload";
 import { TimeTable} from "../types/timeTable";
 import L from "leaflet";
 import dayjs from "dayjs";
+import trainIcon from '../../asset/trainIcon.svg';
 
 interface Prop {
     railload:Railload,
@@ -32,7 +33,7 @@ export const Train = (prop:Prop) => {
 
 
     const customIcon = L.icon({
-        iconUrl: './asset/trainIcon.svg',
+        iconUrl: trainIcon,
         iconSize: [30, 30], // アイコンのサイズ
         iconAnchor: [15, 15], // アイコンのアンカー位置
     });

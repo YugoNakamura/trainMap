@@ -1,7 +1,21 @@
 import { Marker, Polyline, Popup } from "react-leaflet";
 import {Railload, Section, Station, SwitchPoint} from "../types/railload"
-import { LatLngExpression } from "leaflet";
+import L, { LatLngExpression } from "leaflet";
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// マーカーのアイコンを設定
+const customMarkerIcon = new L.Icon({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+L.Marker.prototype.options.icon = customMarkerIcon;
 export interface Prop {
     railload:Railload
 }
