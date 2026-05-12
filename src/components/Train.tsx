@@ -4,7 +4,7 @@ import { Railload, Section, Station, SwitchPoint } from "../types/railload";
 import { TimeTable} from "../types/timeTable";
 import L from "leaflet";
 import dayjs from "dayjs";
-import trainIcon from '../../asset/trainIcon.svg';
+import trainIcon from '/asset/trainIcon.svg';
 
 interface Prop {
     railload:Railload,
