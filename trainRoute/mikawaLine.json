@@ -296,9 +296,9 @@
             ]
         },
         {
-            "id": "MU09_A-MU09_1",
+            "id": "MU09_A-MU09_2",
             "prev": "MU09_A",
-            "next": "MU09_1",
+            "next": "MU09_2",
             "distance": 0.0007124062852077058,
             "coords": [
                 [
@@ -320,8 +320,8 @@
             ]
         },
         {
-            "id": "MU09_1-MU09_B",
-            "prev": "MU09_1",
+            "id": "MU09_2-MU09_B",
+            "prev": "MU09_2",
             "next": "MU09_B",
             "distance": 0.0008875232109781167,
             "coords": [
@@ -339,9 +339,9 @@
             ]
         },
         {
-            "id": "MU09_A-MU09_2",
+            "id": "MU09_A-MU09_1",
             "prev": "MU09_A",
-            "next": "MU09_2",
+            "next": "MU09_1",
             "distance": 0.0007095142258789799,
             "coords": [
                 [
@@ -363,8 +363,8 @@
             ]
         },
         {
-            "id": "MU09_2-MU09_B",
-            "prev": "MU09_2",
+            "id": "MU09_1-MU09_B",
+            "prev": "MU09_1",
             "next": "MU09_B",
             "distance": 0.0008942850295335799,
             "coords": [
@@ -3723,9 +3723,9 @@
             ]
         },
         {
-            "id": "MY02_B-MY02_2",
+            "id": "MY02_B-MY02_1",
             "prev": "MY02_B",
-            "next": "MY02_2",
+            "next": "MY02_1",
             "distance": 0.0009572878684503864,
             "coords": [
                 [
@@ -3747,8 +3747,8 @@
             ]
         },
         {
-            "id": "MY02_2-MY02_A",
-            "prev": "MY02_2",
+            "id": "MY02_1-MY02_A",
+            "prev": "MY02_1",
             "next": "MY02_A",
             "distance": 0.005601237939938219,
             "coords": [
@@ -3831,9 +3831,9 @@
             ]
         },
         {
-            "id": "MY02_B-MY02_1",
+            "id": "MY02_B-MY02_2",
             "prev": "MY02_B",
-            "next": "MY02_1",
+            "next": "MY02_2",
             "distance": 0.0009464136067537698,
             "coords": [
                 [
@@ -3855,8 +3855,8 @@
             ]
         },
         {
-            "id": "MY02_1-MY02_A",
-            "prev": "MY02_1",
+            "id": "MY02_2-MY02_A",
+            "prev": "MY02_2",
             "next": "MY02_A",
             "distance": 0.005646671069630643,
             "coords": [
@@ -6439,12 +6439,12 @@
             ]
         },
         {
-            "id": "MY02_1",
+            "id": "MY02_2",
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
             "code": "MY02",
-            "prev": "MY02_B-MY02_1",
-            "next": "MY02_1-MY02_A",
+            "prev": "MY02_B-MY02_2",
+            "next": "MY02_2-MY02_A",
             "coord": [
                 35.0109842,
                 137.077474
@@ -6571,12 +6571,12 @@
             ]
         },
         {
-            "id": "MU09_1",
+            "id": "MU09_2",
             "name": "新川町",
             "name_en": "Shinkawa-machi",
             "code": "MU09",
-            "prev": "MU09_A-MU09_1",
-            "next": "MU09_1-MU09_B",
+            "prev": "MU09_A-MU09_2",
+            "next": "MU09_2-MU09_B",
             "coord": [
                 34.8965858,
                 136.9903221
@@ -6607,12 +6607,12 @@
             ]
         },
         {
-            "id": "MY02_2",
+            "id": "MY02_1",
             "name": "三河八橋",
             "name_en": "Mikawa Yatsuhashi",
             "code": "MY02",
-            "prev": "MY02_B-MY02_2",
-            "next": "MY02_2-MY02_A",
+            "prev": "MY02_B-MY02_1",
+            "next": "MY02_1-MY02_A",
             "coord": [
                 35.011044,
                 137.0773992
@@ -6823,12 +6823,12 @@
             ]
         },
         {
-            "id": "MU09_2",
+            "id": "MU09_1",
             "name": "新川町",
             "name_en": "Shinkawa-machi",
             "code": "MU09",
-            "prev": "MU09_A-MU09_2",
-            "next": "MU09_2-MU09_B",
+            "prev": "MU09_A-MU09_1",
+            "next": "MU09_1-MU09_B",
             "coord": [
                 34.8965958,
                 136.9902858
@@ -6949,27 +6949,27 @@
             ],
             "direction": [
                 {
-                    "from": "MU09_A-MU09_1",
-                    "to": "MU10_1-MU09_A",
-                    "condition": "none"
-                },
-                {
                     "from": "MU09_A-MU09_2",
                     "to": "MU10_1-MU09_A",
                     "condition": "none"
                 },
                 {
-                    "from": "MU10_1-MU09_A",
-                    "to": "MU09_A-MU09_1",
-                    "condition": [
-                        "MU09_1"
-                    ]
+                    "from": "MU09_A-MU09_1",
+                    "to": "MU10_1-MU09_A",
+                    "condition": "none"
                 },
                 {
                     "from": "MU10_1-MU09_A",
                     "to": "MU09_A-MU09_2",
                     "condition": [
                         "MU09_2"
+                    ]
+                },
+                {
+                    "from": "MU10_1-MU09_A",
+                    "to": "MU09_A-MU09_1",
+                    "condition": [
+                        "MU09_1"
                     ]
                 }
             ]
@@ -6982,27 +6982,27 @@
             ],
             "direction": [
                 {
-                    "from": "MU09_1-MU09_B",
-                    "to": "MU09_B-MU08_A",
-                    "condition": "none"
-                },
-                {
                     "from": "MU09_2-MU09_B",
                     "to": "MU09_B-MU08_A",
                     "condition": "none"
                 },
                 {
-                    "from": "MU09_B-MU08_A",
-                    "to": "MU09_1-MU09_B",
-                    "condition": [
-                        "MU09_1"
-                    ]
+                    "from": "MU09_1-MU09_B",
+                    "to": "MU09_B-MU08_A",
+                    "condition": "none"
                 },
                 {
                     "from": "MU09_B-MU08_A",
                     "to": "MU09_2-MU09_B",
                     "condition": [
                         "MU09_2"
+                    ]
+                },
+                {
+                    "from": "MU09_B-MU08_A",
+                    "to": "MU09_1-MU09_B",
+                    "condition": [
+                        "MU09_1"
                     ]
                 }
             ]
@@ -7583,27 +7583,27 @@
             ],
             "direction": [
                 {
-                    "from": "MY02_2-MY02_A",
-                    "to": "MY02_A-MY01_B",
-                    "condition": "none"
-                },
-                {
                     "from": "MY02_1-MY02_A",
                     "to": "MY02_A-MY01_B",
                     "condition": "none"
                 },
                 {
-                    "from": "MY02_A-MY01_B",
-                    "to": "MY02_2-MY02_A",
-                    "condition": [
-                        "MY02_2"
-                    ]
+                    "from": "MY02_2-MY02_A",
+                    "to": "MY02_A-MY01_B",
+                    "condition": "none"
                 },
                 {
                     "from": "MY02_A-MY01_B",
                     "to": "MY02_1-MY02_A",
                     "condition": [
                         "MY02_1"
+                    ]
+                },
+                {
+                    "from": "MY02_A-MY01_B",
+                    "to": "MY02_2-MY02_A",
+                    "condition": [
+                        "MY02_2"
                     ]
                 }
             ]
@@ -7616,27 +7616,27 @@
             ],
             "direction": [
                 {
-                    "from": "MY02_B-MY02_2",
-                    "to": "MY03_A-MY02_B",
-                    "condition": "none"
-                },
-                {
                     "from": "MY02_B-MY02_1",
                     "to": "MY03_A-MY02_B",
                     "condition": "none"
                 },
                 {
-                    "from": "MY03_A-MY02_B",
-                    "to": "MY02_B-MY02_2",
-                    "condition": [
-                        "MY02_2"
-                    ]
+                    "from": "MY02_B-MY02_2",
+                    "to": "MY03_A-MY02_B",
+                    "condition": "none"
                 },
                 {
                     "from": "MY03_A-MY02_B",
                     "to": "MY02_B-MY02_1",
                     "condition": [
                         "MY02_1"
+                    ]
+                },
+                {
+                    "from": "MY03_A-MY02_B",
+                    "to": "MY02_B-MY02_2",
+                    "condition": [
+                        "MY02_2"
                     ]
                 }
             ]
