@@ -38,6 +38,7 @@ export const TrainScheduler = (prop:Prop) => {
     )}</div>;    
 }
 
+// 現在時刻と時刻表から現在走行中の列車を返す
 const getRunningTrains = (date:dayjs.Dayjs, railload:Railload, timeTables:TimeTable[]) => {
     let trainProps:trainProp[] = [];
     for (let i = 0; i < timeTables.length; i++) {

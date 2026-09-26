@@ -140,8 +140,6 @@ class Switch:
             for dir in sw['direction']:
                 if dir['condition'] == '':
                     condlist = self.getConditionList(sw["id"], dir['to'])
-                    print(f'condlist: {condlist}')
-                    print()
                     dir['condition'] = condlist
 
 
@@ -149,7 +147,6 @@ class Switch:
     p = re.compile(r'([A-Z]{2}\d{2}_\d+)')
     def getConditionList(self, switchId, sectionId):
         trackNos = []
-        print(f'switchId: {switchId}, sectionId: {sectionId}')
         matchObj = self.p.search(sectionId)
         if matchObj == None:
             # sectionIdに繋がっている分岐点のIDを取得
@@ -158,7 +155,6 @@ class Switch:
                 if id != switchId:
                     nextSwitchId = id
                     break
-            print(f'nextSwitchId: {nextSwitchId}')
             # nextSwitchIdから次のsectionIdを取得
             for switch in self.switches:
                 if switch['id'] == nextSwitchId:

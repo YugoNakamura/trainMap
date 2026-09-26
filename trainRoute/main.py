@@ -39,6 +39,8 @@ if __name__ == '__main__':
                 if (jsonRail[i][0] == jsonRail[j][k] or jsonRail[i][-1] == jsonRail[j][k]) and\
                       k != 0 and k != len(jsonRail[j])-1:
                     popList.append([j, k])
+
+        print(popList)
         for n in range(len(popList)):
             before = jsonRail[popList[n][0]][:popList[n][1]+1]
             after = jsonRail[popList[n][0]][popList[n][1]:]
@@ -46,6 +48,7 @@ if __name__ == '__main__':
             jsonRail.insert(popList[n][0], after)
             jsonRail.insert(popList[n][0], before)
             
+#        print(jsonRail)
 
 
     output = {'sections':[], 'stations':[], 'switchPoints':[]}

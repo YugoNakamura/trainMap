@@ -90,7 +90,7 @@ class TrainControler {
         let depTime:dayjs.Dayjs;
         let arrTime:dayjs.Dayjs;
         //時刻から出発駅と到着駅を算出，出発駅と到着駅が前回のレンダリングから変更されているか確認
-        [depSta_tmp, arrSta_tmp, depTime, arrTime] = this.speedControler.getTrainSta(date);
+        [depSta_tmp, arrSta_tmp, depTime, arrTime] = this.speedControler.getTrainStatus(date);
         //駅に停車中の場合
         //depStaとarrStaが同じ場合は駅に停車中なので、駅の座標を返す
         if(depSta_tmp === arrSta_tmp) {
@@ -215,7 +215,7 @@ class SpeedControler {
     //列車が駅間にいるか停車中か判定
     //depStaとarrStaが同じ：駅に停車中
     //depStaとarrStaが異なる：depStaからarrStaに向けて移動中
-    getTrainSta(date:dayjs.Dayjs):[string, string, dayjs.Dayjs, dayjs.Dayjs] {
+    getTrainStatus(date:dayjs.Dayjs):[string, string, dayjs.Dayjs, dayjs.Dayjs] {
         let depSta:string = '';
         let arrSta:string = '';
         let depTime:dayjs.Dayjs = dayjs(0);
