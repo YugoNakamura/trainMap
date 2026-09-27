@@ -36,6 +36,57 @@
   - 運行中列車の Marker
   - 時刻と速度を設定する UI
 
+### 2.3 エントリポイントからのプログラム樹形図
+
+実行時の呼び出し関係は次のとおりです。`Map` は画面全体とデータ変換を担当し、列車の位置計算は `Train` 内部のクラスが担当します。
+
+```mermaid
+flowchart TD
+  index["src/index.tsx<br/>ReactDOM.createRoot"] --> app["App<br/>src/App.tsx"]
+  app --> plugin["dayjs.extend(hmsPlugin)<br/>src/types/HMSDayjs.ts"]
+  app --> map["Map<br/>src/components/Map.tsx"]
+
+  map --> timetable["timeTable/mikawaLine.json<br/>RawTimeTable[] -> TimeTable[]<br/>dayjs の時刻を生成"]
+  map --> raildata["trainRoute/mikawaLine.json<br/>Railload"]
+  map --> leaflet["MapContainer / TileLayer<br/>react-leaflet / OpenStreetMap"]
+  map --> controls["date / speedRate の入力 UI<br/>setDate / setSpeedRate"]
+
+  leaflet --> rails["Railloads<br/>src/components/Railloads.tsx"]
+  rails --> sections["sections -> Polyline"]
+  rails --> stations["stations -> Marker + Popup"]
+  rails --> switches["switchPoints -> Marker + Popup"]
+
+  leaflet --> scheduler["TrainScheduler<br/>src/components/TrainScheduler.tsx"]
+  scheduler --> watch["date の変更を監視"]
+  watch --> running["getRunningTrains(date, railload, timeTables)<br/>運行中の列車を抽出"]
+  running --> train["列車ごとに Train<br/>src/components/Train.tsx"]
+
+  train --> controller["TrainControler を useRef に保持"]
+  controller --> maps["路線・駅・分岐点を ID で Map 化"]
+  controller --> speed["SpeedControler を生成"]
+  controller --> nextpos["getNextPosition(date)"]
+
+  nextpos --> status["SpeedControler.getTrainStatus(date)<br/>発車駅・到着駅・発着時刻を判定"]
+  nextpos --> trace["駅間が変わった場合:<br/>getTraceCoords(depStaID, arrStaID)"]
+  trace --> tracecoords["Section を順にたどって<br/>座標列を作成"]
+  trace --> branch["getNextSecID(...)<br/>分岐を選択"]
+  nextpos --> progress["SpeedControler.getProgress(...)<br/>加速・定速・減速モデルで進行距離を計算"]
+  nextpos --> interpolation["座標列を線形補間"]
+  interpolation --> marker["Marker として列車を描画<br/>trainIcon.svg"]
+
+  classDef entry fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
+  classDef component fill:#e8f5e9,stroke:#388e3c,color:#1b5e20
+  classDef calculation fill:#fff3e0,stroke:#f57c00,color:#e65100
+  class index,app entry
+  class map,rails,scheduler,train component
+  class controller,speed,nextpos,status,trace,branch,progress,interpolation calculation
+```
+
+補足:
+
+- `src/types/*` は型定義と `dayjs` プラグインを提供します。型定義自体は実行時の呼び出し先ではありません。
+- [src/components/LoadJson.tsx](src/components/LoadJson.tsx) の `LoadJson` は、現在の実装ではどのコンポーネントからも呼び出されていません。データは `Map.tsx` の JSON import で読み込まれます。
+
 ---
 
 ## 3. 画面とユーザー操作
