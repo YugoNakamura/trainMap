@@ -54,7 +54,7 @@ class TrainControler {
     //出発駅からの距離
     private traceDists:number[];
     //上り:true, 下り:false
-    private isInBound:boolean;
+    private isInBound:string;
     //速度制御用
     private speedControler:SpeedControler;
     //出発駅と到着駅のID
@@ -66,7 +66,7 @@ class TrainControler {
         stations:Station[], 
         switchPoints:SwitchPoint[],
         timeTable:TimeTable,
-        isInBound:boolean,
+        isInBound:string,
     ) {
         //それぞれのIDをkeyとするmapを作成
         this.sections = new Map(sections.map(section => [section.id, section]));
@@ -144,8 +144,15 @@ class TrainControler {
         //出発駅から次に進むSectionIDを取得
         let depSta = this.stations.get(depStaID);
         if (!depSta) throw new Error("Station Data Load Failed");
-        //上りならnext，下りならprev
-        let secID = this.isInBound ? depSta.next : depSta.prev;
+        //上りならprev，下りならnext
+        let secID:string;
+        if(this.isInBound === "inbound") {
+            secID = depSta.prev;
+        } else if(this.isInBound === "outbound") {
+            secID = depSta.next;
+        } else {
+            throw new Error("bound is not set");
+        }
 
         while(true) {
             //取得したSectionIDからSectionの情報を取得

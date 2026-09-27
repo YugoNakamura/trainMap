@@ -6,7 +6,7 @@ export interface RawTimeTable{
     fromStaId: string,
     toSta:string,
     toStaId: string,
-    bound: boolean,
+    bound: string,
     tt: RawDia[]
 }
 
@@ -25,7 +25,7 @@ export interface TimeTable{
     fromStaId: string,
     toSta:string,
     toStaId: string,
-    bound: boolean,
+    bound: string,
     tt: Dia[]
 }
 

@@ -9,7 +9,7 @@ import { TrainScheduler } from './TrainScheduler';
 
 import './Map.css';
 //ファイル読み込み
-import timeDataRaw from '../../timeTable/mikawaLine.json';
+import timeDataRaw from '../../timeTable/MU_outbound_weekday.json';
 import raillDataRaw from '../../trainRoute/mikawaLine.json';
 
 import dayjs from 'dayjs';
@@ -22,7 +22,7 @@ export const Map = () => {
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
     const frameRate = 30;
 
-    const rawTimeTables = timeDataRaw as RawTimeTable[];
+    const rawTimeTables = timeDataRaw.dias as RawTimeTable[];
     const timeTablesRef = useRef<TimeTable[]>([]);
     const railData = raillDataRaw as Railload;
 

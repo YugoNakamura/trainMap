@@ -196,7 +196,7 @@ interface TimeTable {
   fromStaId: string;
   toSta: string;
   toStaId: string;
-  bound: boolean;
+  bound: string; //"inbound" or "outbound"
   tt: Dia[];
 }
 ```
