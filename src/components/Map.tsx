@@ -9,20 +9,23 @@ import { TrainScheduler } from './TrainScheduler';
 
 import './Map.css';
 //ファイル読み込み
-import timeDataRaw from '../../timeTable/MU_outbound_weekday.json';
 import raillDataRaw from '../../trainRoute/mikawaLine.json';
 
 import dayjs from 'dayjs';
 
 const initialPosition:LatLng = new LatLng(35.0056828, 137.0397465);
 const initialZoom: number = 16;
+const timeDataRaw = import.meta.glob<{ dias: RawTimeTable[] }>('../../timeTable/*.json', {
+    eager: true,
+    import: 'default'
+});
+const rawTimeTables = Object.values(timeDataRaw).flatMap((timeData) => timeData.dias);
 
 export const Map = () => {
     const [speedRate, setSpeedRate] = useState<number>(1);
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
     const frameRate = 30;
 
-    const rawTimeTables = timeDataRaw.dias as RawTimeTable[];
     const timeTablesRef = useRef<TimeTable[]>([]);
     const railData = raillDataRaw as Railload;
 

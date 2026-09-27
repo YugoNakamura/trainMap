@@ -162,8 +162,8 @@ class TrainControler {
             //上り下りに合わせて線路座標・線路座標間距離を並び替え
             let coords_copy = [...sec.coords];
             let dist_coords_copy = [...sec.dist_coords];
-            let coords      = this.isInBound ? sec.coords       : coords_copy.reverse();
-            let dist_coords = this.isInBound ? sec.dist_coords  : dist_coords_copy.reverse();
+            let coords      = this.isInBound === "outbound" ? sec.coords       : coords_copy.reverse();
+            let dist_coords = this.isInBound === "outbound" ? sec.dist_coords  : dist_coords_copy.reverse();
 
             //traceCoordsの末尾にcoordsを連結(Sectionの端は重複するため、coordsの末尾を捨てる)
             if(traceCoords.length > 0) traceCoords.pop();
@@ -177,7 +177,7 @@ class TrainControler {
             prevSecID = secID;
 
             //次のポイント(分岐点もしくは駅)のIDを取得
-            let pointID = this.isInBound ? sec.next : sec.prev;
+            let pointID = this.isInBound === "outbound" ? sec.next : sec.prev;
             //次のポイントが分岐点なら、分岐点の情報から次に進むべきSectionIDを取得
             if(this.switchPoints.has(pointID)) {
                 let switchPoint = this.switchPoints.get(pointID);
