@@ -12,6 +12,11 @@ interface Prop {
     date:dayjs.Dayjs
 }
 
+interface RouteStep {
+    section:Section,
+    direction:1|-1
+}
+
 export const Train = (prop:Prop) => {
     const [trainPos, setTrainPos] = useState<number[]>([0, 0]);
     const trainCtrlRef = useRef<TrainControler|null>(null);
@@ -135,77 +140,118 @@ class TrainControler {
     }
 
     private getTraceCoords(depStaID:string, arrStaID:string):[number[][], number[]] {
-        //駅間の座標配列(戻り値)
-        let traceCoords:number[][] = [];
-        //出発駅からの各線路座標までの距離の配列(戻り値)
-        let traceDists:number[] = [0];
-        let prevSecID = "";
-
-        //出発駅から次に進むSectionIDを取得
-        let depSta = this.stations.get(depStaID);
-        if (!depSta) throw new Error("Station Data Load Failed");
-        //上りならprev，下りならnext
-        let secID:string;
-        if(this.isInBound === "inbound") {
-            secID = depSta.prev;
-        } else if(this.isInBound === "outbound") {
-            secID = depSta.next;
-        } else {
+        if(this.isInBound !== "inbound" && this.isInBound !== "outbound") {
             throw new Error("bound is not set");
         }
 
-        while(true) {
-            //取得したSectionIDからSectionの情報を取得
-            let sec = this.sections.get(secID);
-            if (!sec) throw new Error("Section Data Load Failed");
+        const route = this.findSectionPath(depStaID, arrStaID, false)
+            ?? this.findSectionPath(depStaID, arrStaID, true);
+        if(!route) {
+            throw new Error(`No route found from station ${depStaID} to ${arrStaID}`);
+        }
 
-            //上り下りに合わせて線路座標・線路座標間距離を並び替え
-            let coords_copy = [...sec.coords];
-            let dist_coords_copy = [...sec.dist_coords];
-            let coords      = this.isInBound === "outbound" ? sec.coords       : coords_copy.reverse();
-            let dist_coords = this.isInBound === "outbound" ? sec.dist_coords  : dist_coords_copy.reverse();
+        const traceCoords:number[][] = [];
+        const traceDists:number[] = [0];
+        for(const step of route) {
+            const coords = step.direction === 1
+                ? step.section.coords
+                : [...step.section.coords].reverse();
+            const distances = step.direction === 1
+                ? step.section.dist_coords
+                : [...step.section.dist_coords].reverse();
 
-            //traceCoordsの末尾にcoordsを連結(Sectionの端は重複するため、coordsの末尾を捨てる)
-            if(traceCoords.length > 0) traceCoords.pop();
-            coords.forEach(coord => traceCoords.push(coord));
-
-            //線路座標間距離をもとに、出発駅から各線路座標までの距離を算出してtraceDistsに格納
-            dist_coords.forEach(dist_coord => {
-                traceDists.push(traceDists[traceDists.length-1]+dist_coord)
-            });
-
-            prevSecID = secID;
-
-            //次のポイント(分岐点もしくは駅)のIDを取得
-            let pointID = this.isInBound === "outbound" ? sec.next : sec.prev;
-            //次のポイントが分岐点なら、分岐点の情報から次に進むべきSectionIDを取得
-            if(this.switchPoints.has(pointID)) {
-                let switchPoint = this.switchPoints.get(pointID);
-                if (!switchPoint) throw new Error("Switch Data Load Failed");
-                secID = this.getNextSecID(switchPoint, prevSecID, arrStaID);
-            //次のポイントが駅なら、目的駅かどうかを確認して、線路座標と距離を返す
-            } else if(pointID === arrStaID) {
-                return [traceCoords, traceDists];
+            if(traceCoords.length === 0) {
+                traceCoords.push(coords[0]);
+            }
+            for(let i = 1; i < coords.length; i++) {
+                traceCoords.push(coords[i]);
+                traceDists.push(traceDists[traceDists.length - 1] + distances[i - 1]);
             }
         }
+        return [traceCoords, traceDists];
     }
 
-    // 線路の分岐点(Switches)において、通過したSectionのID(prevSecID)と目的駅ID(desStaID)から、次に進むべきSectionのIDを取得
-    private getNextSecID(switchPoint:SwitchPoint, prevSecID:string, desStaID:string):string {
-        let nextSecID = "";
-        //switchPointにおいてprevSecIDから出発する方向の分岐点の情報を取得
-        let dirs = switchPoint.direction.filter(function(dir) {
-            return dir.from === prevSecID
-        });
+    private findSectionPath(
+        depStaID:string,
+        arrStaID:string,
+        allowUnmappedSwitchTransitions:boolean,
+    ):RouteStep[]|null {
+        const depSta = this.stations.get(depStaID);
+        if(!depSta) throw new Error(`Station Data Load Failed: ${depStaID}`);
 
-        for(let i = 0; i < dirs.length; i++) {
-            //Yの字型の分岐炉で根元から進行する場合:condition:"none"
-            //Yの字型の分岐点で枝から進行する場合:conditionに目的駅IDを含む
-            if(dirs[i].condition === "none" || dirs[i].condition.includes(desStaID)) {
-                nextSecID = dirs[i].to;
+        const preferredSide = this.isInBound === "inbound" ? "prev" : "next";
+        const startSides = [preferredSide, preferredSide === "prev" ? "next" : "prev"] as const;
+        const queue:RouteStep[][] = [];
+        for(const side of startSides) {
+            const section = this.sections.get(depSta[side]);
+            if(!section) continue;
+            const direction = side === "next" ? 1 : -1;
+            const departurePoint = direction === 1 ? section.prev : section.next;
+            if(departurePoint === depStaID) {
+                queue.push([{section, direction}]);
             }
         }
-        return nextSecID;
+
+        const visited = new Set<string>();
+        for(let queueIndex = 0; queueIndex < queue.length; queueIndex++) {
+            const path = queue[queueIndex];
+            const current = path[path.length - 1];
+            const sectionID = current.section.id;
+            const state = `${sectionID}:${current.direction}`;
+            if(visited.has(state)) continue;
+            visited.add(state);
+
+            const pointID = current.direction === 1
+                ? current.section.next
+                : current.section.prev;
+            if(pointID === arrStaID) return path;
+
+            let nextSectionIDs:string[] = [];
+            const switchPoint = this.switchPoints.get(pointID);
+            if(switchPoint) {
+                const directions = switchPoint.direction.filter(direction =>
+                    direction.from === sectionID
+                );
+                const matchingDirections = directions.filter(direction =>
+                    direction.condition === "none"
+                    || (Array.isArray(direction.condition)
+                        && (direction.condition.length === 0 || direction.condition.includes(arrStaID)))
+                );
+                nextSectionIDs = matchingDirections.map(direction => direction.to);
+
+                if(allowUnmappedSwitchTransitions) {
+                    for(const section of this.sections.values()) {
+                        if((section.prev === pointID || section.next === pointID)
+                            && section.id !== sectionID
+                            && !nextSectionIDs.includes(section.id)) {
+                            nextSectionIDs.push(section.id);
+                        }
+                    }
+                }
+            } else {
+                const station = this.stations.get(pointID);
+                if(station) {
+                    nextSectionIDs = [station.prev, station.next]
+                        .filter(id => id !== sectionID);
+                }
+            }
+
+            for(const nextSectionID of nextSectionIDs) {
+                const section = this.sections.get(nextSectionID);
+                if(!section) continue;
+
+                let direction:1|-1;
+                if(section.prev === pointID) {
+                    direction = 1;
+                } else if(section.next === pointID) {
+                    direction = -1;
+                } else {
+                    continue;
+                }
+                queue.push([...path, {section, direction}]);
+            }
+        }
+        return null;
     }
 }
 
