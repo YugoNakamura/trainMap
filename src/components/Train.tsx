@@ -43,7 +43,9 @@ export const Train = (prop:Prop) => {
         iconAnchor: [15, 15], // アイコンのアンカー位置
     });
     return (
-        <Marker position={[trainPos[0], trainPos[1]]} icon={customIcon}><Popup>Train</Popup></Marker>
+        <Marker position={[trainPos[0], trainPos[1]]} icon={customIcon}>
+            <Popup>{prop.timeTable.line} {prop.timeTable.trainNo}</Popup>
+        </Marker>
     );
 }
 
