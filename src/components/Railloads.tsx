@@ -27,7 +27,13 @@ export function Railloads(prop:Prop) {
     const sectionLines:JSX.Element[] = sections.map((section, index) => {
         //number[][]からLatLngExpression[]に変換
         const latlngCoods:LatLngExpression[] = section.coords.map(coord => coord as LatLngExpression);
-        return <Polyline positions={latlngCoods} key={'section'+index}><Popup>{section.id}</Popup></Polyline>;
+        return <Polyline
+            positions={latlngCoods}
+            pathOptions={{ color: prop.railload.colorcode }}
+            key={'section'+index}
+        >
+            <Popup>{section.id}</Popup>
+        </Polyline>;
     });
 
     //駅情報

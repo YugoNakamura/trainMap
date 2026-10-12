@@ -33,6 +33,7 @@ export interface way {
 }
 
 export interface Railload {
+    colorcode:string,
     sections:Section[],
     stations:Station[],
     switchPoints:SwitchPoint[]
