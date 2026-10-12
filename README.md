@@ -46,8 +46,8 @@ flowchart TD
   app --> plugin["dayjs.extend(hmsPlugin)<br/>src/types/HMSDayjs.ts"]
   app --> map["Map<br/>src/components/Map.tsx"]
 
-  map --> timetable["timeTable/mikawaLine.json<br/>RawTimeTable[] -> TimeTable[]<br/>dayjs の時刻を生成"]
-  map --> raildata["trainRoute/mikawaLine.json<br/>Railload"]
+  map --> timetable["timeTable/{略称}_{方向}_*.json<br/>略称で路線に対応付けて RawTimeTable[] -> TimeTable[]"]
+  map --> raildata["trainRoute/{略称}.trainmap.json<br/>路線ごとの Railload"]
   map --> leaflet["MapContainer / TileLayer<br/>react-leaflet / OpenStreetMap"]
   map --> controls["date / speedRate の入力 UI<br/>setDate / setSpeedRate"]
 
@@ -121,8 +121,9 @@ Map コンポーネントの state は次の通りです。
 
 ### 4.1 路線データ
 
-- 読み込み元: `trainRoute/mikawaLine.json`
+- 読み込み元: `trainRoute/{略称}.trainmap.json` (路線ごとに複数ファイル)
 - 型: [src/types/railload.ts](src/types/railload.ts)
+- ファイル名の先頭2文字を路線のアルファベット略称として扱い、同じ略称の時刻表と対応付ける
 
 この JSON は `Railload` 型に対応し、次を持つ構造です。
 
@@ -180,8 +181,9 @@ interface SwitchPoint {
 
 ### 4.2 時刻表データ
 
-- 読み込み元: `timeTable/mikawaLine.json`
+- 読み込み元: `timeTable/{略称}_{方向}_*.json` (路線・方向ごとに複数ファイル)
 - 型: [src/types/timeTable.ts](src/types/timeTable.ts)
+- ファイル名先頭の2文字の略称で路線を識別し、同一路線の上下線の時刻表を読み込む
 
 `RawTimeTable` を受け取り、Map コンポーネント上で次の変換を行う:
 
@@ -308,12 +310,13 @@ interface Dia {
 
 処理の流れ:
 
-1. 発駅を起点として、向きに応じて `next` または `prev` の section を辿る
-2. section の `coords` を連結する
-3. 分岐点で `switchPoint.direction` を参照し、到着駅に応じて次 section を選択する
-4. 着駅に到達した時点で終了する
+1. 発駅に接続する section から、時刻表の運行方向を優先して経路探索を開始する
+2. section の接続と `switchPoint.direction` の条件を使い、着駅までの経路を探索する
+3. 分岐データだけでは経路を確定できない場合、分岐点で接続する section も探索する
+4. section の `coords` と `dist_coords` を進行方向に合わせて連結し、着駅に到達した時点で終了する
 
 `traceCoords` と `traceDists` の両方を保持し、各座標が「駅からの距離」でどう表されるかを管理する。
+路線データに着駅までの接続経路がない場合は、発駅と着駅を含むエラーを投げる。
 
 ### 6.4 位置補間
 
@@ -381,8 +384,8 @@ interface way {
 ## 9. 実際のデータフロー
 
 1. `Map` が JSON を読み込む
-   - `timeTable/mikawaLine.json` → `RawTimeTable[]`
-   - `trainRoute/mikawaLine.json` → `Railload`
+   - `timeTable/{略称}_{方向}_*.json` → 略称ごとの `RawTimeTable[]`
+   - `trainRoute/{略称}.trainmap.json` → 略称ごとの `Railload`
 2. `Map` が `dayjs` に変換し `TrainScheduler` に渡す
 3. `TrainScheduler` が `date` を見て運行中列車を抽出する
 4. `Train` が各列車の `TrainControler` を生成する
