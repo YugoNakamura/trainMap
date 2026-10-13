@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { LatLng, LatLngBounds } from 'leaflet';
 import { Railloads} from './Railloads';
 import { RawTimeTable, TimeTable } from "../types/timeTable"
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 
@@ -118,11 +118,28 @@ export const Map = () => {
     const [isPlaying, setIsPlaying] = useState(true);
     const frameRate = 30;
     const [routes] = useState(() => loadRoutes(date));
+    const clockAnchor = useRef({
+        realTime: Date.now(),
+        displayTime: date.valueOf()
+    });
+
+    const getDisplayTime = (realTime: number, rate: number) =>
+        clockAnchor.current.displayTime +
+        (realTime - clockAnchor.current.realTime) * rate;
+
+    const setDisplayDate = (nextDate: dayjs.Dayjs) => {
+        const realTime = Date.now();
+        clockAnchor.current = {
+            realTime,
+            displayTime: nextDate.valueOf()
+        };
+        setDate(nextDate);
+    };
 
     useEffect(() => {
         if (!isPlaying) return;
         const id = window.setInterval(() => {
-            setDate(prevDate => prevDate.add(frameRate * speedRate, 'ms'));
+            setDate(dayjs(getDisplayTime(Date.now(), speedRate)));
         }, frameRate);
         return () => {
             window.clearInterval(id);
@@ -152,7 +169,7 @@ export const Map = () => {
                 <button
                     className="current-time-button"
                     type="button"
-                    onClick={() => setDate(dayjs())}
+                    onClick={() => setDisplayDate(dayjs())}
                 >
                     <span aria-hidden="true">↻</span>
                     現在時刻に戻す
@@ -162,7 +179,15 @@ export const Map = () => {
                     <button
                         className="playback-button"
                         type="button"
-                        onClick={() => setIsPlaying(playing => !playing)}
+                        onClick={() => {
+                            const realTime = Date.now();
+                            const displayTime = isPlaying
+                                ? getDisplayTime(realTime, speedRate)
+                                : date.valueOf();
+                            clockAnchor.current = { realTime, displayTime };
+                            setDate(dayjs(displayTime));
+                            setIsPlaying(playing => !playing);
+                        }}
                         aria-label={isPlaying ? '再生を一時停止' : '再生を開始'}
                     >
                         <span aria-hidden="true">{isPlaying ? 'Ⅱ' : '▶'}</span>
@@ -173,7 +198,15 @@ export const Map = () => {
                         <select
                             name="speedRate"
                             value={speedRate}
-                            onChange={(event) => setSpeedRate(Number(event.target.value))}
+                            onChange={(event) => {
+                                const realTime = Date.now();
+                                const displayTime = isPlaying
+                                    ? getDisplayTime(realTime, speedRate)
+                                    : date.valueOf();
+                                clockAnchor.current = { realTime, displayTime };
+                                setDate(dayjs(displayTime));
+                                setSpeedRate(Number(event.target.value));
+                            }}
                         >
                             <option value="1">1倍</option>
                             <option value="2">2倍</option>
@@ -193,7 +226,9 @@ export const Map = () => {
                             step="1"
                             value={date.format("YYYY-MM-DDTHH:mm:ss")}
                             onChange={(event) => {
-                                if (event.target.value) setDate(dayjs(event.target.value));
+                                if (event.target.value) {
+                                    setDisplayDate(dayjs(event.target.value));
+                                }
                             }}
                         />
                     </label>
