@@ -13,8 +13,7 @@ interface Prop {
 }
 
 interface RouteStep {
-    section:Section,
-    direction:1|-1
+    section:Section
 }
 
 export const Train = (prop:Prop) => {
@@ -155,10 +154,10 @@ class TrainControler {
         const traceCoords:number[][] = [];
         const traceDists:number[] = [0];
         for(const step of route) {
-            const coords = step.direction === 1
+            const coords = this.isInBound === "inbound"
                 ? step.section.coords
                 : [...step.section.coords].reverse();
-            const distances = step.direction === 1
+            const distances = this.isInBound === "inbound"
                 ? step.section.dist_coords
                 : [...step.section.dist_coords].reverse();
 
@@ -181,16 +180,14 @@ class TrainControler {
         const depSta = this.stations.get(depStaID);
         if(!depSta) throw new Error(`Station Data Load Failed: ${depStaID}`);
 
-        const preferredSide = this.isInBound === "inbound" ? "prev" : "next";
-        const startSides = [preferredSide, preferredSide === "prev" ? "next" : "prev"] as const;
+        const isInbound = this.isInBound === "inbound";
+        const startSide = isInbound ? "next" : "prev";
         const queue:RouteStep[][] = [];
-        for(const side of startSides) {
-            const section = this.sections.get(depSta[side]);
-            if(!section) continue;
-            const direction = side === "next" ? 1 : -1;
-            const departurePoint = direction === 1 ? section.prev : section.next;
+        const startSection = this.sections.get(depSta[startSide]);
+        if(startSection) {
+            const departurePoint = isInbound ? startSection.prev : startSection.next;
             if(departurePoint === depStaID) {
-                queue.push([{section, direction}]);
+                queue.push([{section: startSection}]);
             }
         }
 
@@ -199,11 +196,10 @@ class TrainControler {
             const path = queue[queueIndex];
             const current = path[path.length - 1];
             const sectionID = current.section.id;
-            const state = `${sectionID}:${current.direction}`;
-            if(visited.has(state)) continue;
-            visited.add(state);
+            if(visited.has(sectionID)) continue;
+            visited.add(sectionID);
 
-            const pointID = current.direction === 1
+            const pointID = isInbound
                 ? current.section.next
                 : current.section.prev;
             if(pointID === arrStaID) return path;
@@ -233,8 +229,12 @@ class TrainControler {
             } else {
                 const station = this.stations.get(pointID);
                 if(station) {
-                    nextSectionIDs = [station.prev, station.next]
-                        .filter(id => id !== sectionID);
+                    const nextSectionID = this.isInBound === "inbound"
+                        ? station.next
+                        : station.prev;
+                    if(nextSectionID !== sectionID) {
+                        nextSectionIDs = [nextSectionID];
+                    }
                 }
             }
 
@@ -242,15 +242,9 @@ class TrainControler {
                 const section = this.sections.get(nextSectionID);
                 if(!section) continue;
 
-                let direction:1|-1;
-                if(section.prev === pointID) {
-                    direction = 1;
-                } else if(section.next === pointID) {
-                    direction = -1;
-                } else {
-                    continue;
-                }
-                queue.push([...path, {section, direction}]);
+                const departurePoint = isInbound ? section.prev : section.next;
+                if(departurePoint !== pointID) continue;
+                queue.push([...path, {section}]);
             }
         }
         return null;
