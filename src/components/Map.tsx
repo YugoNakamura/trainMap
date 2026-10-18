@@ -78,7 +78,8 @@ const loadRoutes = (date: dayjs.Dayjs): RouteData[] => {
                         : dayjs(0),
                     d: dia.d !== undefined
                         ? dayjs(`${date.format("YYYY/MM/DD")} ${dia.d}`, "YYYY/MM/DD HH:mm:ss")
-                        : dayjs("2100/01/01 00:00:00", "YYYY/MM/DD HH:mm:ss")
+                        : dayjs("2100/01/01 00:00:00", "YYYY/MM/DD HH:mm:ss"),
+                    p: dia.p ?? false
                 }))
             }))
         };

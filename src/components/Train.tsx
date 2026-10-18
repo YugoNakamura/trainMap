@@ -298,7 +298,7 @@ class TrainControler {
 
 class SpeedControler {
     //時刻表
-    private tt:{s:string, a:dayjs.Dayjs, d:dayjs.Dayjs}[] = [];
+    private tt:{s:string, a:dayjs.Dayjs, d:dayjs.Dayjs, p:boolean}[] = [];
     //加減速時間(msec)
     private accelTime:number = 2*1000;
     
@@ -332,17 +332,32 @@ class SpeedControler {
             return [depSta, arrSta, depTime, arrTime];
         }
         //現在時刻が駅間の移動中の場合
-        for(let i = 0; i < this.tt.length-1; i++) {
-            if(date.isHMSSameOrAfter(this.tt[i].d) && date.isHMSBefore(this.tt[i+1].a)) {
-                depSta = this.tt[i].s;
-                arrSta = this.tt[i+1].s;
-                depTime = this.tt[i].d;
-                arrTime = this.tt[i+1].a;
+        let depStaIndex = -1;
+        for (let i = this.tt.length - 2; i >= 0; i--) {
+            if (this.tt[i].p) continue;
+            if(date.isHMSSameOrAfter(this.tt[i].d)) {
+                depStaIndex = i;
                 break;
             }
         }
+        let arrStaIndex = -1;
+        for (let i = 1; i < this.tt.length; i++) {
+            if (this.tt[i].p) continue;
+            if(date.isHMSSameOrBefore(this.tt[i].a)) {
+                arrStaIndex = i;
+                break;
+            }
+        }
+        depSta = this.tt[depStaIndex].s;
+        arrSta = this.tt[arrStaIndex].s;
+        depTime = this.tt[depStaIndex].d;
+        arrTime = this.tt[arrStaIndex].a;
+
         //現在時刻に駅に停車している場合(現在時刻が駅の到着時刻より後で出発時刻より前)：depStaとarrStaは同じ
         for(let i = 1; i < this.tt.length-1; i++) {
+            if (this.tt[i].p) {
+                continue;
+            }
             if(date.isHMSSameOrAfter(this.tt[i].a) && date.isHMSBefore(this.tt[i].d)) {
                 depSta = this.tt[i].s;
                 arrSta = this.tt[i].s;

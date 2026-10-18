@@ -13,7 +13,8 @@ export interface RawTimeTable{
 export interface RawDia{
     s:string,
     a?:string,
-    d?:string
+    d?:string,
+    p?:boolean
 }
 
 import dayjs from "dayjs"
@@ -32,5 +33,6 @@ export interface TimeTable{
 export interface Dia{
     s:string,
     a:dayjs.Dayjs,
-    d:dayjs.Dayjs
+    d:dayjs.Dayjs,
+    p:boolean
 }
