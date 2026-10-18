@@ -358,6 +358,7 @@ interface way {
 - `from` に現在通過中の section ID を一致させる
 - `condition === "none"` の場合は無条件で進む
 - `condition` が string[] の場合は、目的駅 ID が含まれているものを採用する
+- `condition` が空配列の場合は路線情報の誤りとしてエラーにする
 
 `TrainControler.getNextSecID(switchPoint, prevSecID, desStaID)` がこの判定を担当する。
 
