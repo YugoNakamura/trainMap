@@ -1,7 +1,7 @@
 {
+    "line": "Mikawa Line(Umi)",
     "dias": [
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "581",
             "bound": "outbound",
             "tt": [
@@ -66,7 +66,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "583",
             "bound": "outbound",
             "tt": [
@@ -131,7 +130,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "585",
             "bound": "outbound",
             "tt": [
@@ -196,7 +194,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "681",
             "bound": "outbound",
             "tt": [
@@ -261,7 +258,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "683",
             "bound": "outbound",
             "tt": [
@@ -326,7 +322,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "685",
             "bound": "outbound",
             "tt": [
@@ -391,7 +386,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "687",
             "bound": "outbound",
             "tt": [
@@ -456,7 +450,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "781",
             "bound": "outbound",
             "tt": [
@@ -521,7 +514,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "783",
             "bound": "outbound",
             "tt": [
@@ -586,7 +578,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "785",
             "bound": "outbound",
             "tt": [
@@ -651,7 +642,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "787",
             "bound": "outbound",
             "tt": [
@@ -716,7 +706,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "881",
             "bound": "outbound",
             "tt": [
@@ -781,7 +770,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "883",
             "bound": "outbound",
             "tt": [
@@ -846,7 +834,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "885",
             "bound": "outbound",
             "tt": [
@@ -911,7 +898,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "887",
             "bound": "outbound",
             "tt": [
@@ -976,7 +962,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "981",
             "bound": "outbound",
             "tt": [
@@ -1041,7 +1026,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "983",
             "bound": "outbound",
             "tt": [
@@ -1106,7 +1090,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "985",
             "bound": "outbound",
             "tt": [
@@ -1171,7 +1154,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "987",
             "bound": "outbound",
             "tt": [
@@ -1236,7 +1218,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1081",
             "bound": "outbound",
             "tt": [
@@ -1301,7 +1282,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1083",
             "bound": "outbound",
             "tt": [
@@ -1366,7 +1346,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1085",
             "bound": "outbound",
             "tt": [
@@ -1431,7 +1410,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1087",
             "bound": "outbound",
             "tt": [
@@ -1496,7 +1474,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1181",
             "bound": "outbound",
             "tt": [
@@ -1561,7 +1538,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1183",
             "bound": "outbound",
             "tt": [
@@ -1626,7 +1602,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1185",
             "bound": "outbound",
             "tt": [
@@ -1691,7 +1666,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1187",
             "bound": "outbound",
             "tt": [
@@ -1756,7 +1730,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1281",
             "bound": "outbound",
             "tt": [
@@ -1821,7 +1794,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1283",
             "bound": "outbound",
             "tt": [
@@ -1886,7 +1858,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1285",
             "bound": "outbound",
             "tt": [
@@ -1951,7 +1922,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1287",
             "bound": "outbound",
             "tt": [
@@ -2016,7 +1986,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1381",
             "bound": "outbound",
             "tt": [
@@ -2081,7 +2050,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1383",
             "bound": "outbound",
             "tt": [
@@ -2146,7 +2114,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1385",
             "bound": "outbound",
             "tt": [
@@ -2211,7 +2178,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1387",
             "bound": "outbound",
             "tt": [
@@ -2276,7 +2242,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1481",
             "bound": "outbound",
             "tt": [
@@ -2341,7 +2306,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1483",
             "bound": "outbound",
             "tt": [
@@ -2406,7 +2370,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1485",
             "bound": "outbound",
             "tt": [
@@ -2471,7 +2434,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1487",
             "bound": "outbound",
             "tt": [
@@ -2536,7 +2498,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1581",
             "bound": "outbound",
             "tt": [
@@ -2601,7 +2562,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1583",
             "bound": "outbound",
             "tt": [
@@ -2666,7 +2626,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1585",
             "bound": "outbound",
             "tt": [
@@ -2731,7 +2690,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1587",
             "bound": "outbound",
             "tt": [
@@ -2796,7 +2754,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1681",
             "bound": "outbound",
             "tt": [
@@ -2861,7 +2818,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1683",
             "bound": "outbound",
             "tt": [
@@ -2926,7 +2882,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1685",
             "bound": "outbound",
             "tt": [
@@ -2991,7 +2946,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1687",
             "bound": "outbound",
             "tt": [
@@ -3056,7 +3010,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1781",
             "bound": "outbound",
             "tt": [
@@ -3121,7 +3074,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1783",
             "bound": "outbound",
             "tt": [
@@ -3186,7 +3138,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1785",
             "bound": "outbound",
             "tt": [
@@ -3251,7 +3202,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1787",
             "bound": "outbound",
             "tt": [
@@ -3316,7 +3266,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1881",
             "bound": "outbound",
             "tt": [
@@ -3381,7 +3330,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1883",
             "bound": "outbound",
             "tt": [
@@ -3446,7 +3394,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1885",
             "bound": "outbound",
             "tt": [
@@ -3511,7 +3458,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1887",
             "bound": "outbound",
             "tt": [
@@ -3576,7 +3522,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1981",
             "bound": "outbound",
             "tt": [
@@ -3641,7 +3586,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1983",
             "bound": "outbound",
             "tt": [
@@ -3706,7 +3650,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1985",
             "bound": "outbound",
             "tt": [
@@ -3771,7 +3714,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "1987",
             "bound": "outbound",
             "tt": [
@@ -3836,7 +3778,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2081",
             "bound": "outbound",
             "tt": [
@@ -3901,7 +3842,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2083",
             "bound": "outbound",
             "tt": [
@@ -3966,7 +3906,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2085",
             "bound": "outbound",
             "tt": [
@@ -4031,7 +3970,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2087",
             "bound": "outbound",
             "tt": [
@@ -4096,7 +4034,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2181",
             "bound": "outbound",
             "tt": [
@@ -4161,7 +4098,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2183",
             "bound": "outbound",
             "tt": [
@@ -4226,7 +4162,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2185",
             "bound": "outbound",
             "tt": [
@@ -4291,7 +4226,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2187",
             "bound": "outbound",
             "tt": [
@@ -4356,7 +4290,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2281",
             "bound": "outbound",
             "tt": [
@@ -4421,7 +4354,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2283",
             "bound": "outbound",
             "tt": [
@@ -4486,7 +4418,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Umi)",
             "trainNo": "2381",
             "bound": "outbound",
             "tt": [

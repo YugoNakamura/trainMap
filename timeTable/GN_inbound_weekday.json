@@ -1,7 +1,7 @@
 {
+    "line": "西尾線",
     "dias": [
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "554",
             "bound": "inbound",
             "tt": [
@@ -76,7 +76,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "650",
             "bound": "inbound",
             "tt": [
@@ -151,7 +150,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "652",
             "bound": "inbound",
             "tt": [
@@ -226,7 +224,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "748",
             "bound": "inbound",
             "tt": [
@@ -282,7 +279,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "752",
             "bound": "inbound",
             "tt": [
@@ -342,7 +338,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "4740",
             "bound": "inbound",
             "tt": [
@@ -398,7 +393,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "754",
             "bound": "inbound",
             "tt": [
@@ -423,7 +417,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "772",
             "bound": "inbound",
             "tt": [
@@ -498,7 +491,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "702",
             "bound": "inbound",
             "tt": [
@@ -570,7 +562,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "852",
             "bound": "inbound",
             "tt": [
@@ -645,7 +636,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "840",
             "bound": "inbound",
             "tt": [
@@ -701,7 +691,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "854",
             "bound": "inbound",
             "tt": [
@@ -776,7 +765,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "856",
             "bound": "inbound",
             "tt": [
@@ -836,7 +824,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "940",
             "bound": "inbound",
             "tt": [
@@ -907,7 +894,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "950",
             "bound": "inbound",
             "tt": [
@@ -967,7 +953,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "942",
             "bound": "inbound",
             "tt": [
@@ -1038,7 +1023,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1050",
             "bound": "inbound",
             "tt": [
@@ -1098,7 +1082,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "946",
             "bound": "inbound",
             "tt": [
@@ -1169,7 +1152,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1052",
             "bound": "inbound",
             "tt": [
@@ -1229,7 +1211,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1042",
             "bound": "inbound",
             "tt": [
@@ -1300,7 +1281,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1150",
             "bound": "inbound",
             "tt": [
@@ -1360,7 +1340,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1046",
             "bound": "inbound",
             "tt": [
@@ -1431,7 +1410,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1152",
             "bound": "inbound",
             "tt": [
@@ -1491,7 +1469,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1142",
             "bound": "inbound",
             "tt": [
@@ -1562,7 +1539,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1250",
             "bound": "inbound",
             "tt": [
@@ -1622,7 +1598,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1146",
             "bound": "inbound",
             "tt": [
@@ -1693,7 +1668,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1252",
             "bound": "inbound",
             "tt": [
@@ -1753,7 +1727,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1242",
             "bound": "inbound",
             "tt": [
@@ -1824,7 +1797,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1350",
             "bound": "inbound",
             "tt": [
@@ -1884,7 +1856,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1246",
             "bound": "inbound",
             "tt": [
@@ -1955,7 +1926,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1352",
             "bound": "inbound",
             "tt": [
@@ -2015,7 +1985,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1342",
             "bound": "inbound",
             "tt": [
@@ -2086,7 +2055,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1450",
             "bound": "inbound",
             "tt": [
@@ -2146,7 +2114,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1346",
             "bound": "inbound",
             "tt": [
@@ -2217,7 +2184,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1452",
             "bound": "inbound",
             "tt": [
@@ -2277,7 +2243,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1442",
             "bound": "inbound",
             "tt": [
@@ -2348,7 +2313,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1550",
             "bound": "inbound",
             "tt": [
@@ -2408,7 +2372,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1446",
             "bound": "inbound",
             "tt": [
@@ -2479,7 +2442,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1552",
             "bound": "inbound",
             "tt": [
@@ -2539,7 +2501,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1542",
             "bound": "inbound",
             "tt": [
@@ -2610,7 +2571,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1650",
             "bound": "inbound",
             "tt": [
@@ -2670,7 +2630,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1546",
             "bound": "inbound",
             "tt": [
@@ -2741,7 +2700,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1652",
             "bound": "inbound",
             "tt": [
@@ -2801,7 +2759,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1642",
             "bound": "inbound",
             "tt": [
@@ -2872,7 +2829,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1750",
             "bound": "inbound",
             "tt": [
@@ -2932,7 +2888,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1646",
             "bound": "inbound",
             "tt": [
@@ -3003,7 +2958,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1752",
             "bound": "inbound",
             "tt": [
@@ -3063,7 +3017,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1742",
             "bound": "inbound",
             "tt": [
@@ -3134,7 +3087,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1850",
             "bound": "inbound",
             "tt": [
@@ -3194,7 +3146,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1746",
             "bound": "inbound",
             "tt": [
@@ -3265,7 +3216,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1852",
             "bound": "inbound",
             "tt": [
@@ -3325,7 +3275,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1842",
             "bound": "inbound",
             "tt": [
@@ -3396,7 +3345,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1950",
             "bound": "inbound",
             "tt": [
@@ -3456,7 +3404,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1846",
             "bound": "inbound",
             "tt": [
@@ -3527,7 +3474,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1952",
             "bound": "inbound",
             "tt": [
@@ -3587,7 +3533,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1942",
             "bound": "inbound",
             "tt": [
@@ -3658,7 +3603,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2050",
             "bound": "inbound",
             "tt": [
@@ -3718,7 +3662,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "1946",
             "bound": "inbound",
             "tt": [
@@ -3789,7 +3732,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2052",
             "bound": "inbound",
             "tt": [
@@ -3849,7 +3791,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2042",
             "bound": "inbound",
             "tt": [
@@ -3920,7 +3861,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2150",
             "bound": "inbound",
             "tt": [
@@ -3980,7 +3920,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2046",
             "bound": "inbound",
             "tt": [
@@ -4051,7 +3990,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2152",
             "bound": "inbound",
             "tt": [
@@ -4111,7 +4049,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2142",
             "bound": "inbound",
             "tt": [
@@ -4182,7 +4119,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2250",
             "bound": "inbound",
             "tt": [
@@ -4257,7 +4193,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2146",
             "bound": "inbound",
             "tt": [
@@ -4313,7 +4248,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2252",
             "bound": "inbound",
             "tt": [
@@ -4388,7 +4322,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2350",
             "bound": "inbound",
             "tt": [
@@ -4463,7 +4396,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2340",
             "bound": "inbound",
             "tt": [
@@ -4519,7 +4451,6 @@
             ]
         },
         {
-            "line": "\u897f\u5c3e\u7dda",
             "trainNo": "2352",
             "bound": "inbound",
             "tt": [

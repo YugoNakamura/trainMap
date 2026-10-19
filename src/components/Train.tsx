@@ -352,12 +352,9 @@ class SpeedControler {
         arrSta = this.tt[arrStaIndex].s;
         depTime = this.tt[depStaIndex].d;
         arrTime = this.tt[arrStaIndex].a;
-
         //現在時刻に駅に停車している場合(現在時刻が駅の到着時刻より後で出発時刻より前)：depStaとarrStaは同じ
         for(let i = 1; i < this.tt.length-1; i++) {
-            if (this.tt[i].p) {
-                continue;
-            }
+            if (this.tt[i].p) continue;
             if(date.isHMSSameOrAfter(this.tt[i].a) && date.isHMSBefore(this.tt[i].d)) {
                 depSta = this.tt[i].s;
                 arrSta = this.tt[i].s;

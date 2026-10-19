@@ -1,7 +1,7 @@
 {
+    "line": "Mikawa Line(Yama)",
     "dias": [
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "560",
             "bound": "inbound",
             "tt": [
@@ -66,7 +66,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "562",
             "bound": "inbound",
             "tt": [
@@ -131,7 +130,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "564",
             "bound": "inbound",
             "tt": [
@@ -196,7 +194,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "660",
             "bound": "inbound",
             "tt": [
@@ -261,7 +258,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "662",
             "bound": "inbound",
             "tt": [
@@ -326,7 +322,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "664",
             "bound": "inbound",
             "tt": [
@@ -391,7 +386,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "666",
             "bound": "inbound",
             "tt": [
@@ -456,7 +450,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "760",
             "bound": "inbound",
             "tt": [
@@ -521,7 +514,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "762",
             "bound": "inbound",
             "tt": [
@@ -586,7 +578,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "764",
             "bound": "inbound",
             "tt": [
@@ -651,7 +642,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "766",
             "bound": "inbound",
             "tt": [
@@ -716,7 +706,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "860",
             "bound": "inbound",
             "tt": [
@@ -781,7 +770,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "862",
             "bound": "inbound",
             "tt": [
@@ -846,7 +834,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "864",
             "bound": "inbound",
             "tt": [
@@ -911,7 +898,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "866",
             "bound": "inbound",
             "tt": [
@@ -976,7 +962,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "960",
             "bound": "inbound",
             "tt": [
@@ -1041,7 +1026,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "962",
             "bound": "inbound",
             "tt": [
@@ -1106,7 +1090,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "964",
             "bound": "inbound",
             "tt": [
@@ -1171,7 +1154,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "966",
             "bound": "inbound",
             "tt": [
@@ -1236,7 +1218,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1060",
             "bound": "inbound",
             "tt": [
@@ -1301,7 +1282,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1062",
             "bound": "inbound",
             "tt": [
@@ -1366,7 +1346,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1064",
             "bound": "inbound",
             "tt": [
@@ -1431,7 +1410,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1066",
             "bound": "inbound",
             "tt": [
@@ -1496,7 +1474,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1160",
             "bound": "inbound",
             "tt": [
@@ -1561,7 +1538,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1162",
             "bound": "inbound",
             "tt": [
@@ -1626,7 +1602,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1164",
             "bound": "inbound",
             "tt": [
@@ -1691,7 +1666,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1166",
             "bound": "inbound",
             "tt": [
@@ -1756,7 +1730,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1260",
             "bound": "inbound",
             "tt": [
@@ -1821,7 +1794,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1262",
             "bound": "inbound",
             "tt": [
@@ -1886,7 +1858,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1264",
             "bound": "inbound",
             "tt": [
@@ -1951,7 +1922,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1266",
             "bound": "inbound",
             "tt": [
@@ -2016,7 +1986,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1360",
             "bound": "inbound",
             "tt": [
@@ -2081,7 +2050,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1362",
             "bound": "inbound",
             "tt": [
@@ -2146,7 +2114,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1364",
             "bound": "inbound",
             "tt": [
@@ -2211,7 +2178,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1366",
             "bound": "inbound",
             "tt": [
@@ -2276,7 +2242,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1460",
             "bound": "inbound",
             "tt": [
@@ -2341,7 +2306,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1462",
             "bound": "inbound",
             "tt": [
@@ -2406,7 +2370,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1464",
             "bound": "inbound",
             "tt": [
@@ -2471,7 +2434,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1466",
             "bound": "inbound",
             "tt": [
@@ -2536,7 +2498,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1560",
             "bound": "inbound",
             "tt": [
@@ -2601,7 +2562,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1562",
             "bound": "inbound",
             "tt": [
@@ -2666,7 +2626,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1564",
             "bound": "inbound",
             "tt": [
@@ -2731,7 +2690,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1566",
             "bound": "inbound",
             "tt": [
@@ -2796,7 +2754,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1660",
             "bound": "inbound",
             "tt": [
@@ -2861,7 +2818,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1662",
             "bound": "inbound",
             "tt": [
@@ -2926,7 +2882,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1664",
             "bound": "inbound",
             "tt": [
@@ -2991,7 +2946,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1666",
             "bound": "inbound",
             "tt": [
@@ -3056,7 +3010,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1760",
             "bound": "inbound",
             "tt": [
@@ -3121,7 +3074,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1762",
             "bound": "inbound",
             "tt": [
@@ -3186,7 +3138,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1764",
             "bound": "inbound",
             "tt": [
@@ -3251,7 +3202,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1766",
             "bound": "inbound",
             "tt": [
@@ -3316,7 +3266,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1860",
             "bound": "inbound",
             "tt": [
@@ -3381,7 +3330,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1862",
             "bound": "inbound",
             "tt": [
@@ -3446,7 +3394,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1864",
             "bound": "inbound",
             "tt": [
@@ -3511,7 +3458,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1866",
             "bound": "inbound",
             "tt": [
@@ -3576,7 +3522,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1960",
             "bound": "inbound",
             "tt": [
@@ -3641,7 +3586,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1962",
             "bound": "inbound",
             "tt": [
@@ -3706,7 +3650,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1964",
             "bound": "inbound",
             "tt": [
@@ -3771,7 +3714,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "1966",
             "bound": "inbound",
             "tt": [
@@ -3836,7 +3778,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2060",
             "bound": "inbound",
             "tt": [
@@ -3901,7 +3842,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2062",
             "bound": "inbound",
             "tt": [
@@ -3966,7 +3906,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2064",
             "bound": "inbound",
             "tt": [
@@ -4031,7 +3970,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2066",
             "bound": "inbound",
             "tt": [
@@ -4096,7 +4034,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2160",
             "bound": "inbound",
             "tt": [
@@ -4161,7 +4098,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2162",
             "bound": "inbound",
             "tt": [
@@ -4226,7 +4162,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2164",
             "bound": "inbound",
             "tt": [
@@ -4291,7 +4226,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2166",
             "bound": "inbound",
             "tt": [
@@ -4356,7 +4290,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2260",
             "bound": "inbound",
             "tt": [
@@ -4421,7 +4354,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2262",
             "bound": "inbound",
             "tt": [
@@ -4486,7 +4418,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2264",
             "bound": "inbound",
             "tt": [
@@ -4551,7 +4482,6 @@
             ]
         },
         {
-            "line": "Mikawa Line(Yama)",
             "trainNo": "2360",
             "bound": "inbound",
             "tt": [
