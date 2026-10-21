@@ -97,8 +97,9 @@ class TrainControler {
         let arrSta_tmp:string;
         let depTime:dayjs.Dayjs;
         let arrTime:dayjs.Dayjs;
+        let passStations:string[];
         //時刻から出発駅と到着駅を算出，出発駅と到着駅が前回のレンダリングから変更されているか確認
-        [depSta_tmp, arrSta_tmp, depTime, arrTime] = this.speedControler.getTrainStatus(date);
+        [depSta_tmp, arrSta_tmp, depTime, arrTime, passStations] = this.speedControler.getTrainStatus(date);
         //駅に停車中の場合
         //depStaとarrStaが同じ場合は駅に停車中なので、駅の座標を返す
         if(depSta_tmp === arrSta_tmp) {
@@ -112,7 +113,7 @@ class TrainControler {
         if(depSta_tmp !== this.depStaID || arrSta_tmp !== this.arrStaID) {
             this.depStaID = depSta_tmp;
             this.arrStaID = arrSta_tmp;
-            [this.traceCoords, this.traceDists] = this.getTraceCoords(depSta_tmp, arrSta_tmp);
+            [this.traceCoords, this.traceDists] = this.getTraceCoords(depSta_tmp, arrSta_tmp, passStations);
         }
         //駅間距離
         let distance = this.traceDists[this.traceDists.length-1]
@@ -143,12 +144,12 @@ class TrainControler {
     }
 
     // 出発駅から到着駅までの経路をたどり、座標と累積距離を作成する
-    private getTraceCoords(depStaID:string, arrStaID:string):[number[][], number[]] {
+    private getTraceCoords(depStaID:string, arrStaID:string, passStations:string[]):[number[][], number[]] {
         if(this.isInBound !== "inbound" && this.isInBound !== "outbound") {
             throw new Error("bound is not set");
         }
 
-        const route = this.findSectionPath(depStaID, arrStaID);
+        const route = this.findSectionPath(depStaID, arrStaID, passStations);
         if(!route) {
             const depStation = this.stations.get(depStaID);
             const arrStation = this.stations.get(arrStaID);
@@ -181,117 +182,71 @@ class TrainControler {
     }
 
     // 分岐条件と進行方向に従って、駅間を結ぶ区間の経路を探索する
-    private findSectionPath(depStaID:string, arrStaID:string):Section[]|null {
-        const depSta = this.stations.get(depStaID);
-        const depStationName = depSta?.name ?? depStaID;
-        const arrStationName = this.stations.get(arrStaID)?.name ?? arrStaID;
-        const describeRouteError = (detail:string) =>
-            `列車番号 ${this.trainNo}: ${depStationName} から ${arrStationName} の経路データに不整合があります。${detail}`;
-        let errorMessage:string|null = null;
-        let route:Section[]|null = null;
-
+    private findSectionPath(depStaID:string, arrStaID:string, passStations:string[]):Section[]|null {
+        let route:Section[] = [];
+        //駅IDから駅データを取得
+        let depSta = this.stations.get(depStaID);
         if(!depSta) {
-            errorMessage = `Station Data Load Failed: ${depStaID}`;
-        } else {
-            const isInbound = this.isInBound === "inbound";
-            const searchSide = isInbound ? "next" : "prev";
-            const startSection = this.sections.get(depSta[searchSide]);
+            throw new Error(`Station Data Load Failed ${depSta}`);
+        }
+        let nextSectionID = this.isInBound === "inbound" ? depSta.next : depSta.prev;
+        while (true) {
+            //進行方向の区間を取得
+            let nextSection = this.sections.get(nextSectionID);
+            if(!nextSection) {
+                throw new Error(`Section Data Load Failed ${nextSection}`);
+            }
+            //得られた区間をrouteに追加
+            route.push(nextSection);
+            //次の分岐点or駅のIDを取得
+            let nextPointID = this.isInBound === "inbound" ? nextSection.next : nextSection.prev;
+            if(nextPointID === arrStaID) {
+                break
+            }
 
-            if(!startSection) {
-                errorMessage = describeRouteError(
-                    `出発駅に接続する区間 ${depSta[searchSide]} が見つかりません。`
-                );
-            } else {
-                const startDeparturePoint = isInbound ? startSection.prev : startSection.next;
-                if(startDeparturePoint !== depStaID) {
-                    errorMessage = describeRouteError(
-                        `出発駅が区間 ${startSection.id} の出発側端点 ${startDeparturePoint} と一致しません。`
-                    );
-                } else {
-                    const path:Section[] = [];
-                    const visited = new Set<string>();
-                    let current = startSection;
-
-                    while(!errorMessage) {
-                        const sectionID = current.id;
-                        if(visited.has(sectionID)) {
-                            errorMessage = describeRouteError(`区間 ${sectionID} で循環しています。`);
-                            break;
-                        }
-                        visited.add(sectionID);
-                        path.push(current);
-
-                        const pointID = isInbound ? current.next : current.prev;
-                        if(pointID === arrStaID) {
-                            route = path;
-                            break;
-                        }
-
-                        let nextSectionID:string|undefined;
-                        const switchPoint = this.switchPoints.get(pointID);
-                        if(switchPoint) {
-                            const directions = switchPoint.direction.filter(direction =>
-                                direction.from === sectionID
-                            );
-                            if(directions.length === 0) {
-                                errorMessage = describeRouteError(
-                                    `分岐点 ${pointID} に区間 ${sectionID} からの分岐条件がありません。`
-                                );
-                                break;
-                            }
-
-                            const matchingDirections = directions.filter(direction =>
-                                direction.condition === "none"
-                                || (Array.isArray(direction.condition)
-                                    && direction.condition.includes(arrStaID))
-                            );
-                            if(matchingDirections.length === 0) {
-                                errorMessage = describeRouteError(
-                                    `分岐点 ${pointID} に区間 ${sectionID} からの条件に一致する次の区間がありません。`
-                                );
-                                break;
-                            }
-                            nextSectionID = matchingDirections[0].to;
-                        } else {
-                            const station = this.stations.get(pointID);
-                            if(!station) {
-                                errorMessage = describeRouteError(
-                                    `区間 ${sectionID} の端点 ${pointID} が駅または分岐点として登録されていません。`
-                                );
-                                break;
-                            }
-
-                            nextSectionID = isInbound ? station.next : station.prev;
-                            if(nextSectionID === sectionID) {
-                                errorMessage = describeRouteError(
-                                    `駅 ${station.name} の進行方向に接続する区間が現在の区間 ${sectionID} と同じです。`
-                                );
-                                break;
-                            }
-                        }
-
-                        if(nextSectionID === undefined) break;
-
-                        const nextSection = this.sections.get(nextSectionID);
-                        if(!nextSection) {
-                            errorMessage = describeRouteError(`区間 ${nextSectionID} が見つかりません。`);
-                            break;
-                        }
-
-                        const departurePoint = isInbound ? nextSection.prev : nextSection.next;
-                        if(departurePoint !== pointID) {
-                            errorMessage = describeRouteError(
-                                `接続点 ${pointID} が区間 ${nextSection.id} の出発側端点 ${departurePoint} と一致しません。`
-                            );
-                            break;
-                        }
-                        current = nextSection;
-                    }
+            //次のポイントが駅か判定
+            if(this.stations.has(nextPointID)) {
+                let nextSta = this.stations.get(nextPointID);
+                if(!nextSta) {
+                    throw new Error(`Station Data Load Failed ${nextPointID}`);
                 }
+                //passStationsにnextStaが含まれるか判定
+                if (passStations[0] === nextSta.id) {
+                    //先頭の1個を除いて更新
+                    passStations = passStations.slice(1)
+                    nextSectionID = this.isInBound === "inbound" ? nextSta.next : nextSta.prev;
+                } else {
+                    throw new Error(`停車駅・通過駅以外の駅を探索 ${nextSta.id}`)
+                }
+                continue;
+
+            //次のポイントが分岐点か判定 
+            }else if(this.switchPoints.has(nextPointID)) {
+                let nextSwitch = this.switchPoints.get(nextPointID);
+                if (!nextSwitch) {
+                    throw new Error(`Switch Data Load Failed ${nextPointID}`);
+                }
+                //直近に通過したsectionIDとfromが一致するdirectionを抽出
+                let ways = nextSwitch.direction.filter(direc => direc.from === route[route.length - 1].id)
+                //1つしか該当せず，conditionが'none'ならそれを選択
+                if (ways.length == 1 && ways[0].condition === 'none') {
+                    nextSectionID = ways[0].to
+                } else {
+                    ways = ways.filter(way => Array.isArray(way.condition));
+                    if(passStations.length >= 1) {
+                        ways = ways.filter(way => way.condition.includes(passStations[0]))
+                    } else {
+                        ways = ways.filter(way => way.condition.includes(arrStaID))
+                    }
+                    if (ways.length != 1) {
+                        throw new Error(`分岐点で経路の抽出に失敗 ${nextPointID}, 残留数${ways.length},列車番号 ${this.trainNo}${passStations[0]}`)
+                    } 
+                    nextSectionID = ways[0].to
+                }
+            } else {
+                throw new Error(`分岐点または駅のポイントを探索できませんでした ${nextPointID}`)
             }
         }
-
-        if(errorMessage) throw new Error(errorMessage);
         return route;
     }
 }
@@ -310,18 +265,20 @@ class SpeedControler {
     //列車が駅間にいるか停車中か判定
     //depStaとarrStaが同じ：駅に停車中
     //depStaとarrStaが異なる：depStaからarrStaに向けて移動中
-    getTrainStatus(date:dayjs.Dayjs):[string, string, dayjs.Dayjs, dayjs.Dayjs] {
+    getTrainStatus(date:dayjs.Dayjs):[string, string, dayjs.Dayjs, dayjs.Dayjs, string[]] {
         let depSta:string = '';
         let arrSta:string = '';
         let depTime:dayjs.Dayjs = dayjs(0);
         let arrTime:dayjs.Dayjs = dayjs(0);
+        let passStations:string[] = [];
         //始発前の時刻を指定された場合、始発駅に停車しているとみなす
         if(date.isHMSBefore(this.tt[0].d)) {
             depSta = this.tt[0].s;
             arrSta = this.tt[0].s;
             depTime = this.tt[0].d;
             arrTime = this.tt[0].a;
-            return [depSta, arrSta, depTime, arrTime];
+            passStations = [];
+            return [depSta, arrSta, depTime, arrTime, passStations];
         }
         //終着後の時刻を指定された場合、終着駅に停車しているとみなす
         if(date.isHMSSameOrAfter(this.tt[this.tt.length-1].a)) {
@@ -329,29 +286,9 @@ class SpeedControler {
             arrSta = this.tt[this.tt.length-1].s;
             depTime = this.tt[this.tt.length-1].d;
             arrTime = this.tt[this.tt.length-1].a;
-            return [depSta, arrSta, depTime, arrTime];
+            passStations = [];
+            return [depSta, arrSta, depTime, arrTime, passStations];
         }
-        //現在時刻が駅間の移動中の場合
-        let depStaIndex = -1;
-        for (let i = this.tt.length - 2; i >= 0; i--) {
-            if (this.tt[i].p) continue;
-            if(date.isHMSSameOrAfter(this.tt[i].d)) {
-                depStaIndex = i;
-                break;
-            }
-        }
-        let arrStaIndex = -1;
-        for (let i = 1; i < this.tt.length; i++) {
-            if (this.tt[i].p) continue;
-            if(date.isHMSSameOrBefore(this.tt[i].a)) {
-                arrStaIndex = i;
-                break;
-            }
-        }
-        depSta = this.tt[depStaIndex].s;
-        arrSta = this.tt[arrStaIndex].s;
-        depTime = this.tt[depStaIndex].d;
-        arrTime = this.tt[arrStaIndex].a;
         //現在時刻に駅に停車している場合(現在時刻が駅の到着時刻より後で出発時刻より前)：depStaとarrStaは同じ
         for(let i = 1; i < this.tt.length-1; i++) {
             if (this.tt[i].p) continue;
@@ -360,10 +297,42 @@ class SpeedControler {
                 arrSta = this.tt[i].s;
                 depTime = this.tt[i].d;
                 arrTime = this.tt[i].a;
+                passStations = [];
+                return [depSta, arrSta, depTime, arrTime, passStations];
+            }
+        }
+        //現在時刻が駅間の移動中の場合
+        let depStaIndex = -1;
+        for (let i = this.tt.length - 2; i >= 0; i--) {
+            if (this.tt[i].p) {
+                continue;
+            }
+            if(date.isHMSSameOrAfter(this.tt[i].d)) {
+                depStaIndex = i;
                 break;
             }
         }
-        return [depSta, arrSta, depTime, arrTime];
+        let arrStaIndex = -1;
+        for (let i = 1; i < this.tt.length; i++) {
+            if (this.tt[i].p) {
+                continue;
+            }
+            if(date.isHMSSameOrBefore(this.tt[i].a)) {
+                arrStaIndex = i;
+                break;
+            }
+        }
+
+        //出発駅と到着駅の間の駅をpassStationsに格納
+        for (let i = depStaIndex + 1; i < arrStaIndex; i++) {
+            passStations.push(this.tt[i].s);
+        }
+
+        depSta = this.tt[depStaIndex].s;
+        arrSta = this.tt[arrStaIndex].s;
+        depTime = this.tt[depStaIndex].d;
+        arrTime = this.tt[arrStaIndex].a;
+        return [depSta, arrSta, depTime, arrTime, passStations];
     }
 
     //getTrainStaで得られたdepStaとarrStaをもとに、駅間距離を受け取って列車の進行割合を算出
