@@ -42,7 +42,7 @@ export const TrainScheduler = (prop:Prop) => {
 const getRunningTrains = (date:dayjs.Dayjs, railload:Railload, timeTables:TimeTable[]) => {
     let trainProps:trainProp[] = [];
     for (let i = 0; i < timeTables.length; i++) {
-        if(date.isHMSSameOrAfter(timeTables[i].tt[0].d) && date.isHMSBefore(timeTables[i].tt[timeTables[i].tt.length - 1].a)) {
+        if(date.isSameOrAfter(timeTables[i].tt[0].d) && date.isBefore(timeTables[i].tt[timeTables[i].tt.length - 1].a)) {
             trainProps.push({
                 "railload":railload,
                 "timeTable":timeTables[i],

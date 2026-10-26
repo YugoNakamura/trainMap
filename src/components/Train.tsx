@@ -272,7 +272,7 @@ class SpeedControler {
         let arrTime:dayjs.Dayjs = dayjs(0);
         let passStations:string[] = [];
         //始発前の時刻を指定された場合、始発駅に停車しているとみなす
-        if(date.isHMSBefore(this.tt[0].d)) {
+        if(date.isBefore(this.tt[0].d)) {
             depSta = this.tt[0].s;
             arrSta = this.tt[0].s;
             depTime = this.tt[0].d;
@@ -281,7 +281,7 @@ class SpeedControler {
             return [depSta, arrSta, depTime, arrTime, passStations];
         }
         //終着後の時刻を指定された場合、終着駅に停車しているとみなす
-        if(date.isHMSSameOrAfter(this.tt[this.tt.length-1].a)) {
+        if(date.isSameOrAfter(this.tt[this.tt.length-1].a)) {
             depSta = this.tt[this.tt.length-1].s;
             arrSta = this.tt[this.tt.length-1].s;
             depTime = this.tt[this.tt.length-1].d;
@@ -292,7 +292,7 @@ class SpeedControler {
         //現在時刻に駅に停車している場合(現在時刻が駅の到着時刻より後で出発時刻より前)：depStaとarrStaは同じ
         for(let i = 1; i < this.tt.length-1; i++) {
             if (this.tt[i].p) continue;
-            if(date.isHMSSameOrAfter(this.tt[i].a) && date.isHMSBefore(this.tt[i].d)) {
+            if(date.isSameOrAfter(this.tt[i].a) && date.isBefore(this.tt[i].d)) {
                 depSta = this.tt[i].s;
                 arrSta = this.tt[i].s;
                 depTime = this.tt[i].d;
@@ -307,7 +307,7 @@ class SpeedControler {
             if (this.tt[i].p) {
                 continue;
             }
-            if(date.isHMSSameOrAfter(this.tt[i].d)) {
+            if(date.isSameOrAfter(this.tt[i].d)) {
                 depStaIndex = i;
                 break;
             }
@@ -317,7 +317,7 @@ class SpeedControler {
             if (this.tt[i].p) {
                 continue;
             }
-            if(date.isHMSSameOrBefore(this.tt[i].a)) {
+            if(date.isSameOrBefore(this.tt[i].a)) {
                 arrStaIndex = i;
                 break;
             }
@@ -343,7 +343,7 @@ class SpeedControler {
         let travelTime = arrTime.diff(depTime, 'millisecond');
 
         //停止中の場合は例外を投げる
-        if(depTime.isHMSAfter(arrTime)) throw new Error("This Train is currently stopped at a station.");
+        if(depTime.isAfter(arrTime)) throw new Error("This Train is currently stopped at a station.");
 
         //出発駅を出発してからの経過時間(msec)
         let elapsedTime = date.diff(depTime, 'millisecond');

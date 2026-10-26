@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { LatLng, LatLngBounds } from 'leaflet';
 import { Railloads} from './Railloads';
 import { RawTimeTable, TimeTable } from "../types/timeTable"
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 
@@ -40,7 +40,7 @@ const getRouteCode = (filePath: string, fileType: 'route' | 'timeTable'): string
     return routeCode.toUpperCase();
 };
 
-const loadRoutes = (date: dayjs.Dayjs): RouteData[] => {
+const loadRoutes = (serviceDay: string): RouteData[] => {
     const rawTimeTablesByRoute = new globalThis.Map<string, RawTimeTable[]>();
     Object.entries(timeDataRaw).forEach(([filePath, timeData]) => {
         const routeCode = getRouteCode(filePath, 'timeTable');
@@ -74,10 +74,10 @@ const loadRoutes = (date: dayjs.Dayjs): RouteData[] => {
                 tt: rawTimeTable.tt.map((dia) => ({
                     s: dia.s,
                     a: dia.a !== undefined
-                        ? dayjs(`${date.format("YYYY/MM/DD")} ${dia.a}`, "YYYY/MM/DD HH:mm:ss")
+                        ? dayjs(`${serviceDay} ${dia.a}`, "YYYY/MM/DD HH:mm:ss")
                         : dayjs(0),
                     d: dia.d !== undefined
-                        ? dayjs(`${date.format("YYYY/MM/DD")} ${dia.d}`, "YYYY/MM/DD HH:mm:ss")
+                        ? dayjs(`${serviceDay} ${dia.d}`, "YYYY/MM/DD HH:mm:ss")
                         : dayjs("2100/01/01 00:00:00", "YYYY/MM/DD HH:mm:ss"),
                     p: dia.p ?? false
                 }))
@@ -118,7 +118,9 @@ export const Map = () => {
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
     const [isPlaying, setIsPlaying] = useState(true);
     const frameRate = 30;
-    const [routes] = useState(() => loadRoutes(date));
+    // 4時を運行日の境界とし、24時以降のダイヤを前日分として扱う
+    const serviceDay = date.subtract(4, 'hour').format("YYYY/MM/DD");
+    const routes = useMemo(() => loadRoutes(serviceDay), [serviceDay]);
     const clockAnchor = useRef({
         realTime: Date.now(),
         displayTime: date.valueOf()
