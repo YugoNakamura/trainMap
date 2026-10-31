@@ -7,7 +7,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Railload } from '../types/railload';
 import { TrainScheduler } from './TrainScheduler';
 
-import './Map.css';
+import './TrainMap.css';
 
 import dayjs from 'dayjs';
 
@@ -40,8 +40,10 @@ const getRouteCode = (filePath: string, fileType: 'route' | 'timeTable'): string
     return routeCode.toUpperCase();
 };
 
+// 指定されたサービス日の時刻表データを読み込み、路線情報と結合して返す関数
 const loadRoutes = (serviceDay: string): RouteData[] => {
-    const rawTimeTablesByRoute = new globalThis.Map<string, RawTimeTable[]>();
+    // 路線コードをキーとして上下線の時刻表をまとめる
+    const rawTimeTablesByRoute = new Map<string, RawTimeTable[]>();
     Object.entries(timeDataRaw).forEach(([filePath, timeData]) => {
         const routeCode = getRouteCode(filePath, 'timeTable');
         rawTimeTablesByRoute.set(routeCode, [
@@ -50,7 +52,8 @@ const loadRoutes = (serviceDay: string): RouteData[] => {
         ]);
     });
 
-    const routesByCode = new globalThis.Map<string, Railload>();
+    // 路線コードをキーとして路線情報をまとめる
+    const routesByCode = new Map<string, Railload>();
     Object.entries(railDataRaw).forEach(([filePath, railload]) => {
         const routeCode = getRouteCode(filePath, 'route');
         if (routesByCode.has(routeCode)) {
@@ -66,6 +69,7 @@ const loadRoutes = (serviceDay: string): RouteData[] => {
         }
         rawTimeTablesByRoute.delete(code);
 
+        // 文字列として読み込んだ時刻表の時刻を dayjs オブジェクトに変換する
         return {
             code,
             railload,
@@ -92,6 +96,7 @@ const loadRoutes = (serviceDay: string): RouteData[] => {
     return routes;
 };
 
+// 地図の表示範囲を路線に合わせて調整するコンポーネント
 const FitRoutes = ({ routes }: { routes: RouteData[] }) => {
     const map = useMap();
 
@@ -113,7 +118,7 @@ const FitRoutes = ({ routes }: { routes: RouteData[] }) => {
     return null;
 };
 
-export const Map = () => {
+export const TrainMap = () => {
     const [speedRate, setSpeedRate] = useState<number>(1);
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
     const [isPlaying, setIsPlaying] = useState(true);

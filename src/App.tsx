@@ -1,4 +1,4 @@
-import { Map } from "./components/Map";
+import { TrainMap } from "./components/TrainMap";
 
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
@@ -12,7 +12,7 @@ export const App = () =>{
  
       return (
           <div>
-            <Map />
+            <TrainMap />
           </div>
       );
   };
